@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,11 +30,11 @@ th {
 }
 
 tbody > tr:nth-child(odd) {
-    background-color: white; 
+    background-color: white;
 }
 
 tbody > tr:nth-child(even) {
-    background-color: lightblue;   
+    background-color: lightblue;
 }
 
 td {
@@ -69,7 +69,7 @@ img {
 
 <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia">
 <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis">
-    
+
 <table>
 	<thead>
 	<tr>
@@ -106,6 +106,25 @@ img {
         <td>
             WORKFLOW  -  CREACION DE BASE DE DATOS
             <img class="imagen-descripcion" src="images/diagramaUML.png" alt="diagrama UML de una BD" />
+            <br/><br/><br/>
+            <b>Cardinalidad</b> => (minima, maxima)
+            <br/><br/>
+            <b>Relaciones:</b><br/>
+            actividades (0, *) <=> (1, 1) documentos<br/>
+            - Una 'act' PUEDE no tener 'doc' o tener muchos<br/>
+            - Un 'doc' DEBE estar asociado a una y solo una 'act'
+            <br/><br/>
+            actividades (1, *) <=> (1, 1) tareas<br/>
+            - Una 'act' DEBE estar asociada a una o mas 'tar'<br/>
+            - Una 'tar' DEBE estar asociada a una y solo una 'act'
+            <br/><br/>
+            grupos (0, *) <=> (1, 1) tareas<br/>
+            - Un 'gr' PUEDE no tener 'tar' o tener muchas<br/>
+            - Una 'tar' DEBE estar asociada a uno y solo un 'gr'
+            <br/><br/>
+            grupos (1, *) <=> (1, 1) personas<br/>
+            - Un 'gr' DEBE estar asociado a una o mas 'per'<br/>
+            - Una 'per' DEBE estar asociada a uno y solo un 'gr'
         </td>
     </tr>
     <tr>
@@ -194,19 +213,19 @@ img {
         <td>MySQL</td>
         <td>
             CREATE TABLE ['nombre_tabla'] (<br />
-            ['nombre_columna'] [tipo_dato] [constraint],<br />
-            CONSTRAINT ['nombre_pk'] PRIMARY KEY ([columna1], [columna2]),<br />
-            CONSTRAINT ['nombre_fk'] FOREIGN KEY ([columna1], [columna2])<br />
-            REFERENCES ['nombre_tabla_ref'](['nombre_columna_ref'])<br />
-            [MATCH FULL | MATCH PARTIAL]<br />
-            ON UPDATE [accion] ON DELETE [accion]<br />
+            &nbsp; &nbsp; ['nombre_columna'] [tipo_dato] [constraint],<br />
+            &nbsp; &nbsp; CONSTRAINT ['nombre_pk'] PRIMARY KEY ([columna1], [columna2]),<br />
+            &nbsp; &nbsp; CONSTRAINT ['nombre_fk'] FOREIGN KEY ([columna1], [columna2])<br />
+            &nbsp; &nbsp; REFERENCES ['nombre_tabla_ref'](['nombre_columna_ref'])<br />
+            &nbsp; &nbsp; [MATCH FULL | MATCH PARTIAL]<br />
+            &nbsp; &nbsp; ON UPDATE [accion] ON DELETE [accion]<br />
             )ENGINE=InnoDB;
         </td>
         <td>
             Si la FOREIGN KEY esta formada por varias columnas y admite nulos se puede establecer:<br /><br />
             - MATCH FULL: todas las columnas de la FOREIGN KEY tienen valor o ninguna de ellas lo tiene.<br />
             - MATCH PARTIAL: permite las FOREIGN KEY parcialmente nulas.<br /><br /><br />
-    
+
             Se pueden establecer 4 comportamientos [accion] para cada FOREIGN KEY cuando se borra o actualiza el valor
             referenciado, es decir, el valor original en la PRIMARY KEY:<br /><br />
             - NO ACTION o RESTRICT: produce un error, no permite borrar ni actualizar.<br />
@@ -225,16 +244,16 @@ img {
             <b>TIME</b> determina cuando se ejecuta la accion del trigger, puede ser:<br />
             <b>BEFORE</b> ejecuta el trigger ANTES de la accion<br />
             <b>AFTER</b> ejecuta el trigger DEPUES de la accion<br /><br />
-    
+
             <b>EVENT</b> es la accion que realiza el trigger, puede ser <b>UPDATE</b> o <b>DELETE</b> o
             <b>INSERT</b><br /><br />
-    
+
             <b>NEW_STATEMENT</b> es la query que ejecutara el trigger. Ej: INSERT INTO, UPDATE, etc.<br /><br />
-    
+
             En el <b>NEW_STATEMENT</b> se debe especificar si usar el valor previo o posterior al ACTION. Para ello se usan
             los prefijos <b>"OLD."</b> (valor previo) y <b>"NEW."</b> (valor posterior) en los nombres de los campos de la
             tabla de origen de los datos, ya que son los que se asignan como valores.
-    
+
             <b>EACH ROW o EACH STATEMENT</b> (Averiguar que opciones hay)
         </td>
     </tr>
@@ -388,6 +407,36 @@ img {
         </td>
     </tr>
     <tr>
+        <td>MongoDB<br/>noSQL</td>
+        <td>
+        - noSQL tiene un diseño desnormalizado (se puede duplicar data) y “query-first”
+        (las queries son mas relevantes que las relaciones). Esto significa que se define el esquema
+        segun los patrones de acceso a los datos y queries.<br/><br/>
+        - Es util comenzar por definir entidades, atributos y relaciones. Siempre que sea util, se
+        pueden seguir las normas de SQL para identificar las entidades debiles.<br/><br/>
+        - Es importante recordar, los datos que se leen juntos se deben almacenar juntos. Por ejemplo:<br/>
+        &nbsp; &nbsp; * Una web de post tiene las entidades 'Users', 'Posts' y 'Comments'.<br/>
+        &nbsp; &nbsp; * En SQL, 'Comments' se relacionaria con las otras dos entidades.<br/>
+        &nbsp; &nbsp; * En noSQL se debe decidir con cual agruparla. Para este caso se privilegia el acceso a
+        los 'Posts', por lo que 'Comments' quedaria como su embedded object.<br/><br/>
+        - Si un embedded object es demasiado grande (el tamaño optimo es entre 50-100KB). Puede solo
+        agregarse su row key y almacenarlo en su propia tabla.<br/><br/>
+        - Para cada documento se designa un id (row key). Se pueden crear “composite” row key con varios datos,
+         <b>*No se si aplica a todas las noSQL*</b> esto puede ser util para (indexar) agrupar filas.
+        En el ejemplo, la key es compuesta por la categoria y el timestamp.
+        <br/><br/><br/>
+        <span>RELATIONAL TO DOCUMENT MODEL EXAMPLE</span>
+        <img class="imagen-descripcion" src="images/noSQL-relation-example.png" alt="noSQL relation example" />
+        </td>
+        <td>
+        <span>TREE, ADJACENCY LIST, GRAPH DATA EXAMPLE</span>
+        <img class="imagen-descripcion" src="images/noSQL-tree-example.png" alt="diagrama UML de una BD" />
+        <br/><br/>
+        <span>MAPR Documentation - ROW KEY RELEVANCE</span>
+        <img class="imagen-descripcion" src="images/noSQL-row-key.png" alt="noSQL composite row key" />
+        </td>
+    </tr>
+    <tr>
         <td>MongoDB</td>
         <td>sudo service mongod [start status stop restart]</td>
         <td>
@@ -421,11 +470,11 @@ img {
         <td>MongoDB</td>
         <td>
             db.createUser({
-                user: '',
-                pwd: '',
-                customData: {},
-                roles: [],
-                authenticationRestrictions: []
+            &nbsp; &nbsp; user: '',
+            &nbsp; &nbsp; pwd: '',
+            &nbsp; &nbsp; customData: {},
+            &nbsp; &nbsp; roles: [],
+            &nbsp; &nbsp; authenticationRestrictions: []
             })
         </td>
         <td>
@@ -434,7 +483,7 @@ img {
             <b>pwd: </b> contraseña del nuevo usuario.<br/>
             <b>customData (opcional): </b> informacion arbitraria que se desee agregar.<br/>
             <b>roles: </b> los roles (permisos) que tendra el usuario. Pueden ser uno o varios de estos:<br/>
-            
+
             <b>authenticationRestrictions (opcional): </b> una lista IPs desde los cuales el usuario tiene permitido concetarse a la base de datos.<br/>
         </td>
     </tr>
@@ -447,6 +496,11 @@ img {
         <td>MongoDB</td>
         <td>show collections</td>
         <td>Muestra las colecciones de la base de datos</td>
+    </tr>
+    <tr>
+        <td>MongoDB</td>
+        <td>db.[nombre_coleccion].drop()</td>
+        <td>Elimina la coleccion con el nombre que se especifique</td>
     </tr>
     <tr>
         <td>MongoDB</td>
@@ -725,7 +779,7 @@ img {
         	Para colaborar en un proyecto de un tercero se debe hacer Fork en GitHub.
         	<br/>
         	Esto clona el repositorio a nuestra cuenta. Esta copia en nuestra cuenta es la que vamos a poder modificar.<br/><br/>
-        	
+
         	Una vez en este punto tendremos dos branch ocultas:<br/>
         	- Una para hacer fetch a la copia en nuestra cuenta (origin/master), tal cual como en el workflow en equipo.<br/>
         	- Una para hacer fetch (upstream/master) al proyecto original, para obtener una copia actualizada.<br/><br/>
@@ -748,16 +802,16 @@ img {
         <td>LARAVEL<br/>Migration</td>
         <td>
             Schema::create('carts', function (Blueprint $table) {<br/>
-            $table->bigIncrements('id');<br/>
-            $table->string('name')->default('Luis');<br/>
-            $table->integer('age')->nullable();<br/><br/>
+            &nbsp; &nbsp; $table->bigIncrements('id');<br/>
+            &nbsp; &nbsp; $table->string('name')->default('Luis');<br/>
+            &nbsp; &nbsp; $table->integer('age')->nullable();<br/><br/>
 
-            $table->unsignedBigInteger('user_id');<br/>
-            $table->foreign('user_id')<br/>
-                  ->references('id')->on('users')<br/>
-                  ->onDelete('cascade');<br/><br/>
+            &nbsp; &nbsp; $table->unsignedBigInteger('user_id');<br/>
+            &nbsp; &nbsp; $table->foreign('user_id')<br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; ->references('id')->on('users')<br/>
+            &nbsp; &nbsp; &nbsp; &nbsp; ->onDelete('cascade');<br/><br/>
 
-            $table->timestamps();<br/>
+            &nbsp; &nbsp; $table->timestamps();<br/>
         });
         </td>
         <td>
@@ -781,7 +835,7 @@ img {
 </table>
 
 
-<script>   
+<script>
 
 function myFilterCuenta () {
    var tr, td, inputCuenta, filterCuenta,
@@ -789,8 +843,8 @@ function myFilterCuenta () {
 
     tr = document.getElementsByTagName("tr");
     inputCuenta = document.getElementById("inputCuenta");
-    filterCuenta = inputCuenta.value.toUpperCase();      
-   
+    filterCuenta = inputCuenta.value.toUpperCase();
+
    for (i = 0; i < tr.length; i++) {
        td = tr[i].getElementsByTagName("td")[0];
 
@@ -809,7 +863,7 @@ function myFilterDetalle () {
     tr = document.getElementsByTagName("tr");
     inputDetalle = document.getElementById("inputDetalle");
     filterDetalle = inputDetalle.value.toUpperCase();
-   
+
    for (i = 0; i < tr.length; i++) {
        td = tr[i].getElementsByTagName("td")[1];
 
