@@ -130,16 +130,12 @@ img {
     <tr>
         <td>MySQL</td>
         <td>
-            SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME<br />
+            SELECT *<br/>
             FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE<br />
-            WHERE REFERENCED_TABLE_SCHEMA = '[nombre_base_de_datos]' AND<br /> REFERENCED_TABLE_NAME = '[nombre_tabla]'
-            AND<br />
-            REFERENCED_COLUMN_NAME = '[nombre_de_columna]';
+            WHERE POSITION_IN_UNIQUE_CONSTRAINT IS NOT NULL
         </td>
         <td>
-            Muestra la informacion de las dependencias de la tabla o la columna que se coloca en el WHERE, es decir, las
-            FOREIGN KEY que hacen referencia a dicha tabla o columna. Para obtener la informacion correspondiente a la tabla
-            solo se borra la parte de la columna del WHERE
+            Muestra todas las FOREIGN KEY de la base de datos
         </td>
     </tr>
     <tr>
@@ -618,6 +614,24 @@ img {
     </tr>
     <tr>
         <td>Git</td>
+        <td>git config --global [unset] alias.[alias] '[comando_original]'</td>
+        <td>
+            Configura un alias o shortcut:<br/>
+            [alias] : el alias o shortcut que se va a crear.<br/>
+            [comando_original] : el comando con todos sus flag y demas.<br />
+            [unset] (opcional) : elimina el alias especificado. No se pone el comando original.
+        </td>
+    </tr>
+    <tr>
+        <td>Git</td>
+        <td>git config --global --get-regexp [regex]</td>
+        <td>
+            Busca todas las configuraciones que coincidan con la regex que se especifica.<br/>
+            Por ej: si se usa 'alias' devuelve todos los alias configurados.
+        </td>
+    </tr>
+    <tr>
+        <td>Git</td>
         <td>git init</td>
         <td>
 	        Comienza a monitorear los archivos de la carpeta en la que nos encontramos (la carpeta de nuestro proyecto)
@@ -663,8 +677,16 @@ img {
     </tr>
     <tr>
         <td>Git</td>
-        <td>git log</td>
-        <td>Muestra los commit que se han hecho en el branch que te encuentras</td>
+        <td>git log [nombre_branch] --online --graph --decorate --since='[criterio]' | cat</td>
+        <td>
+            Muestra los commit que se han hecho en el branch que te encuentras. Tambien pues:<br/>
+            [nombre_branch] : especificar la branch de la cual quieres ver los commmit.<br />
+            --oneline : muestra cada commit en una linea.<br />
+            --graph : muestra las distintas branch desde la que proviene cada commit<br />
+            --decorate : muestra la branch en la que origino cada commit.<br />
+            --since : filtra los commit que muestra. Puede ser una hora, por ej: '6am' o una fecha '1991-01-31'.<br />
+            | cat : imprime el resultado en la consola. No solo lo muestra en modo vista.
+        </td>
     </tr>
     <tr>
         <td>Git</td>
@@ -687,7 +709,7 @@ img {
         <td>Git</td>
         <td>git reset [--soft --mixed --hard][codigo SHA]</td>
         <td>
-        	Descarta los commit de la branch, vuelve al commit que se elige pero descartando sus cambios y los commit anteriores a el, puede ser:<br/>
+        	Descarta los commit de la branch posteriores al commit seleccionado, puede ser:<br/>
 			<b>--soft</b> : borra los commit pero no toca el staging area ni el working area<br/>
 			<b>--mixed</b> : borra los commit y el staging area pero no toca el working area. Es el default en caso de que se omita este primer parametro.<br/>
 			<b>--hard</b> : borra TODO, los commit, el staging area y el working area.
@@ -695,11 +717,12 @@ img {
     </tr>
     <tr>
         <td>Git</td>
-        <td>git branch [-a -D][nombre_branch]</td>
+        <td>git branch [-a -D -m][nombre_branch]</td>
         <td>
         	Sin ningun parametro, muestra las branch no ocultas que existen:<br/>
         	<b>-a </b> : muestra todas las branch, incluidas las ocultas.<br/>
         	<b>-D </b> : elimina la branch que se ponga en el ultimo parametro.<br/>
+            <b>-m </b> : cambia el nombre de la branch. Luego de este parametro se pone el nombre actual de la rama y el nuevo nombre.<br />
         	<b>nombre_branch </b> : sin los parametros anteriores crea una branch nueva.
         </td>
     </tr>
@@ -708,13 +731,53 @@ img {
         <td>git merge [nombre_branch]</td>
         <td>
         	Absorbe los cambios del branch que se usa en el comando, sin eliminarla.<br/>
-        	Primero debes pararte en la branch que quieres que absorba los cambios
+        	Primero debes pararte en la branch que quieres que absorba los cambios.<br />
+            Para resolver un conflicto se debe ir al archivo, se modifica para que quede<br />
+            como lo queremos (git inserta comentarios donde hay conflictos) y luego hacemos commit.
+        </td>
+    </tr>
+    <tr>
+        <td>Git</td>
+        <td>git rebase [nombre_branch]</td>
+        <td>
+            NO HACER REBASE A CONTENIDO QUE SE HAYA PUSHEADO PORQUE CAMBIA LOS HASH DE LOS COMMIT
+            Se recomienda hacer rebase primero parado en la branch feature (absorber los commit de master) y luego hacer rebase en master antes de hacer push.<br />
+            Funciona igual que merge pero en lugar de solo absorber los cambios de la rama seleccionada, si se hace parado en:<br />
+            - Un branch 'feature': actualiza la branch con los commit de master y pone los commit de la branch actual sobre todos los demas.<br />
+            - Master: absorbe los commit necesarios en master para actualizarse, los pone como ultimos commit y elimina la referencia a la branch de donde provienen.
+
+        </td>
+    </tr>
+    <tr>
+        <td>Git</td>
+        <td>git cherry-pick [codigo_SHA_commit mas viejo]^..[codigo_SHA_commit mas viejo]</td>
+        <td>
+            Hace merge de los commit de otra branch pero los introduce en la rama actual con un nuevo commit (nuevo SHA).<br/>
+            Puede ser un solo commit (se usa solo em primer parametro) o un rango de commits.
         </td>
     </tr>
     <tr>
         <td>Git</td>
         <td>git checkout -b [nombre_branch]</td>
         <td>Crea una branch nueva y te para en ella de una vez</td>
+    </tr>
+    <tr>
+        <td>Git</td>
+        <td>git format-patch -1 [codigo_SHA] [branch_destino] -o patches</td>
+        <td>
+            Estando en la branch con los cambios que se quieren incluir en un parche, se selecciona:<br />
+            [branch_destino] : compara la branch actual con la branch especificada y genera un parche por cada commit.<br />
+            -1 [codigo_SHA] : genera un parche con el commit especificado.<br />
+            -o patches : especifica la carpeta (path relativo) en la que git guarda los archivos de los patch creados.
+        </td>
+    </tr>
+    <tr>
+        <td>Git</td>
+        <td>git am [path_del_patch]</td>
+        <td>
+            Se debe estar parado en la branch que se quieren aplicar los parches.<br />
+            Este comando crea un nuevo commit, es decir, cambia el hash del commit original.
+        </td>
     </tr>
     <tr>
         <td>Git</td>
@@ -797,6 +860,20 @@ img {
         <td>Git</td>
         <td>ssh-keygen</td>
         <td>Genera la clave SSH (publica y privada)</td>
+    </tr>
+    <tr>
+        <td>Git</td>
+        <td>git stash [save 'mensaje_descriptivo'] [list][apply][drop][show] [stash]</td>
+        <td>
+            Guarda los cambios que del staging area en el 'stash' y los oculta. Opciones:<br/>
+            save 'mensaje_descriptivo': el mensaje es opcional pero ayuda a identificar el stash cuando se listan.<br/>
+            pop : aplica el ultimo stash guardado y lo saca de la lista<br/>
+            list : muestra los stash guardados.<br />
+            apply : aplica el ultimo stash sin borrarlo.<br />
+            drop : borra toda la lista de stash.<br />
+            show : muestra el detalle de los cambios del stash seleccionado.<br/>
+            stash : el identidicador de cada stash, su formato es stash@\{0\}
+        </td>
     </tr>
     <tr>
         <td>LARAVEL<br/>Migration</td>
