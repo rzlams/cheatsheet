@@ -1,959 +1,1052 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>My cheatsheet</title>
-<style>
-* {
-	box-sizing: border-box;
-	padding: 0;
-	margin: 0;
-}
+    <style>
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
 
-table {
-    width: 100%;
-}
+        table {
+            width: 100%;
+        }
 
-table, td, tr, th {
-    border: 1px solid black;
-    border-collapse: collapse;
-    position: relative;
-}
+        table,
+        td,
+        tr,
+        th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            position: relative;
+        }
 
-th {
-    padding: .8em;
-    text-transform: uppercase;
-    background-color: darkblue;
-    color: white;
-}
+        th {
+            padding: .8em;
+            text-transform: uppercase;
+            background-color: darkblue;
+            color: white;
+        }
 
-tbody > tr:nth-child(odd) {
-    background-color: white;
-}
+        tbody>tr:nth-child(odd) {
+            background-color: white;
+        }
 
-tbody > tr:nth-child(even) {
-    background-color: lightblue;
-}
+        tbody>tr:nth-child(even) {
+            background-color: lightblue;
+        }
 
-td {
-    padding: 1em;
-    opacity: .6;
-}
+        td {
+            padding: 1em;
+            opacity: .6;
+        }
 
-tbody td:hover {
-    opacity: 1;
-}
+        tbody td:hover {
+            opacity: 1;
+        }
 
-input {
-    width: 25%;
-    padding: .5em 0;
-    margin-bottom: 1em;
-}
-tr > td:first-child {
-    font-weight: bold;
-    text-align: center;
-    width: 10%;
-}
+        input {
+            width: 25%;
+            padding: .5em 0;
+            margin-bottom: 1em;
+        }
 
-tr > td:last-child {
-    width: 35%;
-}
-img {
-    width: 100%;
-}
-</style>
+        tr>td:first-child {
+            font-weight: bold;
+            text-align: center;
+            width: 10%;
+        }
+
+        tr>td:last-child {
+            width: 35%;
+        }
+
+        img {
+            width: 100%;
+        }
+    </style>
 </head>
+
 <body>
 
-<input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia">
-<input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis">
+    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia">
+    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis">
 
-<table>
-	<thead>
-	<tr>
-        <th>Tecnologia</th>
-        <th>Sintaxis</th>
-        <th>Descripcion</th>
-    </tr>
-    </thead>
-    <tbody id="cuentas">
-    <tr>
-        <td>MySQL</td>
-        <td>
-            <b>0.- Crear proyecto en BOUML:</b> Menu "Project"->New; luego en el browser (con click derecho): new class view->new class diagram->new class.<br/><br/>
-            <b>1.- Definir entidades:</b> nombre y breve descripcion de cada una.<br/><br/>
-            <b>2.- Definir relaciones:</b> incluyendo su cardinalidad minima y maxima.<br/>
-            <b>* Cardinalidad minima:</b><br/>
-            0  -  la entidad se relaciona de manera opcional.<br/>
-            1  -  la entidad se relaciona de manera obligatorio.<br/>
-            <b>* Cardinalidad maxima:</b><br/>
-            1  -  la ocurrencia puede relacionarse con solo una de la otra entidad.<br/>
-            n  -  la ocurrencia puede relacionarse con varias a la vez.<br/><br/>
-            <b>3.- Definir atributos:</b> pueden ser simples o compuestos. Se debe especificar cuales son derivados (calculados a partir de otro).<br/><br/>
-            <b>4.- Realizar el diagrama correspondiente al diseño logico</b><br/>
-            * Si las entidades tienen PRIMARY KEY (PK) son llamadas "fuertes/padre" sino son llamadas "debiles/hijo".<br/>
-            * Cada ocurrencia de una entidad debil se relaciona con una y solamente una ocurrencia de la entidad fuerte de la que depende. por esto en la entidad debil se debe crear una FOREIGN KEY (FK) enlazada a la PK de la entidad fuerte.<br/>
-            <b>- RELACIONES BINARIAS ENTRE ENTIDADES FUERTES: </b>en este tipo de relaciones la tabla hija absorbe la relacion y se le asigna una FK.<br/>
-            Segun la cardinalidad maxima de los atributos relacionados esta puede ser:<br/>
-            <b>* Uno a uno:</b> la entidad hija es la que participa de manera oblogatoria, la que tiene cardinalidad minima 1.<br/>
-            <b>* Uno a muchos:</b> la entidad hija es la de cardinalidad maxima 1.<br/>
-            <b>* Muchos a muchos:</b> se crea una tabla intermedia para almacenar las ocurrencias de la relacion. Esta tabla contendra una FK a cada una de las tablas correspondientes a las entidades participantes, ademas de incluir los atributos de la relacion. Ninguna de las FK aceptara nulos. La PK de esta tabla seran las dos FK si la relacion no tiene atributos, o un atributo de la relacion que pueda ser PK.<br/>
-            En las relaciones "Uno a Uno" y "Uno a Muchos" tambien es posible usar una tabla intermedia, pero no es obligatorio como en el caso "Muchos a Muchos". Esto se puede hacer para tratar de favorecer los accesos mas frecuentes y/o que requieran un tiempo de respuesta menor.<br/><br/>
-            <b>5.- Normalizacion</b>
-        </td>
-        <td>
-            WORKFLOW  -  CREACION DE BASE DE DATOS
-            <img class="imagen-descripcion" src="images/diagramaUML.png" alt="diagrama UML de una BD" />
-            <br/><br/><br/>
-            <b>Cardinalidad</b> => (minima, maxima)
-            <br/><br/>
-            <b>Relaciones:</b><br/>
-            actividades (0, *) <=> (1, 1) documentos<br/>
-            - Una 'act' PUEDE no tener 'doc' o tener muchos<br/>
-            - Un 'doc' DEBE estar asociado a una y solo una 'act'
-            <br/><br/>
-            actividades (1, *) <=> (1, 1) tareas<br/>
-            - Una 'act' DEBE estar asociada a una o mas 'tar'<br/>
-            - Una 'tar' DEBE estar asociada a una y solo una 'act'
-            <br/><br/>
-            grupos (0, *) <=> (1, 1) tareas<br/>
-            - Un 'gr' PUEDE no tener 'tar' o tener muchas<br/>
-            - Una 'tar' DEBE estar asociada a uno y solo un 'gr'
-            <br/><br/>
-            grupos (1, *) <=> (1, 1) personas<br/>
-            - Un 'gr' DEBE estar asociado a una o mas 'per'<br/>
-            - Una 'per' DEBE estar asociada a uno y solo un 'gr'
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            SELECT *<br/>
-            FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE<br />
-            WHERE POSITION_IN_UNIQUE_CONSTRAINT IS NOT NULL
-        </td>
-        <td>
-            Muestra todas las FOREIGN KEY de la base de datos
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            USE ['nombre_base_de_datos'];
-        </td>
-        <td>
-            Asigna la Base de Datos con la que se quiere trabajar
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            DESCRIBE ['nombre_tabla'];
-        </td>
-        <td>
-            Muestra el nombre de los campos que conforman la tabla,
-            su tipo de dato, si admite nulos, cuales son PRIMARY KEY o FOREIGN KEY, su valor por defualt e info extra (si es
-            auto_increment u otros)
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            SHOW Databases;<br />o<br />
-            SHOW Tables;
-        </td>
-        <td>
-            Muestra una lista con todas las Base de Datos almacenadas en el equipo<br />o<br />
-            Muestra una lista con los nombres de todas las tablas de la Base de Datos
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            ALTER TABLE [nombre_tabla_actual] RENAME TO [nuevo_nombre];
-        </td>
-        <td>
-            Cambia el nombre de una tabla
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            ALTER TABLE [nombre_tabla] CHANGE [nombre_actual_columna] [nuevo_nombre_columna][tipo de dato][restriccion];
-        </td>
-        <td>
-            Cambia el nombre de una columna
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            ALTER TABLE [nombre_tabla] ADD CONSTRAINT [nombre_restriccion] [restriccion(columna_objetivo)];
-        </td>
-        <td>
-            Agrega una restriccion a una columna
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            NULLIF(valor1, valor2);
-        </td>
-        <td>
-            Si ambos valores son iguales devuelve nulo, sino devuelve el valor1
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            CREATE TABLE ['nombre_tabla'] (<br />
-            &nbsp; &nbsp; ['nombre_columna'] [tipo_dato] [constraint],<br />
-            &nbsp; &nbsp; CONSTRAINT ['nombre_pk'] PRIMARY KEY ([columna1], [columna2]),<br />
-            &nbsp; &nbsp; CONSTRAINT ['nombre_fk'] FOREIGN KEY ([columna1], [columna2])<br />
-            &nbsp; &nbsp; REFERENCES ['nombre_tabla_ref'](['nombre_columna_ref'])<br />
-            &nbsp; &nbsp; [MATCH FULL | MATCH PARTIAL]<br />
-            &nbsp; &nbsp; ON UPDATE [accion] ON DELETE [accion]<br />
-            )ENGINE=InnoDB;
-        </td>
-        <td>
-            Si la FOREIGN KEY esta formada por varias columnas y admite nulos se puede establecer:<br /><br />
-            - MATCH FULL: todas las columnas de la FOREIGN KEY tienen valor o ninguna de ellas lo tiene.<br />
-            - MATCH PARTIAL: permite las FOREIGN KEY parcialmente nulas.<br /><br /><br />
+    <table>
+        <thead>
+            <tr>
+                <th>Tecnologia</th>
+                <th>Sintaxis</th>
+                <th>Descripcion</th>
+            </tr>
+        </thead>
+        <tbody id="cuentas">
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    <b>0.- Crear proyecto en BOUML:</b> Menu "Project"->New; luego en el browser (con click derecho):
+                    new class view->new class diagram->new class.<br /><br />
+                    <b>1.- Definir entidades:</b> nombre y breve descripcion de cada una.<br /><br />
+                    <b>2.- Definir relaciones:</b> incluyendo su cardinalidad minima y maxima.<br />
+                    <b>* Cardinalidad minima:</b><br />
+                    0 - la entidad se relaciona de manera opcional.<br />
+                    1 - la entidad se relaciona de manera obligatorio.<br />
+                    <b>* Cardinalidad maxima:</b><br />
+                    1 - la ocurrencia puede relacionarse con solo una de la otra entidad.<br />
+                    n - la ocurrencia puede relacionarse con varias a la vez.<br /><br />
+                    <b>3.- Definir atributos:</b> pueden ser simples o compuestos. Se debe especificar cuales son
+                    derivados (calculados a partir de otro).<br /><br />
+                    <b>4.- Realizar el diagrama correspondiente al diseño logico</b><br />
+                    * Si las entidades tienen PRIMARY KEY (PK) son llamadas "fuertes/padre" sino son llamadas
+                    "debiles/hijo".<br />
+                    * Cada ocurrencia de una entidad debil se relaciona con una y solamente una ocurrencia de la entidad
+                    fuerte de la que depende. por esto en la entidad debil se debe crear una FOREIGN KEY (FK) enlazada a
+                    la PK de la entidad fuerte.<br />
+                    <b>- RELACIONES BINARIAS ENTRE ENTIDADES FUERTES: </b>en este tipo de relaciones la tabla hija
+                    absorbe la relacion y se le asigna una FK.<br />
+                    Segun la cardinalidad maxima de los atributos relacionados esta puede ser:<br />
+                    <b>* Uno a uno:</b> la entidad hija es la que participa de manera oblogatoria, la que tiene
+                    cardinalidad minima 1.<br />
+                    <b>* Uno a muchos:</b> la entidad hija es la de cardinalidad maxima 1.<br />
+                    <b>* Muchos a muchos:</b> se crea una tabla intermedia para almacenar las ocurrencias de la
+                    relacion. Esta tabla contendra una FK a cada una de las tablas correspondientes a las entidades
+                    participantes, ademas de incluir los atributos de la relacion. Ninguna de las FK aceptara nulos. La
+                    PK de esta tabla seran las dos FK si la relacion no tiene atributos, o un atributo de la relacion
+                    que pueda ser PK.<br />
+                    En las relaciones "Uno a Uno" y "Uno a Muchos" tambien es posible usar una tabla intermedia, pero no
+                    es obligatorio como en el caso "Muchos a Muchos". Esto se puede hacer para tratar de favorecer los
+                    accesos mas frecuentes y/o que requieran un tiempo de respuesta menor.<br /><br />
+                    <b>5.- Normalizacion</b>
+                </td>
+                <td>
+                    WORKFLOW - CREACION DE BASE DE DATOS
+                    <img class="imagen-descripcion" src="images/diagramaUML.png" alt="diagrama UML de una BD" />
+                    <br /><br /><br />
+                    <b>Cardinalidad</b> => (minima, maxima)
+                    <br /><br />
+                    <b>Relaciones:</b><br />
+                    actividades (0, *) <=> (1, 1) documentos<br />
+                        - Una 'act' PUEDE no tener 'doc' o tener muchos<br />
+                        - Un 'doc' DEBE estar asociado a una y solo una 'act'
+                        <br /><br />
+                        actividades (1, *) <=> (1, 1) tareas<br />
+                            - Una 'act' DEBE estar asociada a una o mas 'tar'<br />
+                            - Una 'tar' DEBE estar asociada a una y solo una 'act'
+                            <br /><br />
+                            grupos (0, *) <=> (1, 1) tareas<br />
+                                - Un 'gr' PUEDE no tener 'tar' o tener muchas<br />
+                                - Una 'tar' DEBE estar asociada a uno y solo un 'gr'
+                                <br /><br />
+                                grupos (1, *) <=> (1, 1) personas<br />
+                                    - Un 'gr' DEBE estar asociado a una o mas 'per'<br />
+                                    - Una 'per' DEBE estar asociada a uno y solo un 'gr'
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    SELECT *<br />
+                    FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE<br />
+                    WHERE POSITION_IN_UNIQUE_CONSTRAINT IS NOT NULL
+                </td>
+                <td>
+                    Muestra todas las FOREIGN KEY de la base de datos
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    USE ['nombre_base_de_datos'];
+                </td>
+                <td>
+                    Asigna la Base de Datos con la que se quiere trabajar
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    DESCRIBE ['nombre_tabla'];
+                </td>
+                <td>
+                    Muestra el nombre de los campos que conforman la tabla,
+                    su tipo de dato, si admite nulos, cuales son PRIMARY KEY o FOREIGN KEY, su valor por defualt e info
+                    extra (si es
+                    auto_increment u otros)
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    SHOW Databases;<br />o<br />
+                    SHOW Tables;
+                </td>
+                <td>
+                    Muestra una lista con todas las Base de Datos almacenadas en el equipo<br />o<br />
+                    Muestra una lista con los nombres de todas las tablas de la Base de Datos
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    ALTER TABLE [nombre_tabla_actual] RENAME TO [nuevo_nombre];
+                </td>
+                <td>
+                    Cambia el nombre de una tabla
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    ALTER TABLE [nombre_tabla] CHANGE [nombre_actual_columna] [nuevo_nombre_columna][tipo de
+                    dato][restriccion];
+                </td>
+                <td>
+                    Cambia el nombre de una columna
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    ALTER TABLE [nombre_tabla] ADD CONSTRAINT [nombre_restriccion] [restriccion(columna_objetivo)];
+                </td>
+                <td>
+                    Agrega una restriccion a una columna
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    NULLIF(valor1, valor2);
+                </td>
+                <td>
+                    Si ambos valores son iguales devuelve nulo, sino devuelve el valor1
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    CREATE TABLE ['nombre_tabla'] (<br />
+                    &nbsp; &nbsp; ['nombre_columna'] [tipo_dato] [constraint],<br />
+                    &nbsp; &nbsp; CONSTRAINT ['nombre_pk'] PRIMARY KEY ([columna1], [columna2]),<br />
+                    &nbsp; &nbsp; CONSTRAINT ['nombre_fk'] FOREIGN KEY ([columna1], [columna2])<br />
+                    &nbsp; &nbsp; REFERENCES ['nombre_tabla_ref'](['nombre_columna_ref'])<br />
+                    &nbsp; &nbsp; [MATCH FULL | MATCH PARTIAL]<br />
+                    &nbsp; &nbsp; ON UPDATE [accion] ON DELETE [accion]<br />
+                    )ENGINE=InnoDB;
+                </td>
+                <td>
+                    Si la FOREIGN KEY esta formada por varias columnas y admite nulos se puede establecer:<br /><br />
+                    - MATCH FULL: todas las columnas de la FOREIGN KEY tienen valor o ninguna de ellas lo tiene.<br />
+                    - MATCH PARTIAL: permite las FOREIGN KEY parcialmente nulas.<br /><br /><br />
 
-            Se pueden establecer 4 comportamientos [accion] para cada FOREIGN KEY cuando se borra o actualiza el valor
-            referenciado, es decir, el valor original en la PRIMARY KEY:<br /><br />
-            - NO ACTION o RESTRICT: produce un error, no permite borrar ni actualizar.<br />
-            - CASCADE: borra/actualiza las filas que hacen referencia al valor borrado/actualizado.<br />
-            - SET NULL: pone un nulo en las filas donde se hacia referencia al valor borrado/actualizado.<br />
-            - SET DEFAULT: pone el valor por defecto en la filas donde se hacia referencia al valor borrado/actualizado.
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            CREATE TRIGGER [nombre_trigger] [TIME] [EVENT]<br />
-            ON [nombre_tabla] FOR EACH ROW [NEW_STATEMENT];
-        </td>
-        <td>
-            <b>TIME</b> determina cuando se ejecuta la accion del trigger, puede ser:<br />
-            <b>BEFORE</b> ejecuta el trigger ANTES de la accion<br />
-            <b>AFTER</b> ejecuta el trigger DEPUES de la accion<br /><br />
+                    Se pueden establecer 4 comportamientos [accion] para cada FOREIGN KEY cuando se borra o actualiza el
+                    valor
+                    referenciado, es decir, el valor original en la PRIMARY KEY:<br /><br />
+                    - NO ACTION o RESTRICT: produce un error, no permite borrar ni actualizar.<br />
+                    - CASCADE: borra/actualiza las filas que hacen referencia al valor borrado/actualizado.<br />
+                    - SET NULL: pone un nulo en las filas donde se hacia referencia al valor borrado/actualizado.<br />
+                    - SET DEFAULT: pone el valor por defecto en la filas donde se hacia referencia al valor
+                    borrado/actualizado.
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    CREATE TRIGGER [nombre_trigger] [TIME] [EVENT]<br />
+                    ON [nombre_tabla] FOR EACH ROW [NEW_STATEMENT];
+                </td>
+                <td>
+                    <b>TIME</b> determina cuando se ejecuta la accion del trigger, puede ser:<br />
+                    <b>BEFORE</b> ejecuta el trigger ANTES de la accion<br />
+                    <b>AFTER</b> ejecuta el trigger DEPUES de la accion<br /><br />
 
-            <b>EVENT</b> es la accion que realiza el trigger, puede ser <b>UPDATE</b> o <b>DELETE</b> o
-            <b>INSERT</b><br /><br />
+                    <b>EVENT</b> es la accion que realiza el trigger, puede ser <b>UPDATE</b> o <b>DELETE</b> o
+                    <b>INSERT</b><br /><br />
 
-            <b>NEW_STATEMENT</b> es la query que ejecutara el trigger. Ej: INSERT INTO, UPDATE, etc.<br /><br />
+                    <b>NEW_STATEMENT</b> es la query que ejecutara el trigger. Ej: INSERT INTO, UPDATE, etc.<br /><br />
 
-            En el <b>NEW_STATEMENT</b> se debe especificar si usar el valor previo o posterior al ACTION. Para ello se usan
-            los prefijos <b>"OLD."</b> (valor previo) y <b>"NEW."</b> (valor posterior) en los nombres de los campos de la
-            tabla de origen de los datos, ya que son los que se asignan como valores.
+                    En el <b>NEW_STATEMENT</b> se debe especificar si usar el valor previo o posterior al ACTION. Para
+                    ello se usan
+                    los prefijos <b>"OLD."</b> (valor previo) y <b>"NEW."</b> (valor posterior) en los nombres de los
+                    campos de la
+                    tabla de origen de los datos, ya que son los que se asignan como valores.
 
-            <b>EACH ROW o EACH STATEMENT</b> (Averiguar que opciones hay)
-        </td>
-    </tr>
-    <tr>
-        <td>MySQL</td>
-        <td>
-            DROP TRIGGER ['nombre_trigger'];
-        </td>
-        <td>
-            Borra el trigger seleccionado.
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>sudo su - postgres</td>
-        <td>Login con el usuario postgres, que es superusuario por defecto</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>psql</td>
-        <td>Entra a la consola postgres</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>psql -U [nombre_usuario] [nombre_db]</td>
-        <td>Accede a la base de datos con el usuario especificado</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\q</td>
-        <td>Salir de la consola</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\h [comando]</td>
-        <td>
-        	Muestra la ayuda DENTRO de la consola para los comandos SQL.<br/>
-        	El [comando] es opcional.<br/>
-        	Presiona "q" para salir de la ayuda.
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\?</td>
-        <td>
-        	Muestra la ayuda DENTRO de la conexion a la consola.<br/>
-        	El [comando] es opcional.<br/>
-        	Presiona "q" para salir de la ayuda.
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>psql --help</td>
-        <td>Muestra la ayuda FUERA de la conexion a la consola</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\l</td>
-        <td>Muestra la lista de las bases de datos</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\c [nombre_base_datos]</td>
-        <td>
-        	Conecta a la base de datos especificada.<br/>
-        	Con la ayuda FUERA de la conexion a la consola se puede ver como setear las opciones de la conexion.
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\d [nombre_tabla]</td>
-        <td>
-        	Describe la Base de Datos. Lista de Relaciones<br/>
-        	Con el [nombre_tabla] describe la tabla especificada.
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\du</td>
-        <td>Muestra los usuarios</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>pg_dump -U [nombre_usuario] [nombre_db] > [ruta_output].sql</td>
-        <td>
-            Respalda la base de datos del usuario especificado en la ruta despues del mayor que.<br/>
-            El archivo de output debe ser .sql
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>pg_dumpall > /var/lib/pgsql/backups/dumpall.sql</td>
-        <td>
-            Respalda todas las bases de datos.<br />
-            Debes estar logueado con el superusuario postgres. (sudo su - postgres)
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>
-            psql -U postgres [database_name] < [ruta_archivo].sql<br/>
-            psql -f /var/lib/pgsql/backups/dumpall.sql [database_name]
-        </td>
-        <td>
-            Restaura la base de datos especificada<br />
-            Para el segundo comando debes estar logueado con el superusuario postgres. (sudo su - postgres)
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>pg_restore --verbose --clean --no-acl --no-owner --host=[localhost] --dbname=[db_name] --username=[username] [ruta_archivo].backup</td>
-        <td>Restaura la base de datos especificada, para el usuario y host especificados</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>\i [ruta_archivo]</td>
-        <td>
-        	Inserta un archivo .sql
-        </td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>SELECT version();</td>
-        <td>Selecciona la version</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>CREATE USER [nombre_usuario] WITH password '[password]'</td>
-        <td>Crea un usuario para acceder a la conexion postgres</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>ALTER USER [nombre_superuser] WITH SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN REPLICATION</td>
-        <td>Crea super usuario</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>ALTER DATABASE [database_name] OWNER TO [new_owner];</td>
-        <td>Cambiar el dueño de una base de datos</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>DROP USER [nombre_usuario]</td>
-        <td>Elimina un usuario para acceder a la conexion postgres</td>
-    </tr>
-    <tr>
-        <td>PostgreSQL</td>
-        <td>ALTER USER [usertochange] WITH password '[new_passwd]';</td>
-        <td>
-            Resetea la contraseña de un usuario. Solo se puede hacer como administrador.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB<br/>noSQL</td>
-        <td>
-        - noSQL tiene un diseño desnormalizado (se puede duplicar data) y “query-first”
-        (las queries son mas relevantes que las relaciones). Esto significa que se define el esquema
-        segun los patrones de acceso a los datos y queries.<br/><br/>
-        - Es util comenzar por definir entidades, atributos y relaciones. Siempre que sea util, se
-        pueden seguir las normas de SQL para identificar las entidades debiles.<br/><br/>
-        - Es importante recordar, los datos que se leen juntos se deben almacenar juntos. Por ejemplo:<br/>
-        &nbsp; &nbsp; * Una web de post tiene las entidades 'Users', 'Posts' y 'Comments'.<br/>
-        &nbsp; &nbsp; * En SQL, 'Comments' se relacionaria con las otras dos entidades.<br/>
-        &nbsp; &nbsp; * En noSQL se debe decidir con cual agruparla. Para este caso se privilegia el acceso a
-        los 'Posts', por lo que 'Comments' quedaria como su embedded object.<br/><br/>
-        - Si un embedded object es demasiado grande (el tamaño optimo es entre 50-100KB). Puede solo
-        agregarse su row key y almacenarlo en su propia tabla.<br/><br/>
-        - Para cada documento se designa un id (row key). Se pueden crear “composite” row key con varios datos,
-         <b>*No se si aplica a todas las noSQL*</b> esto puede ser util para (indexar) agrupar filas.
-        En el ejemplo, la key es compuesta por la categoria y el timestamp.
-        <br/><br/><br/>
-        <span>RELATIONAL TO DOCUMENT MODEL EXAMPLE</span>
-        <img class="imagen-descripcion" src="images/noSQL-relation-example.png" alt="noSQL relation example" />
-        </td>
-        <td>
-        <span>TREE, ADJACENCY LIST, GRAPH DATA EXAMPLE</span>
-        <img class="imagen-descripcion" src="images/noSQL-tree-example.png" alt="diagrama UML de una BD" />
-        <br/><br/>
-        <span>MAPR Documentation - ROW KEY RELEVANCE</span>
-        <img class="imagen-descripcion" src="images/noSQL-row-key.png" alt="noSQL composite row key" />
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>sudo service mongod [start status stop restart]</td>
-        <td>
-            <b>start: </b> Inicia el servidor.<br />
-            <b>status: </b> Muestra informacion sobre el estado actual del servidor.<br />
-            <b>stop: </b> Detiene el servidor.<br />
-            <b>restart: </b> Reinicia el servidor.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>sudo mongo</td>
-        <td>Inicia la consola (shell) de Mongo</td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>show dbs</td>
-        <td>Muestra todas las bases de datos almacenadas en el equipo</td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>db</td>
-        <td>Muestra la base de datos en uso actualmente</td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>use [nombre_base_datos]</td>
-        <td>Cambia a la base de datos seleccionada. Si el [nombre_base_datos] no existe, entonces "crea" una nueva con ese nombre (solo se crea realmente cuando se le inserten datos).</td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>
-            db.createUser({
-            &nbsp; &nbsp; user: '',
-            &nbsp; &nbsp; pwd: '',
-            &nbsp; &nbsp; customData: {},
-            &nbsp; &nbsp; roles: [],
-            &nbsp; &nbsp; authenticationRestrictions: []
-            })
-        </td>
-        <td>
-            Crea un usuario de la base de datos:<br/>
-            <b>user: </b> nombre del nuevo usuario.<br/>
-            <b>pwd: </b> contraseña del nuevo usuario.<br/>
-            <b>customData (opcional): </b> informacion arbitraria que se desee agregar.<br/>
-            <b>roles: </b> los roles (permisos) que tendra el usuario. Pueden ser uno o varios de estos:<br/>
+                    <b>EACH ROW o EACH STATEMENT</b> (Averiguar que opciones hay)
+                </td>
+            </tr>
+            <tr>
+                <td>MySQL</td>
+                <td>
+                    DROP TRIGGER ['nombre_trigger'];
+                </td>
+                <td>
+                    Borra el trigger seleccionado.
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>sudo su - postgres</td>
+                <td>Login con el usuario postgres, que es superusuario por defecto</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>psql</td>
+                <td>Entra a la consola postgres</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>psql -U [nombre_usuario] [nombre_db]</td>
+                <td>Accede a la base de datos con el usuario especificado</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\q</td>
+                <td>Salir de la consola</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\h [comando]</td>
+                <td>
+                    Muestra la ayuda DENTRO de la consola para los comandos SQL.<br />
+                    El [comando] es opcional.<br />
+                    Presiona "q" para salir de la ayuda.
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\?</td>
+                <td>
+                    Muestra la ayuda DENTRO de la conexion a la consola.<br />
+                    El [comando] es opcional.<br />
+                    Presiona "q" para salir de la ayuda.
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>psql --help</td>
+                <td>Muestra la ayuda FUERA de la conexion a la consola</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\l</td>
+                <td>Muestra la lista de las bases de datos</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\c [nombre_base_datos]</td>
+                <td>
+                    Conecta a la base de datos especificada.<br />
+                    Con la ayuda FUERA de la conexion a la consola se puede ver como setear las opciones de la conexion.
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\d [nombre_tabla]</td>
+                <td>
+                    Describe la Base de Datos. Lista de Relaciones<br />
+                    Con el [nombre_tabla] describe la tabla especificada.
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\du</td>
+                <td>Muestra los usuarios</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>pg_dump -U [nombre_usuario] [nombre_db] > [ruta_output].sql</td>
+                <td>
+                    Respalda la base de datos del usuario especificado en la ruta despues del mayor que.<br />
+                    El archivo de output debe ser .sql
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>pg_dumpall > /var/lib/pgsql/backups/dumpall.sql</td>
+                <td>
+                    Respalda todas las bases de datos.<br />
+                    Debes estar logueado con el superusuario postgres. (sudo su - postgres)
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>
+                    psql -U postgres [database_name]
+                    < [ruta_archivo].sql<br />
+                    psql -f /var/lib/pgsql/backups/dumpall.sql [database_name]
+                </td>
+                <td>
+                    Restaura la base de datos especificada<br />
+                    Para el segundo comando debes estar logueado con el superusuario postgres. (sudo su - postgres)
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>pg_restore --verbose --clean --no-acl --no-owner --host=[localhost] --dbname=[db_name]
+                    --username=[username] [ruta_archivo].backup</td>
+                <td>Restaura la base de datos especificada, para el usuario y host especificados</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>\i [ruta_archivo]</td>
+                <td>
+                    Inserta un archivo .sql
+                </td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>SELECT version();</td>
+                <td>Selecciona la version</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>CREATE USER [nombre_usuario] WITH password '[password]'</td>
+                <td>Crea un usuario para acceder a la conexion postgres</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>ALTER USER [nombre_superuser] WITH SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN REPLICATION</td>
+                <td>Crea super usuario</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>ALTER DATABASE [database_name] OWNER TO [new_owner];</td>
+                <td>Cambiar el dueño de una base de datos</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>DROP USER [nombre_usuario]</td>
+                <td>Elimina un usuario para acceder a la conexion postgres</td>
+            </tr>
+            <tr>
+                <td>PostgreSQL</td>
+                <td>ALTER USER [usertochange] WITH password '[new_passwd]';</td>
+                <td>
+                    Resetea la contraseña de un usuario. Solo se puede hacer como administrador.
+                </td>
+            </tr>
+            <tr>
+                <td>MongoDB<br />noSQL</td>
+                <td>
+                    - noSQL tiene un diseño desnormalizado (se puede duplicar data) y “query-first”
+                    (las queries son mas relevantes que las relaciones). Esto significa que se define el esquema
+                    segun los patrones de acceso a los datos y queries.<br /><br />
+                    - Es util comenzar por definir entidades, atributos y relaciones. Siempre que sea util, se
+                    pueden seguir las normas de SQL para identificar las entidades debiles.<br /><br />
+                    - Es importante recordar, los datos que se leen juntos se deben almacenar juntos. Por ejemplo:<br />
+                    &nbsp; &nbsp; * Una web de post tiene las entidades 'Users', 'Posts' y 'Comments'.<br />
+                    &nbsp; &nbsp; * En SQL, 'Comments' se relacionaria con las otras dos entidades.<br />
+                    &nbsp; &nbsp; * En noSQL se debe decidir con cual agruparla. Para este caso se privilegia el acceso
+                    a
+                    los 'Posts', por lo que 'Comments' quedaria como su embedded object.<br /><br />
+                    - Si un embedded object es demasiado grande (el tamaño optimo es entre 50-100KB). Puede solo
+                    agregarse su row key y almacenarlo en su propia tabla.<br /><br />
+                    - Para cada documento se designa un id (row key). Se pueden crear “composite” row key con varios
+                    datos,
+                    <b>*No se si aplica a todas las noSQL*</b> esto puede ser util para (indexar) agrupar filas.
+                    En el ejemplo, la key es compuesta por la categoria y el timestamp.
+                    <br /><br /><br />
+                    <span>RELATIONAL TO DOCUMENT MODEL EXAMPLE</span>
+                    <img class="imagen-descripcion" src="images/noSQL-relation-example.png"
+                        alt="noSQL relation example" />
+                </td>
+                <td>
+                    <span>TREE, ADJACENCY LIST, GRAPH DATA EXAMPLE</span>
+                    <img class="imagen-descripcion" src="images/noSQL-tree-example.png" alt="diagrama UML de una BD" />
+                    <br /><br />
+                    <span>MAPR Documentation - ROW KEY RELEVANCE</span>
+                    <img class="imagen-descripcion" src="images/noSQL-row-key.png" alt="noSQL composite row key" />
+                </td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>sudo service mongod [start status stop restart]</td>
+                <td>
+                    <b>start: </b> Inicia el servidor.<br />
+                    <b>status: </b> Muestra informacion sobre el estado actual del servidor.<br />
+                    <b>stop: </b> Detiene el servidor.<br />
+                    <b>restart: </b> Reinicia el servidor.
+                </td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>sudo mongo</td>
+                <td>Inicia la consola (shell) de Mongo</td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>show dbs</td>
+                <td>Muestra todas las bases de datos almacenadas en el equipo</td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>db</td>
+                <td>Muestra la base de datos en uso actualmente</td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>use [nombre_base_datos]</td>
+                <td>Cambia a la base de datos seleccionada. Si el [nombre_base_datos] no existe, entonces "crea" una
+                    nueva con ese nombre (solo se crea realmente cuando se le inserten datos).</td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>
+                    db.createUser({
+                    &nbsp; &nbsp; user: '',
+                    &nbsp; &nbsp; pwd: '',
+                    &nbsp; &nbsp; customData: {},
+                    &nbsp; &nbsp; roles: [],
+                    &nbsp; &nbsp; authenticationRestrictions: []
+                    })
+                </td>
+                <td>
+                    Crea un usuario de la base de datos:<br />
+                    <b>user: </b> nombre del nuevo usuario.<br />
+                    <b>pwd: </b> contraseña del nuevo usuario.<br />
+                    <b>customData (opcional): </b> informacion arbitraria que se desee agregar.<br />
+                    <b>roles: </b> los roles (permisos) que tendra el usuario. Pueden ser uno o varios de estos:<br />
 
-            <b>authenticationRestrictions (opcional): </b> una lista IPs desde los cuales el usuario tiene permitido concetarse a la base de datos.<br/>
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>db.createCollection(['nombre_coleccion'])</td>
-        <td>Crea una coleccion con el nombre que se especifique</td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>show collections</td>
-        <td>Muestra las colecciones de la base de datos</td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>db.[nombre_coleccion].drop()</td>
-        <td>Elimina la coleccion con el nombre que se especifique</td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>db.[nombre_coleccion].insert([{}])</td>
-        <td>
-            Inserta un registro (objeto) en la coleccion que se indique<br/>
-            Tambien se pueden insertar varios a la vez con un array de objetos<br/><br/>
-            Creo que si la coleccion especificada no existe la crea.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>db.[nombre_coleccion].find({ modificador })</td>
-        <td>
-            Es como el SELECT de SQL.<br/>
-            Para acceder a objetos dentro de objetos se coloca la key como si se accediera desde JavaScript con dot notation.<br/>
-            Por ejemplo: "address.city": "London"
-            Si no se colocan argumentos devuelve todos los registros de la coleccion<br/>
-            Los argumentos (criterio de busqueda) se colocan como key:value.<br/><br/>
-            <b>Modificadores (opcionales):</b><br/>
-            <b>$or: [{}] </b> permite colocar un array de objetos para especificar varios values (criterios) para un mismo key.<br/>
-            <b>key: {$gt: [numero]} </b> greater than, permite buscar con un mayor que.<br/>
-            <b>key: {$lt: [numero]} </b> less than, permite buscar con un menor que.<br/>
-            <b>key: {$regex: [regex]} </b> permite buscar con Regular Expressions.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>db.[nombre_coleccion].update({}, { [modificador] }, {upsert: true})</td>
-        <td>
-            Actualiza los registros seleccionados de la coleccion especificada. Recibe tres argumentos<br/>
-            <b>-Primero: </b> El criterio de seleccion de los datos, igual como se pondria en el metodo find().<br/><br/>
-            <b>-Segundo: </b> El nuevo registro. Sobreescribe el objeto actual.<br/>
-            <b>Modificadores dentro del segundo argumento:</b><br/>
-            La key <b>$set</b> permite modificar solo las propiedades que contenga el objeto que se le pasa como value.<br/>
-            La key <b>$unset</b> permite eliminar solo las propiedades que contenga el objeto que se le pasa como value. El value del objeto que recibe $unset es boolean y se especifica con 1 o 0.<br/>
-            La key <b>$rename</b> permite modificar el nombre de la key especificada. Recibe un objeto donde la key es la key actual (que se desea modificar) y el value es el nuevo nombre que se quiere dar a la key.<br/>
-            <b>$inc: { key: [numero] }</b> incrementa el value de la key especificada en base al [numero].<br/>
-            <b>$dec: { key: [numero] }</b> decrementa el value de la key especificada en base al [numero].<br/><br/>
-            <b>-Tercero (opcional): </b> permite crear un nuevo dato en caso de que el que se intenta actualizar no exista.
-        </td>
-    </tr>
-        <td>MongoDB</td>
-        <td>db.[nombre_coleccion].remove({})</td>
-        <td>
-            Elimina los registro seleccionados de la coleccion especificada. Recibe como argumento el criterio de seleccion de los datos, igual como se pondria en el metodo find().
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>.sort({ key: [1 -1] })</td>
-        <td>
-            Organiza la respuesta de manera ascendente (1) o descendente (-1).
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>.limit([numero])</td>
-        <td>
-            Limita la cantidad de resultados que devuelve la busqueda.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>.forEach(function(doc){ print(doc.propiedad) })</td>
-        <td>
-            Funciona igual al metodo de JavaScript. La diferencia es el metodo print que imprime el dato seleccionado.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>.count()</td>
-        <td>
-            Cuenta la cantidad de registros que tiene la busqueda realizada. Si no la precede un .find() devuelve la cantidad total de registros en la coleccion seleccionada.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>.pretty()</td>
-        <td>
-            Organiza el codigo de la respuesta para hacerlo mas legible.<br/>
-            Por lo general se concatena al final de la query.
-        </td>
-    </tr>
-    <tr>
-        <td>MongoDB</td>
-        <td>Date()</td>
-        <td>
-            Da el date y time actual.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git help '[nombre_comando]'</td>
-        <td>Muestra toda la documentacion relacionada</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git config --global user.name '[nombre_usuario]'</td>
-        <td>Configura el nombre del usuario</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git config --global user.email '[correo_usuario]'</td>
-        <td>Configura el correo del usuario</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git config --global color.ui true</td>
-        <td>Activa colores para los mensajes en la terminal</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git config --global --list</td>
-        <td>Muestra un listado de las configuraciones que se tienen</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git config --global [unset] alias.[alias] '[comando_original]'</td>
-        <td>
-            Configura un alias o shortcut:<br/>
-            [alias] : el alias o shortcut que se va a crear.<br/>
-            [comando_original] : el comando con todos sus flag y demas.<br />
-            [unset] (opcional) : elimina el alias especificado. No se pone el comando original.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git config --global --get-regexp [regex]</td>
-        <td>
-            Busca todas las configuraciones que coincidan con la regex que se especifica.<br/>
-            Por ej: si se usa 'alias' devuelve todos los alias configurados.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git init</td>
-        <td>
-	        Comienza a monitorear los archivos de la carpeta en la que nos encontramos (la carpeta de nuestro proyecto)
-	    </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>touch .gitignore</td>
-        <td>Crea el archivo gitignore</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git clone [url] [nombre_destino]</td>
-        <td>
-        	<b>[url] - (Requerido):</b> URL del repositorio que deseas clonar.<br/>
-        	<b>[nombre_destino] - (Opcional):</b> Especifica el nombre que quieres para la carpeta en la que se recibira la copia del repositorio. Por defecto el nombre de la carpeta es el mismo que en el repositorio original.<br/><br/>s
+                    <b>authenticationRestrictions (opcional): </b> una lista IPs desde los cuales el usuario tiene
+                    permitido concetarse a la base de datos.<br />
+                </td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>db.createCollection(['nombre_coleccion'])</td>
+                <td>Crea una coleccion con el nombre que se especifique</td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>show collections</td>
+                <td>Muestra las colecciones de la base de datos</td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>db.[nombre_coleccion].drop()</td>
+                <td>Elimina la coleccion con el nombre que se especifique</td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>db.[nombre_coleccion].insert([{}])</td>
+                <td>
+                    Inserta un registro (objeto) en la coleccion que se indique<br />
+                    Tambien se pueden insertar varios a la vez con un array de objetos<br /><br />
+                    Creo que si la coleccion especificada no existe la crea.
+                </td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>db.[nombre_coleccion].find({ modificador })</td>
+                <td>
+                    Es como el SELECT de SQL.<br />
+                    Para acceder a objetos dentro de objetos se coloca la key como si se accediera desde JavaScript con
+                    dot notation.<br />
+                    Por ejemplo: "address.city": "London"
+                    Si no se colocan argumentos devuelve todos los registros de la coleccion<br />
+                    Los argumentos (criterio de busqueda) se colocan como key:value.<br /><br />
+                    <b>Modificadores (opcionales):</b><br />
+                    <b>$or: [{}] </b> permite colocar un array de objetos para especificar varios values (criterios)
+                    para un mismo key.<br />
+                    <b>key: {$gt: [numero]} </b> greater than, permite buscar con un mayor que.<br />
+                    <b>key: {$lt: [numero]} </b> less than, permite buscar con un menor que.<br />
+                    <b>key: {$regex: [regex]} </b> permite buscar con Regular Expressions.
+                </td>
+            </tr>
+            <tr>
+                <td>MongoDB</td>
+                <td>db.[nombre_coleccion].update({}, { [modificador] }, {upsert: true})</td>
+                <td>
+                    Actualiza los registros seleccionados de la coleccion especificada. Recibe tres argumentos<br />
+                    <b>-Primero: </b> El criterio de seleccion de los datos, igual como se pondria en el metodo
+                    find().<br /><br />
+                    <b>-Segundo: </b> El nuevo registro. Sobreescribe el objeto actual.<br />
+                    <b>Modificadores dentro del segundo argumento:</b><br />
+                    La key <b>$set</b> permite modificar solo las propiedades que contenga el objeto que se le pasa como
+                    value.<br />
+                    La key <b>$unset</b> permite eliminar solo las propiedades que contenga el objeto que se le pasa
+                    como value. El value del objeto que recibe $unset es boolean y se especifica con 1 o 0.<br />
+                    La key <b>$rename</b> permite modificar el nombre de la key especificada. Recibe un objeto donde la
+                    key es la key actual (que se desea modificar) y el value es el nuevo nombre que se quiere dar a la
+                    key.<br />
+                    <b>$inc: { key: [numero] }</b> incrementa el value de la key especificada en base al [numero].<br />
+                    <b>$dec: { key: [numero] }</b> decrementa el value de la key especificada en base al
+                    [numero].<br /><br />
+                    <b>-Tercero (opcional): </b> permite crear un nuevo dato en caso de que el que se intenta actualizar
+                    no exista.
+                </td>
+            </tr>
+            <td>MongoDB</td>
+            <td>db.[nombre_coleccion].remove({})</td>
+            <td>
+                Elimina los registro seleccionados de la coleccion especificada. Recibe como argumento el criterio de
+                seleccion de los datos, igual como se pondria en el metodo find().
+                </tr>
+                <tr>
+                    <td>MongoDB</td>
+                    <td>.sort({ key: [1 -1] })</td>
+                    <td>
+                        Organiza la respuesta de manera ascendente (1) o descendente (-1).
+                    </td>
+                </tr>
+                <tr>
+                    <td>MongoDB</td>
+                    <td>.limit([numero])</td>
+                    <td>
+                        Limita la cantidad de resultados que devuelve la busqueda.
+                    </td>
+                </tr>
+                <tr>
+                    <td>MongoDB</td>
+                    <td>.forEach(function(doc){ print(doc.propiedad) })</td>
+                    <td>
+                        Funciona igual al metodo de JavaScript. La diferencia es el metodo print que imprime el dato
+                        seleccionado.
+                    </td>
+                </tr>
+                <tr>
+                    <td>MongoDB</td>
+                    <td>.count()</td>
+                    <td>
+                        Cuenta la cantidad de registros que tiene la busqueda realizada. Si no la precede un .find()
+                        devuelve la cantidad total de registros en la coleccion seleccionada.
+                    </td>
+                </tr>
+                <tr>
+                    <td>MongoDB</td>
+                    <td>.pretty()</td>
+                    <td>
+                        Organiza el codigo de la respuesta para hacerlo mas legible.<br />
+                        Por lo general se concatena al final de la query.
+                    </td>
+                </tr>
+                <tr>
+                    <td>MongoDB</td>
+                    <td>Date()</td>
+                    <td>
+                        Da el date y time actual.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git help '[nombre_comando]'</td>
+                    <td>Muestra toda la documentacion relacionada</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git config --global user.name '[nombre_usuario]'</td>
+                    <td>Configura el nombre del usuario</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git config --global user.email '[correo_usuario]'</td>
+                    <td>Configura el correo del usuario</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git config --global color.ui true</td>
+                    <td>Activa colores para los mensajes en la terminal</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git config --global --list</td>
+                    <td>Muestra un listado de las configuraciones que se tienen</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>nano .git/config</td>
+                    <td>Accede a la configuracion local de git</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git config --global [unset] alias.[alias] '[comando_original]'</td>
+                    <td>
+                        Configura un alias o shortcut:<br />
+                        [alias] : el alias o shortcut que se va a crear.<br />
+                        [comando_original] : el comando con todos sus flag y demas.<br />
+                        [unset] (opcional) : elimina el alias especificado. No se pone el comando original.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git config --global --get-regexp [reex]</td>
+                    <td>
+                        Busca todas las configuraciones que coincidan con la regex que se especifica.<br />
+                        Por ej: si se usa 'alias' devuelve todos los alias configurados.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git init</td>
+                    <td>
+                        Comienza a monitorear los archivos de la carpeta en la que nos encontramos (la carpeta de
+                        nuestro proyecto)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>touch .gitignore</td>
+                    <td>Crea el archivo gitignore</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git clone [url] [nombre_destino]</td>
+                    <td>
+                        <b>[url] - (Requerido):</b> URL del repositorio que deseas clonar.<br />
+                        <b>[nombre_destino] - (Opcional):</b> Especifica el nombre que quieres para la carpeta en la que
+                        se recibira la copia del repositorio. Por defecto el nombre de la carpeta es el mismo que en el
+                        repositorio original.<br /><br />s
 
-        	<b>Por ejemplo:</b><br/>
-        	git clone https://github.com/libgit2/libgit2 mylibgit<br/><br/>
+                        <b>Por ejemplo:</b><br />
+                        git clone https://github.com/libgit2/libgit2 mylibgit<br /><br />
 
-        	Crea un directorio llamado 'mylibgit', inicializa un directorio .git en su interior, descarga toda la información de ese repositorio y saca una copia de trabajo de la última versión.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git status</td>
-        <td>Muestra el estado de cada archivo dentro del repositorio</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git add -A</td>
-        <td>Agrega todos los archivos al staging area</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git commit -m '[descripcion_commit]'</td>
-        <td>Hace commit de lo que esta en el staging area</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git commit --amend -m '[descripcion_commit]'</td>
-        <td>Corrige el mensaje del ultimo commit</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git log [nombre_branch] --online --graph --decorate --since='[criterio]' | cat</td>
-        <td>
-            Muestra los commit que se han hecho en el branch que te encuentras. Tambien pues:<br/>
-            [nombre_branch] : especificar la branch de la cual quieres ver los commmit.<br />
-            --oneline : muestra cada commit en una linea.<br />
-            --graph : muestra las distintas branch desde la que proviene cada commit<br />
-            --decorate : muestra la branch en la que origino cada commit.<br />
-            --since : filtra los commit que muestra. Puede ser una hora, por ej: '6am' o una fecha '1991-01-31'.<br />
-            | cat : imprime el resultado en la consola. No solo lo muestra en modo vista.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git log > [nombre_archivo.txt]</td>
-        <td>
-        	Crea un archivo .txt en la carpeta raiz del repositorio con el resultado del git log
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git checkout [codigo_SHA o nombre_branch]</td>
-        <td>
-        	Se mueve dependiendo de lo que se coloque en el area que estan los parentesis:
-        	<br/>
-			<b>1.- Codigo_SHA:</b> cambia al commit con el codigo especificado.<br/>
-			<b>2.- Nombre_branch:</b> cambia al ultimo commit de la branch.
-		</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git reset [--soft --mixed --hard][codigo SHA]</td>
-        <td>
-        	Descarta los commit de la branch posteriores al commit seleccionado, puede ser:<br/>
-			<b>--soft</b> : borra los commit pero no toca el staging area ni el working area<br/>
-			<b>--mixed</b> : borra los commit y el staging area pero no toca el working area. Es el default en caso de que se omita este primer parametro.<br/>
-			<b>--hard</b> : borra TODO, los commit, el staging area y el working area.
-		</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git branch [-a -D -m][nombre_branch]</td>
-        <td>
-        	Sin ningun parametro, muestra las branch no ocultas que existen:<br/>
-        	<b>-a </b> : muestra todas las branch, incluidas las ocultas.<br/>
-        	<b>-D </b> : elimina la branch que se ponga en el ultimo parametro.<br/>
-            <b>-m </b> : cambia el nombre de la branch. Luego de este parametro se pone el nombre actual de la rama y el nuevo nombre.<br />
-        	<b>nombre_branch </b> : sin los parametros anteriores crea una branch nueva.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git merge [nombre_branch]</td>
-        <td>
-        	Absorbe los cambios del branch que se usa en el comando, sin eliminarla.<br/>
-        	Primero debes pararte en la branch que quieres que absorba los cambios.<br />
-            Para resolver un conflicto se debe ir al archivo, se modifica para que quede<br />
-            como lo queremos (git inserta comentarios donde hay conflictos) y luego hacemos commit.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git rebase [nombre_branch]</td>
-        <td>
-            NO HACER REBASE A CONTENIDO QUE SE HAYA PUSHEADO PORQUE CAMBIA LOS HASH DE LOS COMMIT
-            Se recomienda hacer rebase primero parado en la branch feature (absorber los commit de master) y luego hacer rebase en master antes de hacer push.<br />
-            Funciona igual que merge pero en lugar de solo absorber los cambios de la rama seleccionada, si se hace parado en:<br />
-            - Un branch 'feature': actualiza la branch con los commit de master y pone los commit de la branch actual sobre todos los demas.<br />
-            - Master: absorbe los commit necesarios en master para actualizarse, los pone como ultimos commit y elimina la referencia a la branch de donde provienen.
+                        Crea un directorio llamado 'mylibgit', inicializa un directorio .git en su interior, descarga
+                        toda la información de ese repositorio y saca una copia de trabajo de la última versión.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git status</td>
+                    <td>Muestra el estado de cada archivo dentro del repositorio</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git add -A</td>
+                    <td>Agrega todos los archivos al staging area</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git commit -m '[descripcion_commit]'</td>
+                    <td>Hace commit de lo que esta en el staging area</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git commit --amend -m '[descripcion_commit]'</td>
+                    <td>Corrige el mensaje del ultimo commit</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git log [nombre_branch] --online --graph --decorate --since='[criterio]' | cat</td>
+                    <td>
+                        Muestra los commit que se han hecho en el branch que te encuentras. Tambien pues:<br />
+                        [nombre_branch] : especificar la branch de la cual quieres ver los commmit.<br />
+                        --oneline : muestra cada commit en una linea.<br />
+                        --graph : muestra las distintas branch desde la que proviene cada commit<br />
+                        --decorate : muestra la branch en la que origino cada commit.<br />
+                        --since : filtra los commit que muestra. Puede ser una hora, por ej: '6am' o una fecha
+                        '1991-01-31'.<br />
+                        | cat : imprime el resultado en la consola. No solo lo muestra en modo vista.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git log > [nombre_archivo.txt]</td>
+                    <td>
+                        Crea un archivo .txt en la carpeta raiz del repositorio con el resultado del git log
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git checkout [codigo_SHA o nombre_branch]</td>
+                    <td>
+                        Se mueve dependiendo de lo que se coloque en el area que estan los parentesis:
+                        <br />
+                        <b>1.- Codigo_SHA:</b> cambia al commit con el codigo especificado.<br />
+                        <b>2.- Nombre_branch:</b> cambia al ultimo commit de la branch.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git reset [--soft --mixed --hard][codigo SHA]</td>
+                    <td>
+                        Descarta los commit de la branch posteriores al commit seleccionado, puede ser:<br />
+                        <b>--soft</b> : borra los commit pero no toca el staging area ni el working area<br />
+                        <b>--mixed</b> : borra los commit y el staging area pero no toca el working area. Es el default
+                        en caso de que se omita este primer parametro.<br />
+                        <b>--hard</b> : borra TODO, los commit, el staging area y el working area.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git branch [-a -D -m][nombre_branch]</td>
+                    <td>
+                        Sin ningun parametro, muestra las branch no ocultas que existen:<br />
+                        <b>-a </b> : muestra todas las branch, incluidas las ocultas.<br />
+                        <b>-D </b> : elimina la branch que se ponga en el ultimo parametro.<br />
+                        <b>-m </b> : cambia el nombre de la branch. Luego de este parametro se pone el nombre actual de
+                        la rama y el nuevo nombre.<br />
+                        <b>nombre_branch </b> : sin los parametros anteriores crea una branch nueva.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git merge [nombre_branch]</td>
+                    <td>
+                        Absorbe los cambios del branch que se usa en el comando, sin eliminarla.<br />
+                        Primero debes pararte en la branch que quieres que absorba los cambios.<br />
+                        Para resolver un conflicto se debe ir al archivo, se modifica para que quede<br />
+                        como lo queremos (git inserta comentarios donde hay conflictos) y luego hacemos commit.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git rebase [nombre_branch o codigo_SHA] --abort --interactive</td>
+                    <td>
+                        NO HACER REBASE A CONTENIDO QUE SE HAYA PUSHEADO PORQUE CAMBIA LOS HASH DE LOS COMMIT
+                        Se recomienda hacer rebase primero parado en la branch feature (absorber los commit de master) y
+                        luego hacer rebase en master antes de hacer push.<br />
+                        Funciona igual que merge pero en lugar de solo absorber los cambios de la rama seleccionada, si
+                        se hace parado en:<br />
+                        - Un branch 'feature': actualiza la branch con los commit de master y pone los commit de la
+                        branch actual sobre todos los demas.<br />
+                        - Master: absorbe los commit necesarios en master para actualizarse, los pone como ultimos
+                        commit y elimina la referencia a la branch de donde provienen.
+                        --abort : interrumpe el proceso de rebase, a veces queda pendiente por resolucion si encuentra
+                        un conflicto.<br />
+                        --interactive : permite operar sobre los commit de la rama actual, la que recibe el rebase.
+                        NOTAS:<br />
+                        &nbsp; &nbsp; - Pueden haber conflictos al tocar los commit.<br />
+                        &nbsp; &nbsp; - Las opciones que da el comando se le colocan delante a cada commit.<br />
+                        &nbsp; &nbsp; - El orden de los commit en el rebase es como aparecen, de arriba hacia abajo.
+                        Para hace squash el anterior es el que esta arriba.<br />
 
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git cherry-pick [codigo_SHA_commit mas viejo]^..[codigo_SHA_commit mas viejo]</td>
-        <td>
-            Hace merge de los commit de otra branch pero los introduce en la rama actual con un nuevo commit (nuevo SHA).<br/>
-            Puede ser un solo commit (se usa solo em primer parametro) o un rango de commits.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git checkout -b [nombre_branch]</td>
-        <td>Crea una branch nueva y te para en ella de una vez</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git format-patch -1 [codigo_SHA] [branch_destino] -o patches</td>
-        <td>
-            Estando en la branch con los cambios que se quieren incluir en un parche, se selecciona:<br />
-            [branch_destino] : compara la branch actual con la branch especificada y genera un parche por cada commit.<br />
-            -1 [codigo_SHA] : genera un parche con el commit especificado.<br />
-            -o patches : especifica la carpeta (path relativo) en la que git guarda los archivos de los patch creados.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git am [path_del_patch]</td>
-        <td>
-            Se debe estar parado en la branch que se quieren aplicar los parches.<br />
-            Este comando crea un nuevo commit, es decir, cambia el hash del commit original.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git remote add origin [url_repositorio_remoto_en_github]</td>
-        <td>Vincula el repositorio remoto con el local</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git remote -v</td>
-        <td>Muestra los repositorios que estan conectados</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git remote remove origin</td>
-        <td>Elimina el vinculo entre los repositorios local y remoto</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git push origin [nombre_branch][-f]</td>
-        <td>
-        	Sube a github el branch que se ponga en el primer parametro.<br/>
-        	El segundo parametro es opcional, fuerza a que se suba el branch seleccionado.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git tag -a [nombre_tag] -m '[descripcion_commit]' [codigo_SHA]</td>
-        <td>
-        	<b>[nombre_tag] - (Requerido):</b> Agrega un tag, normalmente un numero de version u otro distintivo.<br/>
-        	<b>'[descripcion_commit]' - (Opcional):</b> Agrega una descripcion (comentario) al tag.<br/>
-        	<b>[codigo_SHA] - (Opcional):</b> Asigna el tag a un commit.
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git push origin [nombre_tag]</td>
-        <td>Sube a github el tag seleccionado</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git push origin --tags</td>
-        <td>Sube todos los tags a github</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>
-        	<b>git fetch origin</b><br/>
-        	Baja los cambios del repositorio remoto a la branch oculta (origin/master)
-        	<br/><br/>
-        	Luego se puede:<br/>
-        	Hacer merge desde la branch que usaremos en el repositorio local.<br/>
-        	Hacer push para subir cambios al repositorio remoto.
-        </td>
-        <td>
-            WORKFLOW  -  PROYECTOS EN EQUIPO
-            <img class="imagen-descripcion" src="images/git-workflow-equipo.png" alt="Branches de Worflow para proyectos en equipo" />
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>
-        	Para colaborar en un proyecto de un tercero se debe hacer Fork en GitHub.
-        	<br/>
-        	Esto clona el repositorio a nuestra cuenta. Esta copia en nuestra cuenta es la que vamos a poder modificar.<br/><br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>gitn cherry-pick [codigo_SHA_commit mas viejo]^..[codigo_SHA_commit mas nuevo]</td>
+                    <td>
+                        Hace merge de los commit de otra branch pero los introduce en la rama actual con un nuevo commit
+                        (nuevo SHA).<br />
+                        Puede ser un solo commit (se usa solo el primer parametro) o un rango de commits.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git [codigo_SHA]</td>
+                    <td>Crea un nuevo commit en el que revierte todos los cambios del commit seleccionado.</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git checkout -b [nombre_branch]</td>
+                    <td>Crea una branch nueva y te para en ella de una vez</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git format-patch -1 [codigo_SHA] [branch_destino] -o patches</td>
+                    <td>
+                        Estando en la branch con los cambios que se quieren incluir en un parche, se selecciona:<br />
+                        [branch_destino] : compara la branch actual con la branch especificada y genera un parche por
+                        cada commit.<br />
+                        -1 [codigo_SHA] : genera un parche con el commit especificado.<br />
+                        -o patches : especifica la carpeta (path relativo) en la que git guarda los archivos de los
+                        patch creados.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git am [path_del_patch]</td>
+                    <td>
+                        Se debe estar parado en la branch que se quieren aplicar los parches.<br />
+                        Este comando crea un nuevo commit, es decir, cambia el hash del commit original.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git remote add origin [url_repositorio_remoto_en_github]</td>
+                    <td>Vincula el repositorio remoto con el local</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git remote -v</td>
+                    <td>Muestra los repositorios que estan conectados</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git remote remove origin</td>
+                    <td>Elimina el vinculo entre los repositorios local y remoto</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>
+                        git push origin [nombre_branch o codigo_SHA][-f]<br />
+                        git push origin [codigo_SHA]:[nombre_de_branch]
+                    </td>
+                    <td>
+                        Sube a github el branch que se ponga en el primer parametro.<br />
+                        -f : El segundo parametro es opcional, fuerza a que se suba el branch seleccionado.<br />
+                        La segunda opcion es para subir un solo commit. Sube el commit especificado y todos los
+                        anteriores.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git tag -a [nombre_tag] -m '[descripcion_commit]' [codigo_SHA]</td>
+                    <td>
+                        <b>[nombre_tag] - (Requerido):</b> Agrega un tag, normalmente un numero de version u otro
+                        distintivo.<br />
+                        <b>'[descripcion_commit]' - (Opcional):</b> Agrega una descripcion (comentario) al tag.<br />
+                        <b>[codigo_SHA] - (Opcional):</b> Asigna el tag a un commit.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git push origin [nombre_tag]</td>
+                    <td>Sube a github el tag seleccionado</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git push origin --tags</td>
+                    <td>Sube todos los tags a github</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>
+                        <b>git fetch origin</b><br />
+                        Baja los cambios del repositorio remoto a la branch oculta (origin/master)
+                        <br /><br />
+                        Luego se puede:<br />
+                        Hacer merge desde la branch que usaremos en el repositorio local.<br />
+                        Hacer push para subir cambios al repositorio remoto.
+                    </td>
+                    <td>
+                        WORKFLOW - PROYECTOS EN EQUIPO
+                        <img class="imagen-descripcion" src="images/git-workflow-equipo.png"
+                            alt="Branches de Worflow para proyectos en equipo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>
+                        Para colaborar en un proyecto de un tercero se debe hacer Fork en GitHub.
+                        <br />
+                        Esto clona el repositorio a nuestra cuenta. Esta copia en nuestra cuenta es la que vamos a poder
+                        modificar.<br /><br />
 
-        	Una vez en este punto tendremos dos branch ocultas:<br/>
-        	- Una para hacer fetch a la copia en nuestra cuenta (origin/master), tal cual como en el workflow en equipo.<br/>
-        	- Una para hacer fetch (upstream/master) al proyecto original, para obtener una copia actualizada.<br/><br/>
+                        Una vez en este punto tendremos dos branch ocultas:<br />
+                        - Una para hacer fetch a la copia en nuestra cuenta (origin/master), tal cual como en el
+                        workflow en equipo.<br />
+                        - Una para hacer fetch (upstream/master) al proyecto original, para obtener una copia
+                        actualizada.<br /><br />
 
-        	Una vez hechos los cambios que se desean proponer se suben al repositorio propio (el clon) y desde ahi se hace un Pull Request.<br/><br/>
+                        Una vez hechos los cambios que se desean proponer se suben al repositorio propio (el clon) y
+                        desde ahi se hace un Pull Request.<br /><br />
 
-        	Por ultimo el dueño del proyecto puede, o no, hacer merge de los cambios propuestos.
-        </td>
-        <td>
-        	WORKFLOW  -  PROYECTOS DE TERCEROS
-            <img class="imagen-descripcion" src="images/git-workflow-terceros.png" alt="Branches de Worflow para proyectos de terceros" />
-        </td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>ssh-keygen</td>
-        <td>Genera la clave SSH (publica y privada)</td>
-    </tr>
-    <tr>
-        <td>Git</td>
-        <td>git stash [save 'mensaje_descriptivo'] [list][apply][drop][show] [stash]</td>
-        <td>
-            Guarda los cambios que del staging area en el 'stash' y los oculta. Opciones:<br/>
-            save 'mensaje_descriptivo': el mensaje es opcional pero ayuda a identificar el stash cuando se listan.<br/>
-            pop : aplica el ultimo stash guardado y lo saca de la lista<br/>
-            list : muestra los stash guardados.<br />
-            apply : aplica el ultimo stash sin borrarlo.<br />
-            drop : borra toda la lista de stash.<br />
-            show : muestra el detalle de los cambios del stash seleccionado.<br/>
-            stash : el identidicador de cada stash, su formato es stash@\{0\}
-        </td>
-    </tr>
-    <tr>
-        <td>LARAVEL<br/>Migration</td>
-        <td>
-            Schema::create('carts', function (Blueprint $table) {<br/>
-            &nbsp; &nbsp; $table->bigIncrements('id');<br/>
-            &nbsp; &nbsp; $table->string('name')->default('Luis');<br/>
-            &nbsp; &nbsp; $table->integer('age')->nullable();<br/><br/>
+                        Por ultimo el dueño del proyecto puede, o no, hacer merge de los cambios propuestos.
+                    </td>
+                    <td>
+                        WORKFLOW - PROYECTOS DE TERCEROS
+                        <img class="imagen-descripcion" src="images/git-workflow-terceros.png"
+                            alt="Branches de Worflow para proyectos de terceros" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>ssh-keygen</td>
+                    <td>Genera la clave SSH (publica y privada)</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git stash [save 'mensaje_descriptivo'] [list][apply][drop][show] [stash]</td>
+                    <td>
+                        Guarda los cambios del staging area en el 'stash' y los oculta del working tree.<br />
+                        El stash esta disponible en todas las branch locales, asi que se puede aplicar<br />
+                        cualquier stash a la branch en la que te encuentres.<br />
+                        El ultimo stash guardado es el que tiene 'index' 0. Opciones:<br /><br />
+                        save 'mensaje_descriptivo': el mensaje es opcional pero ayuda a identificar el stash cuando se
+                        listan.<br />
+                        pop : aplica el ultimo stash guardado y lo saca de la lista<br />
+                        list : muestra los stash guardados.<br />
+                        drop : borra el ultimo stash de la lista.<br />
+                        show : muestra el detalle de los cambios del stash especificado con su identificador.<br />
+                        apply : aplica el ultimo stash sin borrarlo o el stash especificado con su identificador.<br />
+                    </td>
+                </tr>
+                <tr>
+                    <td>LARAVEL<br />Migration</td>
+                    <td>
+                        Schema::create('carts', function (Blueprint $table) {<br />
+                        &nbsp; &nbsp; $table->bigIncrements('id');<br />
+                        &nbsp; &nbsp; $table->string('name')->default('Luis');<br />
+                        &nbsp; &nbsp; $table->integer('age')->nullable();<br /><br />
 
-            &nbsp; &nbsp; $table->unsignedBigInteger('user_id');<br/>
-            &nbsp; &nbsp; $table->foreign('user_id')<br/>
-            &nbsp; &nbsp; &nbsp; &nbsp; ->references('id')->on('users')<br/>
-            &nbsp; &nbsp; &nbsp; &nbsp; ->onDelete('cascade');<br/><br/>
+                        &nbsp; &nbsp; $table->unsignedBigInteger('user_id');<br />
+                        &nbsp; &nbsp; $table->foreign('user_id')<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; ->references('id')->on('users')<br />
+                        &nbsp; &nbsp; &nbsp; &nbsp; ->onDelete('cascade');<br /><br />
 
-            &nbsp; &nbsp; $table->timestamps();<br/>
-        });
-        </td>
-        <td>
-            Modelo basico de migracion (falta determinar si se va a usar integridad referencial o no)
-        </td>
-    </tr>
-    <tr>
-        <td>Socket.io</td>
-        <td>El handshake inicia se da con una peticion HTTP y al recibir confirmacion del servidor
-            se inicia la conexion con los sockets y se cambia al protocolo WS que mantiene una conexion
-            en vivo apoyado en el protocolo de red TCP. Esta conexion tambien permite que ambos lados
-            (cliente y servidor) emitan eventos.
-        </td>
-        <td>
-            FUNCIONAMIENTO WEB SOCKETS
-            <img class="imagen-descripcion" src="images/diagrama-websockets.png"
-                alt="funcionamiento de websockets" />
-        </td>
-    </tr>
-    </tbody>
-</table>
+                        &nbsp; &nbsp; $table->timestamps();<br />
+                        });
+                    </td>
+                    <td>
+                        Modelo basico de migracion (falta determinar si se va a usar integridad referencial o no)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Socket.io</td>
+                    <td>El handshake inicia se da con una peticion HTTP y al recibir confirmacion del servidor
+                        se inicia la conexion con los sockets y se cambia al protocolo WS que mantiene una conexion
+                        en vivo apoyado en el protocolo de red TCP. Esta conexion tambien permite que ambos lados
+                        (cliente y servidor) emitan eventos.
+                    </td>
+                    <td>
+                        FUNCIONAMIENTO WEB SOCKETS
+                        <img class="imagen-descripcion" src="images/diagrama-websockets.png"
+                            alt="funcionamiento de websockets" />
+                    </td>
+                </tr>
+        </tbody>
+    </table>
 
 
-<script>
+    <script>
 
-function myFilterCuenta () {
-   var tr, td, inputCuenta, filterCuenta,
-   i, textValue;
+        function myFilterCuenta() {
+            var tr, td, inputCuenta, filterCuenta,
+                i, textValue;
 
-    tr = document.getElementsByTagName("tr");
-    inputCuenta = document.getElementById("inputCuenta");
-    filterCuenta = inputCuenta.value.toUpperCase();
+            tr = document.getElementsByTagName("tr");
+            inputCuenta = document.getElementById("inputCuenta");
+            filterCuenta = inputCuenta.value.toUpperCase();
 
-   for (i = 0; i < tr.length; i++) {
-       td = tr[i].getElementsByTagName("td")[0];
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
 
-       if (td) {
-           textValue = td.textContent;
-           if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
-               tr[i].style.display ="";
-           } else {tr[i].style.display = "none";}
-       }
-   }
-}
-function myFilterDetalle () {
-   var tr, td, inputDetalle, filterDetalle,
-   i, textValue;
+                if (td) {
+                    textValue = td.textContent;
+                    if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+                        tr[i].style.display = "";
+                    } else { tr[i].style.display = "none"; }
+                }
+            }
+        }
+        function myFilterDetalle() {
+            var tr, td, inputDetalle, filterDetalle,
+                i, textValue;
 
-    tr = document.getElementsByTagName("tr");
-    inputDetalle = document.getElementById("inputDetalle");
-    filterDetalle = inputDetalle.value.toUpperCase();
+            tr = document.getElementsByTagName("tr");
+            inputDetalle = document.getElementById("inputDetalle");
+            filterDetalle = inputDetalle.value.toUpperCase();
 
-   for (i = 0; i < tr.length; i++) {
-       td = tr[i].getElementsByTagName("td")[1];
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
 
-       if (td) {
-           textValue = td.textContent;
-           if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
-               tr[i].style.display ="";
-           } else {tr[i].style.display = "none";}
-       }
-   }
-}
+                if (td) {
+                    textValue = td.textContent;
+                    if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+                        tr[i].style.display = "";
+                    } else { tr[i].style.display = "none"; }
+                }
+            }
+        }
 
-</script>
+    </script>
 
 </body>
+
 </html>
