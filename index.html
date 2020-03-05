@@ -797,7 +797,9 @@
                     <td>Git</td>
                     <td>git rebase [nombre_branch o codigo_SHA] --abort --interactive</td>
                     <td>
-                        NO HACER REBASE A CONTENIDO QUE SE HAYA PUSHEADO PORQUE CAMBIA LOS HASH DE LOS COMMIT
+                        CAMBIA EL HASH DE LOS COMMIT DE LA BRANCH ACTUAL QUE NO ESTEN EN LA QUE RECIBE, POR ESTO:<br />
+                        &nbsp; &nbsp; - NO HACER REBASE A CONTENIDO QUE SE HAYA PUSHEADO.<br />
+                        &nbsp; &nbsp; - SEGUIR EL SIGUIENTE PROCEDIMIENTO SIEMPRE QUE SE PUEDA.<br />
                         Se recomienda hacer rebase primero parado en la branch feature (absorber los commit de master) y
                         luego hacer rebase en master antes de hacer push.<br />
                         Funciona igual que merge pero en lugar de solo absorber los cambios de la rama seleccionada, si
