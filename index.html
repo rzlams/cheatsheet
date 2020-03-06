@@ -80,6 +80,63 @@ img {
     </thead>
     <tbody id="cuentas">
     <tr>
+        <td>VIM</td>
+        <td>
+          PARA LA MAYORIA DE LOS COMANDOS SE PUEDE ESPECIFICAR LA CANTIDAD DE VECES
+          QUE SE QUIERE EJECUTAR EL COMANDO CON NUMEROS ANTES DEL COMANDO Y LOS
+          CARACTERES NUEVOS DESPUES DEL COMANDO:<br /><br />
+          :[num]  -  lleva a la linea especificada en el [num]<br />
+          :q!  -  cierra el archivo sin guardar<br />
+          :w  -  guarda el archivo sin cerrarlo<br />
+          :wq  -  guarda y cierra el archivo<br />
+          ESC  -  cambia a COMMAND MODE<br />
+          i  -  cambia a INSERT MODE en el espacio o caracter actual<br />
+          o  -  se mueve un espacio a la derecha y cambia a INSERT MODE<br />
+          A  -  se mueve al final de la linea y cambia a INSERT MODE<br />
+          o  -  inserta una linea debajo y cambia a INSERT MODE<br />
+          O  -  inserta una linea arriba y cambia a INSERT MODE<br />
+          C  -  borra toda la linea desde la posicion actual y cambia a INSERT MODE<br />
+          cw  -  change word, borra la palabra actual y cambia a INSERT MODE<br />
+          ct  -  change to, borra la linea actual hasta el [char] especificado<br />
+          r  -  replace, cambia a INSERT MODE y reemplaza el caracter actual<br />
+          R  -  cambia a INSERT MODE y reemplaza tantos caracteres como se especifiquen<br />
+          V  -  cambia a VISUAL MODE, sirve para seleccionar<br />
+          j  -  baja una o [x] posiciones<br />
+          k  -  sube una o [x] posiciones<br />
+          l  -  mueve a la derecha una o [x] posiciones<br />
+          h  -  mueve a la izquierda una o [x] posiciones<br />
+          %  -  te lleva a donde abren o cierran las llave o parentesis actuales<br />
+          dd  -  borra la linea en la que estas parado<br />
+          dt[char]  -  borra la linea hasta el [char] especificado<br />
+          gg  -  te para en la ultima linea<br />
+          G  -  te lleva a la primera linea<br />
+          {  -  sube uno o [x] bloques de codigo<br />
+          }  -  baja uno o [x] bloques de codigo<br />
+          u  -  undo, equivalente a Ctrl + z<br />
+          Ctrl + r  -  redo, hace lo contrario que undo<br />
+          yy  -  copia una linea<br />
+          p  -  pega en la siguiente linea<br />
+          P  -  pega en la linea anterior<br />
+          x  -  borra un caracter<br />
+          d}  -  borra el siguiente bloque de codigo<br />
+          w  - te mueve al inicio de la siguiente palabra<br />
+          W  -  te lleva al siguiente espacio en la linea<br />
+          b  -  te mueve al inicio de la palabra anterior<br />
+          B  -  te lleva al espacio anterior en la linea<br />
+          0w  -  te lleva al principio de la linea<br />
+          $  -  te lleva al final de la linea<br />
+          D  -  borra el resto de la linea desde la posiciona actual<br />
+          *  -  cambia la siguiente ocurrencia de la seleccion actual<br />
+          zz - mueve la vista para que la linea actual quede en el centro<br />
+          ~  -  toggle case, las mayusculas las pasa a minusculas y viceversa<br />
+          .  -  repite la ultima accion realizada en la posicion actual<br />
+          >  -  agrega identacion, equivalente a un tab<br />
+          <  -  quita identacion, equivalente a un tab<br />
+          q  -  inicia y termina la grabacion de una macro, te pide asignarle un tecla para poder llamarlo luego con @<br />
+        </td>
+        <td></td>
+    </tr>
+    <tr>
         <td>MySQL</td>
         <td>
             <b>0.- Crear proyecto en BOUML:</b> Menu "Project"->New; luego en el browser (con click derecho): new class view->new class diagram->new class.<br/><br/>
