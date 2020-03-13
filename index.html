@@ -772,6 +772,18 @@
                 </tr>
                 <tr>
                     <td>Git</td>
+                    <td>git revert --no-commit [codigo SHA] [HEAD~1]</td>
+                    <td>
+                        Revierte los commit seleccionados generando un nuevo commit con los cambios revertidos.<br />
+                        En la practica hace un merge agregando las lineas que quitaste y viceversa.<br />
+                        <b>[HEAD~1]:</b> toma un commit desde HEAD. Con el numero se puede especificar la cantidad de
+                        commits que se desea retroceder desde HEAD.<br />
+                        <b>--no-commit:</b> con este flag evita que haga el commit asi que deja los cambios en el staging.<br />
+                        <b>--no-commit:</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
                     <td>git branch [-a -D -m][nombre_branch]</td>
                     <td>
                         Sin ningun parametro, muestra las branch no ocultas que existen:<br />
