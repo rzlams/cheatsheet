@@ -93,8 +93,9 @@
                     <b>1.- Definir entidades:</b> nombre y breve descripcion de cada una.<br /><br />
                     <b>2.- Definir relaciones:</b> incluyendo su cardinalidad minima y maxima.<br />
                     <b>* Cardinalidad minima:</b><br />
-                    0 - la entidad se relaciona de manera opcional.<br />
-                    1 - la entidad se relaciona de manera obligatorio.<br />
+                    0 - la entidad se relaciona de manera opcional. Su existencia NO depende de participar en la relacion.<br />
+                    1 - la entidad se relaciona de manera obligatorio. Su existencia SI depende de participar en la relacion.<br />
+                    Ej: Una actividad (fuerte) NO necesita documento pero un documento (debil) SI una actividad.<br />
                     <b>* Cardinalidad maxima:</b><br />
                     1 - la ocurrencia puede relacionarse con solo una de la otra entidad.<br />
                     n - la ocurrencia puede relacionarse con varias a la vez.<br /><br />
@@ -124,7 +125,7 @@
                 </td>
                 <td>
                     WORKFLOW - CREACION DE BASE DE DATOS
-                    <img class="imagen-descripcion" src="images/diagramaUML.png" alt="diagrama UML de una BD" />
+                    <img class="imagen-descripcion" src="../images/diagramaUML.png" alt="diagrama UML de una BD" />
                     <br /><br /><br />
                     <b>Cardinalidad</b> => (minima, maxima)
                     <br /><br />
@@ -260,6 +261,16 @@
                     &nbsp; &nbsp; REFERENCES ['nombre_tabla_ref'](['nombre_columna_ref'])<br />
                     &nbsp; &nbsp; [MATCH FULL | MATCH PARTIAL]<br />
                     &nbsp; &nbsp; ON UPDATE [accion] ON DELETE [accion]<br />
+                    )ENGINE=InnoDB;<br /><br /><br />
+
+                    CREATE TABLE codventa_resets (<br />
+                    &nbsp; &nbsp; id int AUTO_INCREMENT NOT NUll,<br />
+                    &nbsp; &nbsp; idventa int NOT NUll,<br />
+                    &nbsp; &nbsp; created_at timestamp DEFAULT CURRENT_TIMESTAMP,<br />
+                    &nbsp; &nbsp; CONSTRAINT codventa_reset_pk PRIMARY KEY (id),<br />
+                    &nbsp; &nbsp; CONSTRAINT ventas_fk FOREIGN KEY (idventa)<br />
+                    &nbsp; &nbsp; REFERENCES ventas(idventa)<br />
+                    &nbsp; &nbsp; ON UPDATE CASCADE ON DELETE CASCADE<br />
                     )ENGINE=InnoDB;
                 </td>
                 <td>

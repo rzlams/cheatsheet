@@ -87,6 +87,22 @@
         <tbody id="cuentas">
                 <tr>
                     <td>Git</td>
+                    <td>git diff [--name-status][--stat][--numstat] branch1 branch2 -- [archivo.ext]</td>
+                    <td>
+                      Lista todas las diferencias entre ambas ramsa. Ademas con:<br/>
+                      --name-status : lista los archivos que han cambiado entre ambas ramas.<br/>
+                      --stat : muestra la diferencia a nivel binario.<br/>
+                      --numstat : muestra en número base decimal las diferencias en líneas.<br/>
+                      -- [archivo.ext] : muestra los cambios del archivo especificado entre ambas ramas.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git diff-tree --no-commit-id --name-only -r [codigo_SHA]</td>
+                    <td>Lista los nombres de todos los archivos pertenecientes al commit especificado</td>
+                </tr>
+                <tr>
+                    <td>Git</td>
                     <td>git help '[nombre_comando]'</td>
                     <td>Muestra toda la documentacion relacionada</td>
                 </tr>
@@ -419,7 +435,7 @@
                 </tr>
                 <tr>
                     <td>Git</td>
-                    <td>git stash [save 'mensaje_descriptivo'] [list][apply][drop][show] [stash]</td>
+                    <td>git stash [save 'mensaje_descriptivo'] [--patch][list][apply][drop][show] [stash]</td>
                     <td>
                         Guarda los cambios del staging area en el 'stash' y los oculta del working tree.<br />
                         El stash esta disponible en todas las branch locales, asi que se puede aplicar<br />
@@ -427,11 +443,20 @@
                         El ultimo stash guardado es el que tiene 'index' 0. Opciones:<br /><br />
                         save 'mensaje_descriptivo': el mensaje es opcional pero ayuda a identificar el stash cuando se
                         listan.<br />
+                        --patch: abre el modo interactivo y te va preguntando que quieres guardar y que no (elige "y", "n" u otra opcion)<br />
                         pop : aplica el ultimo stash guardado y lo saca de la lista<br />
                         list : muestra los stash guardados.<br />
                         drop : borra el ultimo stash de la lista.<br />
                         show : muestra el detalle de los cambios del stash especificado con su identificador.<br />
                         apply : aplica el ultimo stash sin borrarlo o el stash especificado con su identificador.<br />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Git</td>
+                    <td>git diff stash@{0}^1 stash@{0} -- [archivo]</td>
+                    <td>
+                      Hacer el diff de cualquier elemento del stash contra el último commit del branch actual<br/>
+                      Adicionalmente se puede especificar el archivo para el que se quiere el diff
                     </td>
                 </tr>
         </tbody>
