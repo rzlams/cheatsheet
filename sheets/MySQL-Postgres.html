@@ -12,6 +12,15 @@
         margin: 0;
       }
 
+      code {
+        background: lightgray;
+        color: red;
+      }
+
+      .w-80 {
+        width: 80%;
+      }
+
       table {
         width: 100%;
       }
@@ -141,6 +150,65 @@
             grupos (1, *) <=> (1, 1) personas<br />
             - Un 'gr' DEBE estar asociado a una o mas 'per'<br />
             - Una 'per' DEBE estar asociada a uno y solo un 'gr'
+          </td>
+        </tr>
+        <tr>
+          <td>Polymorphic Relationships</td>
+          <td>
+            <div>
+              A polymorphic relationship allows the child model to belong to more than one type of model using a single
+              association.
+            </div>
+            <br />
+
+            <b>One to One:</b>
+            <div>A one-to-one polymorphic relation is similar to a typical one-to-one relation.</div>
+            <div>
+              The <code>imageable_id</code> column will contain the ID value of the post or user, while the
+              <code>imageable_type</code> column will contain the class name of the parent model. The
+              <code>imageable_type</code> column is used by Eloquent to determine which "type" of parent model to return
+              when accessing the imageable relation.
+            </div>
+            <br />
+            <br />
+
+            <b>One to Many:</b>
+            <div>A one-to-many polymorphic relation is similar to a typical one-to-many relation.</div>
+            <div>
+              Using polymorphic relationships, you may use a single comments table to contain <code>comments</code> for
+              both posts and videos.
+            </div>
+            <br />
+            <br />
+
+            <b>Many to Many:</b>
+            <div>
+              Many-to-many polymorphic relations are slightly more complicated than "morph one" and "morph many"
+              relationships.
+            </div>
+            <div>
+              A <code>Post</code> model and <code>Video</code> model could share a polymorphic relation to a
+              <code>Tag</code> model. Using a many-to-many polymorphic relation in this situation would allow your
+              application to have a single table of unique tags that may be associated with posts or videos.
+            </div>
+            <div>
+              In this case, the table shared among the main (father) models corresponds to the intermediate table in a
+              normal many-to-many relationship. It means that you just need one intermediate table for all the models
+              related to the <code>Tag</code> model, because you can identify the relation with the
+              <code>taggable_type</code> field.
+            </div>
+          </td>
+          <td>
+            <b>One to One:</b>
+            <img class="w-80" src="../images/one-to-one-polymorphic.png" alt="diagrama UML one to one poly" />
+            <br />
+
+            <b>One to Many:</b>
+            <img class="w-80" src="../images/one-to-many-polymorphic.png" alt="diagrama UML one to many poly" />
+            <br />
+
+            <b>Many to Many:</b>
+            <img class="w-80" src="../images/many-to-many-polymorphic.png" alt="diagrama UML many to many poly" />
           </td>
         </tr>
         <tr>
