@@ -1,122 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>My cheatsheet</title>
     <style>
-        * {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
 
-        table {
-            width: 100%;
-        }
+      table {
+        width: 100%;
+      }
 
-        table,
-        td,
-        tr,
-        th {
-            border: 1px solid black;
-            border-collapse: collapse;
-            position: relative;
-        }
+      table,
+      td,
+      tr,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+      }
 
-        th {
-            padding: .8em;
-            text-transform: uppercase;
-            background-color: darkblue;
-            color: white;
-        }
+      th {
+        padding: 0.8em;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: white;
+      }
 
-        tbody>tr:nth-child(odd) {
-            background-color: white;
-        }
+      tbody > tr:nth-child(odd) {
+        background-color: white;
+      }
 
-        tbody>tr:nth-child(even) {
-            background-color: lightblue;
-        }
+      tbody > tr:nth-child(even) {
+        background-color: lightblue;
+      }
 
-        td {
-            padding: 1em;
-            opacity: .6;
-        }
+      td {
+        padding: 1em;
+        opacity: 0.6;
+      }
 
-        tbody td:hover {
-            opacity: 1;
-        }
+      tbody td:hover {
+        opacity: 1;
+      }
 
-        input {
-            width: 25%;
-            padding: .5em 0;
-            margin-bottom: 1em;
-        }
+      input {
+        width: 25%;
+        padding: 0.5em 0;
+        margin-bottom: 1em;
+      }
 
-        tr>td:first-child {
-            font-weight: bold;
-            text-align: center;
-            width: 10%;
-        }
+      tr > td:first-child {
+        font-weight: bold;
+        text-align: center;
+        width: 10%;
+      }
 
-        tr>td:last-child {
-            width: 35%;
-        }
+      tr > td:last-child {
+        width: 35%;
+      }
 
-        img {
-            width: 100%;
-        }
+      img {
+        width: 100%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia">
-    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis">
+  <body>
+    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia" />
+    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis" />
 
     <table>
-        <thead>
-            <tr>
-                <th>Tecnologia</th>
-                <th>Sintaxis</th>
-                <th>Descripcion</th>
-            </tr>
-        </thead>
-        <tbody id="cuentas">
-          <tr>
-            <td>APUNTES GENERALES</td>
-            <td>
-              <div>- Los queryBy* y queryAllBy* no dan error, siguen corriendo aunque no consigan nada. En cambio, los getBy* y getAllBy* si dan error al no conseguir nada, es decir, nunca llegan a verificar el expect.</div><br/>
-              <div>- Los warning que piden usar un "act" normalmente se resuelven poniendo el expect dentro de un wait o waitFor.</div><br/>
-              <div>- La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks() que resetea todos los mocks del test.</div><br/>
-              <div>- Los mock pueden retornar un valor con .mockReturnValue o .mockReturnValueOnce.</div><br/>
-              <div>- Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.</div><br/>
-            </td>
-            <td>Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser util en esos casos</td>
-          </tr>
-          <tr>
-            <td>APUNTES MOCKS</td>
-            <td>
-              <div>- La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks() que resetea todos los mocks del test.</div><br/>
-              <div>- Los mock pueden retornar un valor con .mockReturnValue o .mockReturnValueOnce.</div><br/>
-              <div>- Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.</div><br/>
-            </td>
-            <td>Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser util en esos casos</td>
-          </tr>
-          <tr>
-            <td>APUNTES MATCHERS</td>
-            <td>
-              <div>getByText(/text/i, { selector: 'button' })  -  Pueden recibir un segundo parametro indicando un selector css para el elemento que se quiere</div><br/>
-              <div>getByLabelText(/label text/i) = el input correspondiente a ese label (via htmlFor attribute).</div><br/>
-              <div>getByRole('heading') = tags h1 hasta h6.</div><br/>
-            </td>
-            <td>Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser util en esos casos</td>
-          </tr>
-          <tr>
-            <td>REACT - Mock con spyOn</td>
-            <td>
+      <thead>
+        <tr>
+          <th>Tecnologia</th>
+          <th>Sintaxis</th>
+          <th>Descripcion</th>
+        </tr>
+      </thead>
+      <tbody id="cuentas">
+        <tr>
+          <td>APUNTES GENERALES</td>
+          <td>
+            <div>
+              - Los queryBy* y queryAllBy* no dan error, siguen corriendo aunque no consigan nada. En cambio, los getBy*
+              y getAllBy* si dan error al no conseguir nada, es decir, nunca llegan a verificar el expect.
+            </div>
+            <br />
+            <div>
+              - Los warning que piden usar un "act" normalmente se resuelven poniendo el expect dentro de un wait o
+              waitFor.
+            </div>
+            <br />
+            <div>
+              - La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks()
+              que resetea todos los mocks del test.
+            </div>
+            <br />
+            <div>- Los mock pueden retornar un valor con .mockReturnValue o .mockReturnValueOnce.</div>
+            <br />
+            <div>
+              - Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.
+            </div>
+            <br />
+          </td>
+          <td>
+            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
+            util en esos casos
+          </td>
+        </tr>
+        <tr>
+          <td>APUNTES MOCKS</td>
+          <td>
+            <div>
+              - La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks()
+              que resetea todos los mocks del test.
+            </div>
+            <br />
+            <div>- Los mock pueden retornar un valor con .mockReturnValue o .mockReturnValueOnce.</div>
+            <br />
+            <div>
+              - Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.
+            </div>
+            <br />
+          </td>
+          <td>
+            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
+            util en esos casos
+          </td>
+        </tr>
+        <tr>
+          <td>APUNTES MATCHERS</td>
+          <td>
+            <div>
+              getByText(/text/i, { selector: 'button' }) - Pueden recibir un segundo parametro indicando un selector css
+              para el elemento que se quiere
+            </div>
+            <br />
+            <div>getByLabelText(/label text/i) = el input correspondiente a ese label (via htmlFor attribute).</div>
+            <br />
+            <div>getByRole('heading') = tags h1 hasta h6.</div>
+            <br />
+          </td>
+          <td>
+            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
+            util en esos casos
+          </td>
+        </tr>
+        <tr>
+          <td>REACT - Mock con spyOn</td>
+          <td>
             <b>Caso 1:</b>
             <pre>
             const thumbWar = require('../thumb-war')
@@ -133,8 +171,22 @@
               utils.getWinner.mockRestore()
             });
             </pre>
-            <br/>
+            <br />
             <b>Caso 2:</b>
+            <pre>
+            import * as hooks from 'hooks'
+
+            jest.spyOn(hooks, 'useMutation').mockImplementation(() => [
+              jest.fn(),
+              {
+                error: null,
+                isLoading: false,
+                data: undefined,
+              },
+            ])
+            </pre>
+            <br />
+            <b>Caso 3:</b>
             <pre>
             beforeAll(() => {
               jest.spyOn(console, 'error').mockImplementation(() => {})
@@ -148,15 +200,28 @@
               jest.clearAllMocks()
             })
             </pre>
-            </td>
-            <td>
-            Caso 1:<br />
-            - La funcion thumbWar (puede aplicar como componente) llama internamente la funcion utils.getWinner (puede aplicar como un hook).
-            - Se hace mocking de una funcion que se llama dentro de la funcion que se esta probando para poder controlar el resultado que se obtiene
-            </td>
-            <tr>
-            <td>REACT - Dates</td>
-            <td>
+          </td>
+          <td>
+            Caso 1:
+            <p>
+              - La funcion thumbWar (puede aplicar como componente) llama internamente la funcion utils.getWinner (puede
+              aplicar como un hook).
+            </p>
+            <p>
+              - Se hace mocking de una funcion que se llama dentro de la funcion que se esta probando para poder
+              controlar el resultado que se obtiene
+            </p>
+            Caso 2:
+            <p>
+              - Aca es importante el import (sirve para named and default exports). En este caso en el componente se
+              usaba: import { useMutation } from 'hooks'
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td>REACT - Dates</td>
+          <td>
             <pre>
             import { savePost as mockSavePost } from '../api'
 
@@ -184,17 +249,19 @@
               expect(date).toBeLessThanOrEqualTo(postDate)
             });
             </pre>
-            </td>
-            <td>
-              - No se obtiene la fecha exacta pero al saber que esta entre la preDate y la postDate el test es confiable.<br/>
-              - Esto funciona cuando se le pasa al componente el date como    new Date().toISOString()<br/>
-              - En los date en el test se usa el getter getTime() para obteenr un numero que cmomparar<br/>
-              - expect.any(String) recibe como argumento un constructor (Array, Number, String, etc) y hace match con cualquier dato que sea creado con el constructor dado.
-            </td>
-          </tr>
-          <tr>
-            <td>REACT - Mock Module</td>
-            <td>
+          </td>
+          <td>
+            - No se obtiene la fecha exacta pero al saber que esta entre la preDate y la postDate el test es
+            confiable.<br />
+            - Esto funciona cuando se le pasa al componente el date como new Date().toISOString()<br />
+            - En los date en el test se usa el getter getTime() para obteenr un numero que cmomparar<br />
+            - expect.any(String) recibe como argumento un constructor (Array, Number, String, etc) y hace match con
+            cualquier dato que sea creado con el constructor dado.
+          </td>
+        </tr>
+        <tr>
+          <td>REACT - Mock Module</td>
+          <td>
             <pre>
             jest.mock('react-transition-group', () => {
               return {
@@ -202,24 +269,27 @@
               }
             })
             </pre>
-            </td>
-            <td>Puedes hacer que el mock devuelva lo que tu quieres. En este caso si la prop in es truthy muestra retorna la props children (sin esperar la animacion) sino retorna null</td>
-          </tr>
-          <tr>
-            <td>REACT - Debug</td>
-            <td>
+          </td>
+          <td>
+            Puedes hacer que el mock devuelva lo que tu quieres. En este caso si la prop in es truthy muestra retorna la
+            props children (sin esperar la animacion) sino retorna null
+          </td>
+        </tr>
+        <tr>
+          <td>REACT - Debug</td>
+          <td>
             <pre>
             test('Otra manera de debug', () => {
               const { container } = render(< Form />)
               console.log(container.innertHTML)
             });
             </pre>
-            </td>
-            <td>Sirve para ver lo que imprime un componente que no es propio</td>
-          </tr>
-          <tr>
-            <td>REACT - Stateful Hook</td>
-            <td>
+          </td>
+          <td>Sirve para ver lo que imprime un componente que no es propio</td>
+        </tr>
+        <tr>
+          <td>REACT - Stateful Hook</td>
+          <td>
             <b>Component</b>
             <pre>
             import { useState } from 'react';
@@ -229,7 +299,7 @@
               return [count, () => setCount(count + 1)];
             }
             </pre>
-            <br/>
+            <br />
             <b>Unit Test</b>
             <pre>
             import { useCounter } from './Calculator';
@@ -247,12 +317,15 @@
               expect(mockSetState).toHaveBeenCalledWith(2);
             });
             </pre>
-            </td>
-            <td>Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser util en esos casos</td>
-          </tr>
-          <tr>
-            <td>REACT - fireEvent change</td>
-            <td>
+          </td>
+          <td>
+            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
+            util en esos casos
+          </td>
+        </tr>
+        <tr>
+          <td>REACT - fireEvent change</td>
+          <td>
             <pre>
             import { render, fireEvent } from '@testing-library/react'
 
@@ -267,12 +340,15 @@
               expect(input.value).toBe('456.12')
             })
             </pre>
-            </td>
-            <td>Esto es util para modificar el valor del componente aunque tambien se puede modificar actualizando la prop value</td>
-          </tr>
-          <tr>
-            <td>REACT - update props</td>
-            <td>
+          </td>
+          <td>
+            Esto es util para modificar el valor del componente aunque tambien se puede modificar actualizando la prop
+            value
+          </td>
+        </tr>
+        <tr>
+          <td>REACT - update props</td>
+          <td>
             <pre>
             import { render, screen } from '@testing-library/react'
 
@@ -284,12 +360,15 @@
               expect(screen.getByText(/0/i)).toBeInTheDocument()
             })
             </pre>
-            </td>
-            <td>Asi se puede modificar el valor del componente via props</td>
-          </tr>
-          <tr>
-            <td>REACT - Mock Context <br/><br/> Aplica a librerias como React Router que usan context</td>
-            <td>
+          </td>
+          <td>Asi se puede modificar el valor del componente via props</td>
+        </tr>
+        <tr>
+          <td>
+            REACT - Mock Context <br /><br />
+            Aplica a librerias como React Router que usan context
+          </td>
+          <td>
             <pre>
             import AppContext from 'context/AppContext'
             import { render, screen } from '@testing-library/react'
@@ -309,54 +388,56 @@
 
             expect(screen.getByText(/Amber/i)).toBeInTheDocument()
             </pre>
-            </td>
-            <td>Lo que se mockea realmente es el valor que recibe el componente desde el context, de resto sigue consumiendo el context como siempre</td>
-          </tr>
-        </tbody>
+          </td>
+          <td>
+            Lo que se mockea realmente es el valor que recibe el componente desde el context, de resto sigue consumiendo
+            el context como siempre
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <script>
+      function myFilterCuenta() {
+        var tr, td, inputCuenta, filterCuenta, i, textValue
 
-        function myFilterCuenta() {
-            var tr, td, inputCuenta, filterCuenta,
-                i, textValue;
+        tr = document.getElementsByTagName('tr')
+        inputCuenta = document.getElementById('inputCuenta')
+        filterCuenta = inputCuenta.value.toUpperCase()
 
-            tr = document.getElementsByTagName("tr");
-            inputCuenta = document.getElementById("inputCuenta");
-            filterCuenta = inputCuenta.value.toUpperCase();
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[0]
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-
-                if (td) {
-                    textValue = td.textContent;
-                    if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
-                        tr[i].style.display = "";
-                    } else { tr[i].style.display = "none"; }
-                }
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
             }
+          }
         }
-        function myFilterDetalle() {
-            var tr, td, inputDetalle, filterDetalle,
-                i, textValue;
+      }
+      function myFilterDetalle() {
+        var tr, td, inputDetalle, filterDetalle, i, textValue
 
-            tr = document.getElementsByTagName("tr");
-            inputDetalle = document.getElementById("inputDetalle");
-            filterDetalle = inputDetalle.value.toUpperCase();
+        tr = document.getElementsByTagName('tr')
+        inputDetalle = document.getElementById('inputDetalle')
+        filterDetalle = inputDetalle.value.toUpperCase()
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[1]
 
-                if (td) {
-                    textValue = td.textContent;
-                    if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
-                        tr[i].style.display = "";
-                    } else { tr[i].style.display = "none"; }
-                }
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
             }
+          }
         }
-
+      }
     </script>
-</body>
-
+  </body>
 </html>

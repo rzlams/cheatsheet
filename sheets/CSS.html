@@ -1,94 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>My cheatsheet</title>
     <style>
-        * {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
 
-        table {
-            width: 100%;
-        }
+      table {
+        width: 100%;
+      }
 
-        table,
-        td,
-        tr,
-        th {
-            border: 1px solid black;
-            border-collapse: collapse;
-            position: relative;
-        }
+      table,
+      td,
+      tr,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+      }
 
-        th {
-            padding: .8em;
-            text-transform: uppercase;
-            background-color: darkblue;
-            color: white;
-        }
+      th {
+        padding: 0.8em;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: white;
+      }
 
-        tbody>tr:nth-child(odd) {
-            background-color: white;
-        }
+      tbody > tr:nth-child(odd) {
+        background-color: white;
+      }
 
-        tbody>tr:nth-child(even) {
-            background-color: lightblue;
-        }
+      tbody > tr:nth-child(even) {
+        background-color: lightblue;
+      }
 
-        td {
-            padding: 1em;
-            opacity: .6;
-        }
+      td {
+        padding: 1em;
+        opacity: 0.6;
+      }
 
-        tbody td:hover {
-            opacity: 1;
-        }
+      tbody td:hover {
+        opacity: 1;
+      }
 
-        input {
-            width: 25%;
-            padding: .5em 0;
-            margin-bottom: 1em;
-        }
+      input {
+        width: 25%;
+        padding: 0.5em 0;
+        margin-bottom: 1em;
+      }
 
-        tr>td:first-child {
-            font-weight: bold;
-            text-align: center;
-            width: 10%;
-        }
+      tr > td:first-child {
+        font-weight: bold;
+        text-align: center;
+        width: 10%;
+      }
 
-        tr>td:last-child {
-            width: 35%;
-        }
+      tr > td:last-child {
+        width: 35%;
+      }
 
-        img {
-            width: 100%;
-        }
+      img {
+        width: 100%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia">
-    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis">
+  <body>
+    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia" />
+    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis" />
 
     <table>
-        <thead>
-            <tr>
-                <th>Tecnologia</th>
-                <th>Sintaxis</th>
-                <th>Descripcion</th>
-            </tr>
-        </thead>
-        <tbody id="cuentas">
-                <tr>
-                    <td>SVG - Import and style as object</td>
-                    <td>
-                      <pre>
+      <thead>
+        <tr>
+          <th>Tecnologia</th>
+          <th>Sintaxis</th>
+          <th>Descripcion</th>
+        </tr>
+      </thead>
+      <tbody id="cuentas">
+        <tr>
+          <td>SVG - Import and style as object</td>
+          <td>
+            <pre>
                         .container svg path {
                           stroke-dasharray: 1000;
                           stroke-dashoffset: 1000;
@@ -103,16 +102,15 @@
                             stroke-dashoffset: 0;
                           }
                         }
-                      </pre>
-                    </td>
-                    <td>
-                      - Con este metodo se comienza a dibujar el trazo del svg hasta dibujarlo por completo
-                    </td>
-                </tr>
-                <tr>
-                    <td>SVG - Animate Stroke</td>
-                    <td>
-                      <pre>
+                      </pre
+            >
+          </td>
+          <td>- Con este metodo se comienza a dibujar el trazo del svg hasta dibujarlo por completo</td>
+        </tr>
+        <tr>
+          <td>SVG - Animate Stroke</td>
+          <td>
+            <pre>
                         .container svg path {
                           stroke-dasharray: 1000;
                           stroke-dashoffset: 1000;
@@ -127,165 +125,138 @@
                             stroke-dashoffset: 0;
                           }
                         }
-                      </pre>
-                    </td>
-                    <td>
-                      - Con este metodo se comienza a dibujar el trazo del svg hasta dibujarlo por completo
-                    </td>
-                </tr>
-                <tr>
-                    <td>SVG - Dotted Round Border</td>
-                    <td>
-                      <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <path
-                          vector-effect="non-scaling-stroke"
-                          d="M 0.5 5.5 q0,-5 5,-5 L 94.5 0.5 q5,0 5,5 L 99.5 94.5 q0,5 -5,5 L 5.5 99.5 q-5,0 -5,-5 z"
-                          fill="none"
-                          stroke="black"
-                          stroke-width="3"
-                          stroke-dasharray="5,5"
-                        />
-                      </svg>
-                    </td>
-                    <td>
-                      - El SVG escala segun su contenedor..<br />
-                      - Para modificar el tipo de borde se puede cambiar las propiedades stroke*.<br />
-                      - q representa una curva en el path.<br />
-                      - M representa MoveTo (en este caso el inicio) y L representa LineTo en el path
-                    </td>
-                </tr>
-                <tr>
-                    <td>SVG - Background Shape</td>
-                    <td>
-                      <svg height="100%" width="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <polygon
-                          points="0,0 100,0 100,80 65,90 0,60"
-                          stroke-width="20px"
-                          stroke-linejoin="round"
-                          stroke="green"
-                          fill="green"
-                          background="green"
-                        />
-                      </svg>
-                    </td>
-                    <td>
-                      - El SVG escala segun su contenedor..<br />
-                      - El vertice inferior es redondeado. Para modificar que tan redondeado es, puede cambiar el stroke-width
-                    </td>
-                </tr>
-                <tr>
-                    <td>SVG - Double Curve</td>
-                    <td>
-                    <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <path
-                        d="M 0.5 0 C 5 50 20 50 50 50"
-                        fill="none"
-                        stroke="black"
-                        stroke-width="0.5"
-                      />
-                      <path
-                        d="M 50 50 C 70 50 100 40 99.5 100"
-                        fill="none"
-                        stroke="black"
-                        stroke-width="0.5"
-                      />
-                    </svg>
-                    </td>
-                    <td>
-                      - El SVG escala segun su contenedor.<br />
-                      - El vertice inferior es redondeado. Para modificar que tan redondeado es, puede cambiar el stroke-width
-                    </td>
-                </tr>
-                <tr>
-                    <td>SVG - Curve Right Down</td>
-                    <td>
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 100 100"
-                        preserveAspectRatio="none"
-                      >
-                        <path
-                          vector-effect="non-scaling-stroke"
-                          d="M 1 3.5 C 115 1 89.5 -10 94 130"
-                          fill="none"
-                          stroke="black"
-                          stroke-width="4"
-                        />
-                      </svg>
-                    </td>
-                    <td>
-                      - El SVG escala segun su contenedor
-                    </td>
-                </tr>
-                <tr>
-                    <td>SVG - Curve Left Down</td>
-                    <td>
-                      <svg
-                        width="100%"
-                        height="100%"
-                        viewBox="0 0 100 100"
-                        preserveAspectRatio="none"
-                      >
-                        <path
-                          vector-effect="non-scaling-stroke"
-                          d="M 99 3.5 C -15 1 10.5 -10 6 130"
-                          fill="none"
-                          stroke="black"
-                          stroke-width="4"
-                        />
-                      </svg>
-                    </td>
-                    <td>
-                      - El SVG escala segun su contenedor
-                    </td>
-                </tr>
-        </tbody>
+                      </pre
+            >
+          </td>
+          <td>- Con este metodo se comienza a dibujar el trazo del svg hasta dibujarlo por completo</td>
+        </tr>
+        <tr>
+          <td>SVG - Dotted Round Border</td>
+          <td>
+            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path
+                vector-effect="non-scaling-stroke"
+                d="M 0.5 5.5 q0,-5 5,-5 L 94.5 0.5 q5,0 5,5 L 99.5 94.5 q0,5 -5,5 L 5.5 99.5 q-5,0 -5,-5 z"
+                fill="none"
+                stroke="black"
+                stroke-width="3"
+                stroke-dasharray="5,5"
+              />
+            </svg>
+          </td>
+          <td>
+            - El SVG escala segun su contenedor..<br />
+            - Para modificar el tipo de borde se puede cambiar las propiedades stroke*.<br />
+            - q representa una curva en el path.<br />
+            - M representa MoveTo (en este caso el inicio) y L representa LineTo en el path
+          </td>
+        </tr>
+        <tr>
+          <td>SVG - Background Shape</td>
+          <td>
+            <svg height="100%" width="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <polygon
+                points="0,0 100,0 100,80 65,90 0,60"
+                stroke-width="20px"
+                stroke-linejoin="round"
+                stroke="green"
+                fill="green"
+                background="green"
+              />
+            </svg>
+          </td>
+          <td>
+            - El SVG escala segun su contenedor..<br />
+            - El vertice inferior es redondeado. Para modificar que tan redondeado es, puede cambiar el stroke-width
+          </td>
+        </tr>
+        <tr>
+          <td>SVG - Double Curve</td>
+          <td>
+            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path d="M 0.5 0 C 5 50 20 50 50 50" fill="none" stroke="black" stroke-width="0.5" />
+              <path d="M 50 50 C 70 50 100 40 99.5 100" fill="none" stroke="black" stroke-width="0.5" />
+            </svg>
+          </td>
+          <td>
+            - El SVG escala segun su contenedor.<br />
+            - El vertice inferior es redondeado. Para modificar que tan redondeado es, puede cambiar el stroke-width
+          </td>
+        </tr>
+        <tr>
+          <td>SVG - Curve Right Down</td>
+          <td>
+            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path
+                vector-effect="non-scaling-stroke"
+                d="M 1 3.5 C 115 1 89.5 -10 94 130"
+                fill="none"
+                stroke="black"
+                stroke-width="4"
+              />
+            </svg>
+          </td>
+          <td>- El SVG escala segun su contenedor</td>
+        </tr>
+        <tr>
+          <td>SVG - Curve Left Down</td>
+          <td>
+            <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <path
+                vector-effect="non-scaling-stroke"
+                d="M 99 3.5 C -15 1 10.5 -10 6 130"
+                fill="none"
+                stroke="black"
+                stroke-width="4"
+              />
+            </svg>
+          </td>
+          <td>- El SVG escala segun su contenedor</td>
+        </tr>
+      </tbody>
     </table>
 
-
     <script>
+      function myFilterCuenta() {
+        var tr, td, inputCuenta, filterCuenta, i, textValue
 
-        function myFilterCuenta() {
-            var tr, td, inputCuenta, filterCuenta,
-                i, textValue;
+        tr = document.getElementsByTagName('tr')
+        inputCuenta = document.getElementById('inputCuenta')
+        filterCuenta = inputCuenta.value.toUpperCase()
 
-            tr = document.getElementsByTagName("tr");
-            inputCuenta = document.getElementById("inputCuenta");
-            filterCuenta = inputCuenta.value.toUpperCase();
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[0]
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-
-                if (td) {
-                    textValue = td.textContent;
-                    if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
-                        tr[i].style.display = "";
-                    } else { tr[i].style.display = "none"; }
-                }
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
             }
+          }
         }
-        function myFilterDetalle() {
-            var tr, td, inputDetalle, filterDetalle,
-                i, textValue;
+      }
+      function myFilterDetalle() {
+        var tr, td, inputDetalle, filterDetalle, i, textValue
 
-            tr = document.getElementsByTagName("tr");
-            inputDetalle = document.getElementById("inputDetalle");
-            filterDetalle = inputDetalle.value.toUpperCase();
+        tr = document.getElementsByTagName('tr')
+        inputDetalle = document.getElementById('inputDetalle')
+        filterDetalle = inputDetalle.value.toUpperCase()
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[1]
 
-                if (td) {
-                    textValue = td.textContent;
-                    if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
-                        tr[i].style.display = "";
-                    } else { tr[i].style.display = "none"; }
-                }
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
             }
+          }
         }
-
+      }
     </script>
-</body>
-
+  </body>
 </html>

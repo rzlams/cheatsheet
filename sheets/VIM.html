@@ -1,499 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>VIM Cheatsheet</title>
     <style>
-        * {
-            box-sizing: border-box;
-            padding: 0;
-            margin: 0;
-        }
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
 
-        table {
-            width: 100%;
-        }
+      table {
+        width: 100%;
+      }
 
-        table,
-        td,
-        tr,
-        th {
-            border: 1px solid black;
-            border-collapse: collapse;
-            position: relative;
-        }
+      table,
+      td,
+      tr,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+      }
 
-        th {
-            padding: .8em;
-            text-transform: uppercase;
-            background-color: darkblue;
-            color: white;
-        }
+      th {
+        padding: 0.8em;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: white;
+      }
 
-        tbody>tr:nth-child(odd) {
-            background-color: white;
-        }
+      tbody > tr:nth-child(odd) {
+        background-color: white;
+      }
 
-        tbody>tr:nth-child(even) {
-            background-color: lightblue;
-        }
+      tbody > tr:nth-child(even) {
+        background-color: lightblue;
+      }
 
-        td {
-            padding: 1em;
-            opacity: .6;
-        }
+      td {
+        padding: 1em;
+        opacity: 0.6;
+      }
 
-        tbody td:hover {
-            opacity: 1;
-        }
+      tbody td:hover {
+        opacity: 1;
+      }
 
-        input {
-            width: 45%;
-            padding: 1em;
-            border-radius: 35px;
-            margin: 1em;
-        }
+      input {
+        width: 45%;
+        padding: 1em;
+        border-radius: 35px;
+        margin: 1em;
+      }
 
-        tr>td:first-child {
-            font-weight: bold;
-            text-align: center;
-            width: 10%;
-        }
+      tr > td:first-child {
+        font-weight: bold;
+        text-align: center;
+        width: 10%;
+      }
 
-        tr>td:last-child {
-            width: 35%;
-        }
+      tr > td:last-child {
+        width: 35%;
+      }
 
-        .title {
-          text-align: center;
-          font-size: 2rem;
-        }
+      .title {
+        text-align: center;
+        font-size: 2rem;
+      }
 
-        main {
-          display: flex;
-          flex-direction: column;
-          padding: 0 10vw;
-        }
+      main {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10vw;
+      }
 
-        .metadata {
-          display: flex;
-        }
+      .metadata {
+        display: flex;
+      }
 
-        .metadata > div {
-          flex: 33.33%;
-        }
+      .metadata > div {
+        flex: 33.33%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-  <main>
-    <header class="title">VIM</header>
-    <br />
-    <div>
-      <div style="text-align: center;">
-        PARA LA MAYORIA DE LOS COMANDOS SE PUEDE ESPECIFICAR LA CANTIDAD DE VECES
-        QUE SE QUIERE EJECUTAR EL COMANDO CON NUMEROS ANTES DEL COMANDO Y LOS
-        CARACTERES NUEVOS DESPUES DEL COMANDO
-      </div>
-      <br/>
-      <div class="metadata">
+  <body>
+    <main>
+      <header class="title">VIM</header>
+      <br />
       <div>
-        <div><b>TEXT OBJECTS</b></div>
-        <div>w  -  words</div>
-        <div>s  -  sentences</div>
-        <div>p  -  paragraphs</div>
-        <div>t  -  tags</div>
-      </div>
-      <div>
-        <div><b>MOTIONS</b></div>
-        <div>a  -  all</div>
-        <div>i  -  in</div>
-        <div>t  -  ´til</div>
-        <div>f  -  find a letter forward</div>
-        <div>F  -  find a letter backward</div>
-      </div>
-      <div>
-        <div><b>COMANDS</b></div>
-        <div>d  -  delete (also cut)</div>
-        <div>c  -  change (delete, then place in insert mode )</div>
-        <div>y  -  yank (copy)</div>
-        <div>v  -  visually select</div>
+        <div style="text-align: center">
+          PARA LA MAYORIA DE LOS COMANDOS SE PUEDE ESPECIFICAR LA CANTIDAD DE VECES QUE SE QUIERE EJECUTAR EL COMANDO
+          CON NUMEROS ANTES DEL COMANDO Y LOS CARACTERES NUEVOS DESPUES DEL COMANDO
+        </div>
+        <br />
+        <div class="metadata">
+          <div>
+            <div><b>TEXT OBJECTS</b></div>
+            <div>w - words</div>
+            <div>s - sentences</div>
+            <div>p - paragraphs</div>
+            <div>t - tags</div>
+          </div>
+          <div>
+            <div><b>MOTIONS</b></div>
+            <div>a - all</div>
+            <div>i - in</div>
+            <div>t - ´til</div>
+            <div>f - find a letter forward</div>
+            <div>F - find a letter backward</div>
+          </div>
+          <div>
+            <div><b>COMANDS</b></div>
+            <div>d - delete (also cut)</div>
+            <div>c - change (delete, then place in insert mode )</div>
+            <div>y - yank (copy)</div>
+            <div>v - visually select</div>
+          </div>
+        </div>
+
+        <br />
+        <div style="text-align: center">
+          <b>{ COMMAND }{ TEXT OBJECT OR MOTION }</b>
         </div>
       </div>
+      <br />
+      <div>
+        <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia" />
+        <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis" />
       </div>
-      <br/>
-      <div style="text-align: center;">
-        <b>{ COMMAND }{ TEXT OBJECT OR MOTION }</b>
-      </div>
-    </div>
-    <br />
-    <div>
-      <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia">
-      <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis">
-    </div>
-    <br />
-    <table>
+      <br />
+      <table>
         <thead>
-            <tr>
-                <th>Sintaxis</th>
-                <th>Descripcion</th>
-            </tr>
+          <tr>
+            <th>Sintaxis</th>
+            <th>Descripcion</th>
+          </tr>
         </thead>
         <tbody id="cuentas">
-            <tr>
-              <td>diw</td>
-              <td>delete in word. Borra la palabra actual</td>
-            </tr>
-            <tr>
-              <td>: [flecha arriba]</td>
-              <td>Muestra el comando anterior</td>
-            </tr>
-            <tr>
-              <td>: Crtl + r</td>
-              <td>Permite copiar en la barra de instrucciones lo que se haya copiado del documento</td>
-            </tr>
-            <tr>
-              <td>caw</td>
-              <td>change all word. Borra la palabra actual y te pone en INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>ya)</td>
-              <td>yank all ). Copia todo el texto entre parentesis, INCLUYE los parentesis</td>
-            </tr>
-            <tr>
-              <td>ya)</td>
-              <td>yank in ). Copia todo el texto entre parentesis, NO INCLUYE los parentesis</td>
-            </tr>
-            <tr>
-              <td>va"</td>
-              <td>Selecciona en VISUAL MODE el texto entre comillas, INCLUYE las comillas</td>
-            </tr>
-            <tr>
-              <td>:[num]</td>
-              <td>Lleva a la linea especificada en el [num]</td>
-            </tr>
-            <tr>
-              <td>:q!</td>
-              <td>Cierra el archivo sin guardar</td>
-            </tr>
-            <tr>
-              <td>:w</td>
-              <td>Guarda el archivo sin cerrarlo</td>
-            </tr>
-            <tr>
-              <td>:wq</td>
-              <td>Guarda y cierra el archivo</td>
-            </tr>
-            <tr>
-              <td>ESC</td>
-              <td>Cambia a COMMAND MODE</td>
-            </tr>
-            <tr>
-              <td>Ctrl + v</td>
-              <td>Entra en modo VISUAL BLOCK. Permite seleccionar igual que en VISUAL MODE pero repite la accion realizada en todas las lineas seleccionadas</td>
-            </tr>
-            <tr>
-              <td>#</td>
-              <td>Busca la ocurrencia anterior de la palabra actual</td>
-            </tr>
-            <tr>
-              <td>?</td>
-              <td>
-                Busca el patron especificado, desde la posicion actual hacia atras.<br/>
-                Con n se mueve a la ocurrencia anterior y con N se mueve a la siguiente ocurrencia.
-              </td>
-            </tr>
-            <tr>
-              <td>/</td>
-              <td>
-                Busca el patron especificado, desde la posicion actual en adelante.
-                Con n se mueve a la ocurrencia anterior y con N se mueve a la siguiente ocurrencia.
-              </td>
-            </tr>
-            <tr>
-              <td>*</td>
-              <td>Busca la siguiente ocurrencia de la palabra actual</td>
-            </tr>
-            <tr>
-              <td>i</td>
-              <td>Cambia a INSERT MODE en el espacio o caracter actual</td>
-            </tr>
-            <tr>
-              <td>d</td>
-              <td>delete. Tambien sirve para cortar</td>
-            </tr>
-            <tr>
-              <td>y</td>
-              <td>yank. Copia</td>
-            </tr>
-            <tr>
-              <td>A</td>
-              <td>Se mueve al final de la linea y cambia a INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>I</td>
-              <td>Te mueve al principio de la linea y cambia a INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>A</td>
-              <td>Te mueve al final de la linea y cambia a INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>D</td>
-              <td>Borra el resto de la linea desde la posiciona actual</td>
-            </tr>
-            <tr>
-              <td>O</td>
-              <td>Inserta una linea arriba y cambia a INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>o</td>
-              <td>Inserta una linea abajo y cambia a INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>C</td>
-              <td>Borra toda la linea desde la posicion actual y cambia a INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>cw</td>
-              <td>change word. Borra la palabra actual y cambia a INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>ct</td>
-              <td>change to. Borra la linea actual hasta el [char] especificado</td>
-            </tr>
-            <tr>
-              <td>r</td>
-              <td>replace. Cambia a INSERT MODE y reemplaza el caracter actual</td>
-            </tr>
-            <tr>
-              <td>R</td>
-              <td>Cambia a INSERT MODE y reemplaza tantos caracteres como se especifiquen</td>
-            </tr>
-            <tr>
-              <td>V</td>
-              <td>Cambia a VISUAL MODE, sirve para seleccionar</td>
-            </tr>
-            <tr>
-              <td>j</td>
-              <td>Baja una o [x] posiciones</td>
-            </tr>
-            <tr>
-              <td>k</td>
-              <td>Sube una o [x] posiciones</td>
-            </tr>
-            <tr>
-              <td>l</td>
-              <td>Mueve a la derecha una o [x] posiciones</td>
-            </tr>
-            <tr>
-              <td>h</td>
-              <td>Mueve a la izquierda una o [x] posiciones</td>
-            </tr>
-            <tr>
-              <td>%</td>
-              <td>Te lleva a donde abren o cierran las llave o parentesis actuales</td>
-            </tr>
-            <tr>
-              <td>dd</td>
-              <td>Borra la linea en la que estas parado</td>
-            </tr>
-            <tr>
-              <td>dt[char]</td>
-              <td>delete to. Borra la linea hasta el [char] especificado</td>
-            </tr>
-            <tr>
-              <td>gg</td>
-              <td>Te para en la primera linea</td>
-            </tr>
-            <tr>
-              <td>G</td>
-              <td>Te para en la ultima linea</td>
-            </tr>
-            <tr>
-              <td>{</td>
-              <td>Sube uno o [x] bloques de codigo</td>
-            </tr>
-            <tr>
-              <td>}</td>
-              <td>Baja uno o [x] bloques de codigo</td>
-            </tr>
-            <tr>
-              <td>u</td>
-              <td>undo. Equivalente a Ctrl + z</td>
-            </tr>
-            <tr>
-              <td>Ctrl + r</td>
-              <td>redo. Hace lo contrario que undo</td>
-            </tr>
-            <tr>
-              <td>yy</td>
-              <td>Copia una linea</td>
-            </tr>
-            <tr>
-              <td>p</td>
-              <td>Pega en la siguiente linea</td>
-            </tr>
-            <tr>
-              <td>P</td>
-              <td>Pega en la linea anterior</td>
-            </tr>
-            <tr>
-              <td>x</td>
-              <td>Borra un caracter</td>
-            </tr>
-            <tr>
-              <td>m[char]</td>
-              <td>
-                mark. Crea un ancla en la actual y la guarda en el [char] especificado, como los macros.
-                Luego puedes ir a esa linea con el mark usando  `[char]. Por ejemlo: mk se llama con `k
-              </td>
-            </tr>
-            <tr>
-              <td>d}</td>
-              <td>Borra el siguiente bloque de codigo</td>
-            </tr>
-            <tr>
-              <td>w</td>
-              <td>word. Te mueve al inicio de la siguiente palabra</td>
-            </tr>
-            <tr>
-              <td>W</td>
-              <td>Te mueve al siguiente espacio en la linea</td>
-            </tr>
-            <tr>
-              <td>e</td>
-              <td>end. Te mueve al final de la siguiente palabra</td>
-            </tr>
-            <tr>
-              <td>b</td>
-              <td>Te mueve al inicio de la palabra anterior</td>
-            </tr>
-            <tr>
-              <td>B</td>
-              <td>Te mueve al espacio anterior en la linea</td>
-            </tr>
-            <tr>
-              <td>0w</td>
-              <td>Te mueve al principio de la linea</td>
-            </tr>
-            <tr>
-              <td>$</td>
-              <td>Te mueve al final de la linea</td>
-            </tr>
-            <tr>
-              <td>C</td>
-              <td>Borra el resto de la linea desde la posiciona actual y se deja en INSERT MODE</td>
-            </tr>
-            <tr>
-              <td>D</td>
-              <td>Borra el resto de la linea desde la posiciona actual</td>
-            </tr>
-            <tr>
-              <td>*</td>
-              <td>Cambia la siguiente ocurrencia de la seleccion actual</td>
-            </tr>
-            <tr>
-              <td>zz</td>
-              <td>Mueve la vista para que la linea actual quede en el centro</td>
-            </tr>
-            <tr>
-              <td>~</td>
-              <td>toggle case. Las mayusculas las pasa a minusculas y viceversa</td>
-            </tr>
-            <tr>
-              <td>.</td>
-              <td>Repite la ultima accion realizada en la posicion actual</td>
-            </tr>
-            <tr>
-              <td>></td>
-              <td>Agrega identacion, equivalente a un tab</td>
-            </tr>
-            <tr>
-              <td><</td>
-              <td>quita identacion, equivalente a un tab</td>
-            </tr>
-            <tr>
-              <td>q</td>
-              <td>Inicia y termina la grabacion de una macro, te pide asignarle un tecla para poder llamarlo luego con @</td>
-            </tr>
-            <tr>
-              <td>Ctrl + e</td>
-              <td>Hace scroll hacia abajo</td>
-            </tr>
-            <tr>
-              <td>Ctrl + y</td>
-              <td>Hace scroll hacia arriba</td>
-            </tr>
-            <tr>
-              <td>Ctrl + f</td>
-              <td>Hace scroll equivalente a una pagina hacia abajo</td>
-            </tr>
-            <tr>
-              <td>Ctrl + b</td>
-              <td>Hace scroll equivalente a una pagina hacia arriba</td>
-            </tr>
-            <tr>
-              <td>H</td>
-              <td>Mueve el cursor hacia la parte superior de la pantalla</td>
-            </tr>
-            <tr>
-              <td>M</td>
-              <td>Mueve el cursor hacia el centro de la pantalla</td>
-            </tr>
-            <tr>
-              <td>L</td>
-              <td>Mueve el cursor hacia la parte inferior de la pantalla</td>
-            </tr>
+          <tr>
+            <td>diw</td>
+            <td>delete in word. Borra la palabra actual</td>
+          </tr>
+          <tr>
+            <td>: [flecha arriba]</td>
+            <td>Muestra el comando anterior</td>
+          </tr>
+          <tr>
+            <td>: Crtl + r</td>
+            <td>Permite copiar en la barra de instrucciones lo que se haya copiado del documento</td>
+          </tr>
+          <tr>
+            <td>caw</td>
+            <td>change all word. Borra la palabra actual y te pone en INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>ya)</td>
+            <td>yank all ). Copia todo el texto entre parentesis, INCLUYE los parentesis</td>
+          </tr>
+          <tr>
+            <td>ya)</td>
+            <td>yank in ). Copia todo el texto entre parentesis, NO INCLUYE los parentesis</td>
+          </tr>
+          <tr>
+            <td>va"</td>
+            <td>Selecciona en VISUAL MODE el texto entre comillas, INCLUYE las comillas</td>
+          </tr>
+          <tr>
+            <td>:[num]</td>
+            <td>Lleva a la linea especificada en el [num]</td>
+          </tr>
+          <tr>
+            <td>:q!</td>
+            <td>Cierra el archivo sin guardar</td>
+          </tr>
+          <tr>
+            <td>:w</td>
+            <td>Guarda el archivo sin cerrarlo</td>
+          </tr>
+          <tr>
+            <td>:wq</td>
+            <td>Guarda y cierra el archivo</td>
+          </tr>
+          <tr>
+            <td>ESC</td>
+            <td>Cambia a COMMAND MODE</td>
+          </tr>
+          <tr>
+            <td>Ctrl + v</td>
+            <td>
+              Entra en modo VISUAL BLOCK. Permite seleccionar igual que en VISUAL MODE pero repite la accion realizada
+              en todas las lineas seleccionadas
+            </td>
+          </tr>
+          <tr>
+            <td>#</td>
+            <td>Busca la ocurrencia anterior de la palabra actual</td>
+          </tr>
+          <tr>
+            <td>?</td>
+            <td>
+              Busca el patron especificado, desde la posicion actual hacia atras.<br />
+              Con n se mueve a la ocurrencia anterior y con N se mueve a la siguiente ocurrencia.
+            </td>
+          </tr>
+          <tr>
+            <td>/</td>
+            <td>
+              Busca el patron especificado, desde la posicion actual en adelante. Con n se mueve a la ocurrencia
+              anterior y con N se mueve a la siguiente ocurrencia.
+            </td>
+          </tr>
+          <tr>
+            <td>*</td>
+            <td>Busca la siguiente ocurrencia de la palabra actual</td>
+          </tr>
+          <tr>
+            <td>i</td>
+            <td>Cambia a INSERT MODE en el espacio o caracter actual</td>
+          </tr>
+          <tr>
+            <td>d</td>
+            <td>delete. Tambien sirve para cortar</td>
+          </tr>
+          <tr>
+            <td>y</td>
+            <td>yank. Copia</td>
+          </tr>
+          <tr>
+            <td>A</td>
+            <td>Se mueve al final de la linea y cambia a INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>I</td>
+            <td>Te mueve al principio de la linea y cambia a INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>A</td>
+            <td>Te mueve al final de la linea y cambia a INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td>Borra el resto de la linea desde la posiciona actual</td>
+          </tr>
+          <tr>
+            <td>O</td>
+            <td>Inserta una linea arriba y cambia a INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>o</td>
+            <td>Inserta una linea abajo y cambia a INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>Borra toda la linea desde la posicion actual y cambia a INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>cw</td>
+            <td>change word. Borra la palabra actual y cambia a INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>ct</td>
+            <td>change to. Borra la linea actual hasta el [char] especificado</td>
+          </tr>
+          <tr>
+            <td>r</td>
+            <td>replace. Cambia a INSERT MODE y reemplaza el caracter actual</td>
+          </tr>
+          <tr>
+            <td>R</td>
+            <td>Cambia a INSERT MODE y reemplaza tantos caracteres como se especifiquen</td>
+          </tr>
+          <tr>
+            <td>V</td>
+            <td>Cambia a VISUAL MODE, sirve para seleccionar</td>
+          </tr>
+          <tr>
+            <td>j</td>
+            <td>Baja una o [x] posiciones</td>
+          </tr>
+          <tr>
+            <td>k</td>
+            <td>Sube una o [x] posiciones</td>
+          </tr>
+          <tr>
+            <td>l</td>
+            <td>Mueve a la derecha una o [x] posiciones</td>
+          </tr>
+          <tr>
+            <td>h</td>
+            <td>Mueve a la izquierda una o [x] posiciones</td>
+          </tr>
+          <tr>
+            <td>%</td>
+            <td>Te lleva a donde abren o cierran las llave o parentesis actuales</td>
+          </tr>
+          <tr>
+            <td>dd</td>
+            <td>Borra la linea en la que estas parado</td>
+          </tr>
+          <tr>
+            <td>dt[char]</td>
+            <td>delete to. Borra la linea hasta el [char] especificado</td>
+          </tr>
+          <tr>
+            <td>gg</td>
+            <td>Te para en la primera linea</td>
+          </tr>
+          <tr>
+            <td>G</td>
+            <td>Te para en la ultima linea</td>
+          </tr>
+          <tr>
+            <td>{</td>
+            <td>Sube uno o [x] bloques de codigo</td>
+          </tr>
+          <tr>
+            <td>}</td>
+            <td>Baja uno o [x] bloques de codigo</td>
+          </tr>
+          <tr>
+            <td>u</td>
+            <td>undo. Equivalente a Ctrl + z</td>
+          </tr>
+          <tr>
+            <td>Ctrl + r</td>
+            <td>redo. Hace lo contrario que undo</td>
+          </tr>
+          <tr>
+            <td>yy</td>
+            <td>Copia una linea</td>
+          </tr>
+          <tr>
+            <td>p</td>
+            <td>Pega en la siguiente linea</td>
+          </tr>
+          <tr>
+            <td>P</td>
+            <td>Pega en la linea anterior</td>
+          </tr>
+          <tr>
+            <td>x</td>
+            <td>Borra un caracter</td>
+          </tr>
+          <tr>
+            <td>m[char]</td>
+            <td>
+              mark. Crea un ancla en la actual y la guarda en el [char] especificado, como los macros. Luego puedes ir a
+              esa linea con el mark usando `[char]. Por ejemlo: mk se llama con `k
+            </td>
+          </tr>
+          <tr>
+            <td>d}</td>
+            <td>Borra el siguiente bloque de codigo</td>
+          </tr>
+          <tr>
+            <td>w</td>
+            <td>word. Te mueve al inicio de la siguiente palabra</td>
+          </tr>
+          <tr>
+            <td>W</td>
+            <td>Te mueve al siguiente espacio en la linea</td>
+          </tr>
+          <tr>
+            <td>e</td>
+            <td>end. Te mueve al final de la siguiente palabra</td>
+          </tr>
+          <tr>
+            <td>b</td>
+            <td>Te mueve al inicio de la palabra anterior</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>Te mueve al espacio anterior en la linea</td>
+          </tr>
+          <tr>
+            <td>0w</td>
+            <td>Te mueve al principio de la linea</td>
+          </tr>
+          <tr>
+            <td>$</td>
+            <td>Te mueve al final de la linea</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>Borra el resto de la linea desde la posiciona actual y se deja en INSERT MODE</td>
+          </tr>
+          <tr>
+            <td>D</td>
+            <td>Borra el resto de la linea desde la posiciona actual</td>
+          </tr>
+          <tr>
+            <td>*</td>
+            <td>Cambia la siguiente ocurrencia de la seleccion actual</td>
+          </tr>
+          <tr>
+            <td>zz</td>
+            <td>Mueve la vista para que la linea actual quede en el centro</td>
+          </tr>
+          <tr>
+            <td>~</td>
+            <td>toggle case. Las mayusculas las pasa a minusculas y viceversa</td>
+          </tr>
+          <tr>
+            <td>.</td>
+            <td>Repite la ultima accion realizada en la posicion actual</td>
+          </tr>
+          <tr>
+            <td>></td>
+            <td>Agrega identacion, equivalente a un tab</td>
+          </tr>
+          <tr>
+            <td><</td>
+            <td>quita identacion, equivalente a un tab</td>
+          </tr>
+          <tr>
+            <td>q</td>
+            <td>
+              Inicia y termina la grabacion de una macro, te pide asignarle un tecla para poder llamarlo luego con @
+            </td>
+          </tr>
+          <tr>
+            <td>Ctrl + e</td>
+            <td>Hace scroll hacia abajo</td>
+          </tr>
+          <tr>
+            <td>Ctrl + y</td>
+            <td>Hace scroll hacia arriba</td>
+          </tr>
+          <tr>
+            <td>Ctrl + f</td>
+            <td>Hace scroll equivalente a una pagina hacia abajo</td>
+          </tr>
+          <tr>
+            <td>Ctrl + b</td>
+            <td>Hace scroll equivalente a una pagina hacia arriba</td>
+          </tr>
+          <tr>
+            <td>H</td>
+            <td>Mueve el cursor hacia la parte superior de la pantalla</td>
+          </tr>
+          <tr>
+            <td>M</td>
+            <td>Mueve el cursor hacia el centro de la pantalla</td>
+          </tr>
+          <tr>
+            <td>L</td>
+            <td>Mueve el cursor hacia la parte inferior de la pantalla</td>
+          </tr>
         </tbody>
-    </table>
-  </main>
+      </table>
+    </main>
 
     <script>
+      function myFilterCuenta() {
+        var tr, td, inputCuenta, filterCuenta, i, textValue
 
-        function myFilterCuenta() {
-            var tr, td, inputCuenta, filterCuenta,
-                i, textValue;
+        tr = document.getElementsByTagName('tr')
+        inputCuenta = document.getElementById('inputCuenta')
+        filterCuenta = inputCuenta.value.toUpperCase()
 
-            tr = document.getElementsByTagName("tr");
-            inputCuenta = document.getElementById("inputCuenta");
-            filterCuenta = inputCuenta.value.toUpperCase();
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[0]
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-
-                if (td) {
-                    textValue = td.textContent;
-                    if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
-                        tr[i].style.display = "";
-                    } else { tr[i].style.display = "none"; }
-                }
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
             }
+          }
         }
-        function myFilterDetalle() {
-            var tr, td, inputDetalle, filterDetalle,
-                i, textValue;
+      }
+      function myFilterDetalle() {
+        var tr, td, inputDetalle, filterDetalle, i, textValue
 
-            tr = document.getElementsByTagName("tr");
-            inputDetalle = document.getElementById("inputDetalle");
-            filterDetalle = inputDetalle.value.toUpperCase();
+        tr = document.getElementsByTagName('tr')
+        inputDetalle = document.getElementById('inputDetalle')
+        filterDetalle = inputDetalle.value.toUpperCase()
 
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[1]
 
-                if (td) {
-                    textValue = td.textContent;
-                    if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
-                        tr[i].style.display = "";
-                    } else { tr[i].style.display = "none"; }
-                }
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
             }
+          }
         }
-
+      }
     </script>
-</body>
-
+  </body>
 </html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Movil Cheatsheet</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table,
+      td,
+      tr,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+      }
+
+      th {
+        padding: 0.8em;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: white;
+      }
+
+      tbody > tr:nth-child(odd) {
+        background-color: white;
+      }
+
+      tbody > tr:nth-child(even) {
+        background-color: lightblue;
+      }
+
+      td {
+        padding: 1em;
+        opacity: 0.6;
+      }
+
+      tbody td:hover {
+        opacity: 1;
+      }
+
+      input {
+        width: 45%;
+        padding: 1em;
+        border-radius: 35px;
+        margin: 1em;
+      }
+
+      tr > td:first-child {
+        font-weight: bold;
+        text-align: center;
+        width: 10%;
+      }
+
+      tr > td:last-child {
+        width: 35%;
+      }
+
+      .title {
+        text-align: center;
+        font-size: 2rem;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        padding: 0 10vw;
+      }
+
+      .metadata {
+        display: flex;
+      }
+
+      .metadata > div {
+        flex: 33.33%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <main>
+      <div>
+        <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia" />
+        <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis" />
+      </div>
+      <br />
+      <table>
+        <thead>
+          <tr>
+            <th>Tecnologia</th>
+            <th>Descripcion</th>
+            <th>Sintaxis</th>
+          </tr>
+        </thead>
+        <tbody id="cuentas">
+          <tr>
+            <td>Ionic workflow</td>
+            <td>
+              - Abre el dev server<br />
+              - Genera componentes como el cli de angular<br />
+              - Genera el proyecto de android<br />
+              - Genera el proyecto de ios
+            </td>
+            <td>
+              $ ionic serve<br />
+              $ ionic generate<br />
+              $ ionic capacitor build android<br />
+              $ ionic capacitor build ios
+            </td>
+          </tr>
+          <tr>
+            <td>Ionic - change app name</td>
+            <td>En el archivo /android/app/src/main/res/values/strings.xml<br /><br /></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Ionic - change splash and icon</td>
+            <td>
+              $ Run npm install cordova-res --save-dev <br /><br />
+
+              Put the source images at resources folder:<br />
+              - resources/icon.png with resolution 1024x1024px or higher<br />
+              - resources/splash.png with resolution 2732x2732px or higher<br /><br />
+
+              Add scripts to package.json:<br />
+              "resources:android": "cordova-res android && node scripts/resources-android.js"<br />
+              "resources:ios": "cordova-res ios && node scripts/resources-ios.js"<br /><br />
+
+              Put the resources script at scripts folder (you can find them in the portalproveedores app on github):<br />
+              - scripts/resources-android.js<br />
+              - scripts/resources-ios.js<br /><br />
+
+              $sudo chmod -R 777 scripts/resources.js<br />
+              $ npm run resources:android<br />
+              $ npm run resources:ios
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Android</td>
+            <td>Instalar APK en el dispositivo conectado</td>
+            <td>adb install -r app-debug.apk</td>
+          </tr>
+          <tr>
+            <td>Ionic</td>
+            <td>
+              Capacitor 2.0 uses Android X, that means all plugins have to use Android X too and that one is not
+              updated.<br />
+              As workarounds you can use Capacitor 1.5.2 or use jetifier to patch plugins to use Android X. Another
+              possible option is to use Android Studio to migrate on menu Refactor -> Migrate to AndroidX
+            </td>
+            <td>
+              $ npm install jetifier<br />
+              $ npx jetifier<br />
+              $ npx cap sync android
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </main>
+
+    <script>
+      function myFilterCuenta() {
+        var tr, td, inputCuenta, filterCuenta, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputCuenta = document.getElementById('inputCuenta')
+        filterCuenta = inputCuenta.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[0]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+      function myFilterDetalle() {
+        var tr, td, inputDetalle, filterDetalle, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputDetalle = document.getElementById('inputDetalle')
+        filterDetalle = inputDetalle.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[1]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
