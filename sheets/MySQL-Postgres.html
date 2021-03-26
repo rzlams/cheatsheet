@@ -354,6 +354,85 @@
         <tr>
           <td>PostgreSQL</td>
           <td>
+            <pre>
+            UPDATE test
+              SET
+                info = tmp.info
+                field = tmp.field
+            FROM (
+              VALUES
+                (1, 'new1', 'field1'),
+                (2, 'new2', 'field2'),
+                (6, 'new6', 'field6')
+            ) AS tmp (id, info, field)
+            WHERE test.id = tmp.id;
+            </pre>
+          </td>
+          <td>
+            Bulk update<br />
+            Use other's table name after 'FROM' to perform multi-table JOIN batch update.<br />
+            In a scenario where a Cartesian or one-to-many or many-to-many JOIN operations occur, the database might not know the target row for which the value needs to be updated.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
+            <pre>
+            DELETE FROM test
+            USING (VALUES (3),(4),(5)) AS tmp(id)
+            WHERE test.id = tmp.id;
+            </pre>
+          </td>
+          <td>
+            Bulk delete<br />
+            Use other's table name after 'FROM' to perform multi-table JOIN batch deletion.<br />
+            If you want to clear the table, we recommend usig TRUNCATE.<br />
+            In a scenario where a Cartesian or one-to-many or many-to-many JOIN operations occur, the database might not know the target row for which the value needs to be updated.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
+            <pre>
+              SELECT
+                "rt"."id",
+                "rt"."name",
+                "rt"."prefix",
+                "rt"."description",
+                "rt"."uses_resources",
+                "rt"."status",
+                "rt"."has_appointments",
+                "rt"."is_default",
+                CONCAT('[',
+                  STRING_AGG(
+                    CONCAT(
+                      '{',
+                        '"id": "', rtf.id, '",',
+                        '"resource_type_id": "', rtf.resource_type_id, '",',
+                        '"name": "', rtf.name, '",',
+                        '"type": "', rtf.type, '",',
+                        '"is_required": "', rtf.is_required, '",',
+                        '"options": ', COALESCE(rtf.options, '{}'::jsonb), ',',
+                        '"status": "', rtf.status, '",',
+                        '"position": "', rtf.position, '",',
+                        '"created_at": "', rtf.created_at, '",',
+                        '"created_by": "', rtf.created_by, '",',
+                        '"creator_id": "', rtf.creator_id, '"',
+                      '}'
+                    )
+                  , ','),
+                ']') AS fields
+              FROM resources_types rt
+              INNER JOIN resources_types_fields rtf ON rt.id = rtf.resource_type_id
+              WHERE rt.id = $1
+              GROUP BY rt.id
+            </pre>
+          </td>
+          <td>Armar JSON agrupando los resultados de un JOIN</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
             sudo su - postgres<br />
             sudo -i -u postgres
           </td>
