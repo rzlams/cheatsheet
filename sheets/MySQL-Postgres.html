@@ -280,13 +280,42 @@
         </tr>
         <tr>
           <td>MySQL</td>
-          <td>ALTER TABLE [nombre_tabla] ADD CONSTRAINT [nombre_restriccion] [restriccion(columna_objetivo)];</td>
-          <td>Agrega una restriccion a una columna</td>
+          <td>
+          ALTER TABLE [nombre_tabla] ADD CONSTRAINT [nombre_restriccion] [restriccion(columna_objetivo)];
+          <br />
+          <br />
+          <b>Ejemplo:</b><br />
+          ALTER TABLE products ADD service_type_id int NOT NULL;<br />
+ALTER TABLE products ADD CONSTRAINT products_service_types_fk FOREIGN KEY (service_type_id) REFERENCES service_types(id);
+          </td>
+          <td>
+            Agrega una restriccion a una columna<br />
+            Al modificar una tabla se debe añadir la columna primero y luego agregar la restriccion
+          </td>
         </tr>
         <tr>
           <td>MySQL</td>
           <td>NULLIF(valor1, valor2);</td>
           <td>Si ambos valores son iguales devuelve nulo, sino devuelve el valor1</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            mysqldump -u username -p database_name > data-dump.sql
+          </td>
+          <td>
+            Exportar base de datos
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            mysql -u username -p new_database < data-dump.sql
+          </td>
+          <td>
+            Importar base de datos<br />
+            Antes se debe crear la base de datos vacia
+          </td>
         </tr>
         <tr>
           <td>MySQL</td>

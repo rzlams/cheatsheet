@@ -96,10 +96,47 @@
         </tr>
         <tr>
           <td>Docker</td>
-          <td>docker run -d [nombre_imagen]</td>
+          <td>docker push [nombre_imagen]</td>
+          <td>Sube a dockerhub la imagen especificada.</td>
+        </tr>
+        <tr>
+          <td>Docker</td>
+          <td>docker build [path_to_dockerfile] -t [image_tagname]</td>
+          <td>
+            Crea en local una imagen de docker<br />
+            Primero se debe crear el dockerfile para luego correr el build.<br />
+            image_tagname : sigue el siguiente formato [account_name]/[app_name] Ejemplo: rzlams/my-app
+          </td>
+        </tr>
+        <tr>
+          <td>Docker</td>
+          <td>
+            docker run -d [nombre_imagen]:[tag]<br />
+            docker run -it [nombre_imagen] sh<br />
+            docker run -p [external_port]:[internal_port]<br />
+            docker run -v [external_path]:[internal_path]<br />
+            docker run -e [key]=[value] docker run --entrypoint [comando]<br />
+            docker run image --network=none<br />
+            docker run --cpus=.5 ubuntu<br />
+            docker run --memory=100m ubuntu
+          </td>
           <td>
             Ejecuta una imagen instalada. Sino consigue la imagen la descarga desde dockerhub y la instala.<br />
-            -d : activa el modo 'detach', es decir, ejecuta el contenedor en segundo plano sin ocupar la consola.
+            -d : activa el modo 'detach', es decir, ejecuta el contenedor en segundo plano sin ocupar la consola.<br />
+            -it : activa el modo interactivo en la terminal. Si le agregas el sh al final te deja usar el bash dentro
+            del contenedor<br />
+            -t : activa el modo 'atach'. Por ejemplo: con -it se puede mostrar el prompt que imprime un container al
+            ejecutarse, si pide algun input<br />
+            -p : mapea un puerto externo con uno interno del container<br />
+            -v : volume mapping, similar al mapeo de puertos este comando mapea una carpeta. Esto es util para servicios
+            que necesiten persistir datos (como mysql<br />
+            -e : permite establecer variables de entorno<br />
+            tag : se refiere a la version (el default es latest) los tags soportados se encuentran en la descripcion de
+            la imagen en dockerhub<br />
+            --entrypoint : reescribe el ENTRYPOINT del dockerfile<br />
+            --network : el network por defecto es bridge. Tambien puede ser seteado a "none" o "host"<br />
+            --cpus : limita la capacidad del CPU que utiliza docker. Por ejemplo: .5 es equivalente a 50%<br />
+            --memory : limita la cantidad de memoria usada por docker. Por ejemplo: 100m es equivalente a 100 megas
           </td>
         </tr>
         <tr>
@@ -109,6 +146,16 @@
             Sale del modo detach, es decir, ocupa la consola con la ejecucion del container especificado.<br />
             El container_id pueden ser solo los cinco primeros caracteres del id.
           </td>
+        </tr>
+        <tr>
+          <td>Docker</td>
+          <td>docker logs [container_id]</td>
+          <td>Muestra los logs de un container que este corriendo en detached mode</td>
+        </tr>
+        <tr>
+          <td>Docker</td>
+          <td>docker inspect [container_id]</td>
+          <td>Muestra toda la informacion del container en formato JSON</td>
         </tr>
         <tr>
           <td>Docker</td>
@@ -140,6 +187,40 @@
             Remueve la imagen especificada.<br />
             Se deben detener todos los containers de la image (o que dependan de ella) que se esten ejecutando para
             poder borrarla.
+          </td>
+        </tr>
+        <tr>
+          <td>Docker</td>
+          <td>dockerfile:</td>
+          <td>
+            Sigue el formato INSTRUCTION ARGUMENT. Todo los que esta a la izquierda es una instruccion y lo siguiente un
+            argumento<br />
+            FROM : es la imagen base. Puede ser un sistema operativo u otra imagen basada en un sistema operativo<br />
+            CMD : tiene dos posibles formatos, comando argumento (como en la terminal) o como JSON, ["comando",
+            "argumento"]<br />
+            Es el comando que corre al iniciar el container y el que determina si el proceso del cointainer esta activo
+            o no (al deternerse el proceso que inicia el comando, se para el container tambien).<br />
+            ENTRYPOINT : el formato es en JSON, ["comando", "argumento"].<br />
+            Igual que CMD corre al iniciar el container. La diferencia es que los argumentos que se pasen al "docker
+            run" se le anexan al final, mientras que los mismos argumentos reescriben por completo CMD.<br />
+            Tanto ENTRYPOINT como CMD se pueden usar juntos. En ese caso le anexa el valor de CMD al de ENTRYPOINT
+          </td>
+        </tr>
+
+        <tr>
+          <td>Docker</td>
+          <td>dockerfile compose file</td>
+          <td>
+            - Para la version 2 en adelante se debe especificar la version al inicio del docker-compose.yml<br />
+            - A partir de la version 2 docker compose:<br />
+            &nbsp; - Los servicios se definen bajo la key "services"<br />
+            &nbsp; - Crea una conexion bridge para todos los containers, lo que elimina la necesidad de crear links para
+            comunicarlos.<br />
+            &nbsp; - En cambio incluye "depends_on", donde se puede especificar el contenedor del cual depende para que
+            corra los contenedores en el orden adecuado<br />
+            - La version 3 tiene soporte para docker swarn<br />
+            - La key "networks" en la raiz permite definir varias conexiones. Luego con la key "networks" dentro de cada
+            servicio, se puede asociar ese servicio a las conexiones que se especifiquen<br />
           </td>
         </tr>
       </tbody>

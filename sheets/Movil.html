@@ -109,18 +109,49 @@
               - Abre el dev server<br />
               - Genera componentes como el cli de angular<br />
               - Genera el proyecto de android<br />
-              - Genera el proyecto de ios
+              - Genera el proyecto de ios<br />
+              - Desarrollar con live reload en el telefono
             </td>
             <td>
               $ ionic serve<br />
               $ ionic generate<br />
               $ ionic capacitor build android<br />
-              $ ionic capacitor build ios
+              $ ionic capacitor build ios<br />
+              $ ionic capacitor run android -l --external
+            </td>
+          </tr>
+          <tr>
+            <td>Error id plugin io.fabric</td>
+            <td>
+              - Agregar la siguiente linea a las keys "repositories" de "buildscript" y "allprojects":<br />
+              $ maven { url 'https://maven.fabric.io/public' }<br />
+              - Agregar la siguiente linea a buildscript -> dependencies:<br />
+              $ classpath 'io.fabric.tools:gradle:1.+'<br />
+            </td>
+            <td>Este error se presento con el plugin "firebase"</td>
+          </tr>
+          <tr>
+            <td>Configuracion de la APP (capacitor.config.json)</td>
+            <td>
+              <pre>
+  {
+    "appId": "com.aura.portalproveedores", // Nombre del paquete
+    "appName": "AURA Portal Proveedores",  // Nombre de la aplicacion
+  }
+</pre
+              >
+            </td>
+            <td>
+              Para que estas configuraciones tomen efecto puede ser necesario elimnar la carpeta del proyecto (por ej:
+              android/) y crearla de nuevo (npx cap sync android)
             </td>
           </tr>
           <tr>
             <td>Ionic - change app name</td>
-            <td>En el archivo /android/app/src/main/res/values/strings.xml<br /><br /></td>
+            <td>
+              En la key appName del capacitor.config.json o en el archivo
+              /android/app/src/main/res/values/strings.xml<br /><br />
+            </td>
             <td></td>
           </tr>
           <tr>
@@ -162,7 +193,36 @@
             <td>
               $ npm install jetifier<br />
               $ npx jetifier<br />
-              $ npx cap sync android
+              $ npx cap sync android<br />
+              $ ionic capacitor build android
+            </td>
+          </tr>
+          <tr>
+            <td>Ionic FCM cordova plugin con capacitor</td>
+            <td>
+              - Instala el plugin con:<br />
+              $ npm install cordova-plugin-fcm-with-dependecy-updated@latest<br />
+              $ npm install @ionic-native/fcm<br />
+              $ ionic cap sync<br /><br />
+
+              - Crea un proyecto en Firebase y agrega la app al proyecto<br />
+              - Descargar el archivo google-services.json y ponerlo en la raiz del proyecto de Ionic, en /android/app/ y
+              en /android/capacitor-cordova-android-plugins/<br />
+              - Antes de correr la app con Android Studio se debe modificar en el archivo /Gradle Script/build.gradle la
+              linea classpath 'com.google.gms:google-services:4.3.4' (cambiar 4.3.3 por 4.3.4)<br />
+              - Si al correr el proyecto en Android Studio da el error "No matching client found for package name
+              'capacitor.android.plugins'" entonces hay que cambiar con Android Studio el texto
+              'capacitor.android.plugins' por el nombre de tu paquete en el archivo
+              capacitor-cordova-android-pugins/manifest/AndroidManifest.xml<br />
+              - Si al probar las notificaciones desde la consola de Firebase no funciona en el movil, entonces
+              desinstalar y volver a instalar las dependencias "@ionic-native/fcm" y
+              "cordova-plugin-fcm-with-dependecy-updated"
+            </td>
+            <td>
+              $ npm install jetifier<br />
+              $ npx jetifier<br />
+              $ npx cap sync android<br />
+              $ ionic capacitor build android
             </td>
           </tr>
         </tbody>
