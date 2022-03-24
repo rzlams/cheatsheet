@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Databases Cheatsheet</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      code {
+        background: lightgray;
+        color: red;
+      }
+
+      .w-80 {
+        width: 80%;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table,
+      td,
+      tr,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+      }
+
+      th {
+        padding: 0.8em;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: white;
+      }
+
+      tbody > tr:nth-child(odd) {
+        background-color: white;
+      }
+
+      tbody > tr:nth-child(even) {
+        background-color: lightblue;
+      }
+
+      td {
+        padding: 1em;
+        opacity: 0.6;
+      }
+
+      tbody td:hover {
+        opacity: 1;
+      }
+
+      input {
+        width: 25%;
+        padding: 0.5em 0;
+        margin-bottom: 1em;
+      }
+
+      tr > td:first-child {
+        font-weight: bold;
+        text-align: center;
+        width: 10%;
+      }
+
+      tr > td:last-child {
+        width: 35%;
+      }
+
+      img {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia" />
+    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis" />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tecnologia</th>
+          <th>Sintaxis</th>
+          <th>Descripcion</th>
+        </tr>
+      </thead>
+      <tbody id="cuentas">
+        <tr>
+          <td>SQL Modeling</td>
+          <td>
+            <b>0.- Crear proyecto en BOUML:</b> Menu "Project"->New; luego en el browser (con click derecho): new class view->new class diagram->new
+            class.<br /><br />
+            <b>1.- Definir entidades:</b> nombre y breve descripcion de cada una.<br /><br />
+            <b>2.- Definir relaciones:</b> incluyendo su cardinalidad minima y maxima.<br />
+            <b>* Cardinalidad minima:</b><br />
+            0 - la entidad se relaciona de manera opcional. Su existencia NO depende de participar en la relacion.<br />
+            1 - la entidad se relaciona de manera obligatorio. Su existencia SI depende de participar en la relacion.<br />
+            Ej: Una actividad (fuerte) NO necesita documento pero un documento (debil) SI una actividad.<br />
+            <b>* Cardinalidad maxima:</b><br />
+            1 - la ocurrencia puede relacionarse con solo una de la otra entidad.<br />
+            n - la ocurrencia puede relacionarse con varias a la vez.<br /><br />
+            <b>3.- Definir atributos:</b> pueden ser simples o compuestos. Se debe especificar cuales son derivados (calculados a partir de otro).<br /><br />
+            <b>4.- Realizar el diagrama correspondiente al diseño logico</b><br />
+            * Si las entidades tienen PRIMARY KEY (PK) son llamadas "fuertes/padre" sino son llamadas "debiles/hijo".<br />
+            * Cada ocurrencia de una entidad debil se relaciona con una y solamente una ocurrencia de la entidad fuerte de la que depende. por esto en
+            la entidad debil se debe crear una FOREIGN KEY (FK) enlazada a la PK de la entidad fuerte.<br />
+            <b>- RELACIONES BINARIAS ENTRE ENTIDADES FUERTES: </b>en este tipo de relaciones la tabla hija absorbe la relacion y se le asigna una
+            FK.<br />
+            Segun la cardinalidad maxima de los atributos relacionados esta puede ser:<br />
+            <b>* Uno a uno:</b> la entidad hija es la que participa de manera oblogatoria, la que tiene cardinalidad minima 1.<br />
+            <b>* Uno a muchos:</b> la entidad hija es la de cardinalidad maxima 1.<br />
+            <b>* Muchos a muchos:</b> se crea una tabla intermedia para almacenar las ocurrencias de la relacion. Esta tabla contendra una FK a cada
+            una de las tablas correspondientes a las entidades participantes, ademas de incluir los atributos de la relacion. Ninguna de las FK
+            aceptara nulos. La PK de esta tabla seran las dos FK si la relacion no tiene atributos, o un atributo de la relacion que pueda ser PK.<br />
+            En las relaciones "Uno a Uno" y "Uno a Muchos" tambien es posible usar una tabla intermedia, pero no es obligatorio como en el caso
+            "Muchos a Muchos". Esto se puede hacer para tratar de favorecer los accesos mas frecuentes y/o que requieran un tiempo de respuesta
+            menor.<br /><br />
+            <b>5.- Normalizacion</b>
+          </td>
+          <td>
+            WORKFLOW - CREACION DE BASE DE DATOS
+            <img class="imagen-descripcion" src="../images/diagramaUML.png" alt="diagrama UML de una BD" />
+            <br /><br /><br />
+            <b>Cardinalidad</b> => (minima, maxima) <br /><br />
+            <b>Relaciones:</b><br />
+            actividades (0, *) <=> (1, 1) documentos<br />
+            - Una 'act' PUEDE no tener 'doc' o tener muchos<br />
+            - Un 'doc' DEBE estar asociado a una y solo una 'act'
+            <br /><br />
+            actividades (1, *) <=> (1, 1) tareas<br />
+            - Una 'act' DEBE estar asociada a una o mas 'tar'<br />
+            - Una 'tar' DEBE estar asociada a una y solo una 'act'
+            <br /><br />
+            grupos (0, *) <=> (1, 1) tareas<br />
+            - Un 'gr' PUEDE no tener 'tar' o tener muchas<br />
+            - Una 'tar' DEBE estar asociada a uno y solo un 'gr'
+            <br /><br />
+            grupos (1, *) <=> (1, 1) personas<br />
+            - Un 'gr' DEBE estar asociado a una o mas 'per'<br />
+            - Una 'per' DEBE estar asociada a uno y solo un 'gr'
+          </td>
+        </tr>
+        <tr>
+          <td>Polymorphic Relationships</td>
+          <td>
+            <div>A polymorphic relationship allows the child model to belong to more than one type of model using a single association.</div>
+            <br />
+
+            <b>One to One:</b>
+            <div>A one-to-one polymorphic relation is similar to a typical one-to-one relation.</div>
+            <div>
+              The <code>imageable_id</code> column will contain the ID value of the post or user, while the <code>imageable_type</code> column will
+              contain the class name of the parent model. The <code>imageable_type</code> column is used by Eloquent to determine which "type" of
+              parent model to return when accessing the imageable relation.
+            </div>
+            <br />
+            <br />
+
+            <b>One to Many:</b>
+            <div>A one-to-many polymorphic relation is similar to a typical one-to-many relation.</div>
+            <div>
+              Using polymorphic relationships, you may use a single comments table to contain <code>comments</code> for both posts and videos.
+            </div>
+            <br />
+            <br />
+
+            <b>Many to Many:</b>
+            <div>Many-to-many polymorphic relations are slightly more complicated than "morph one" and "morph many" relationships.</div>
+            <div>
+              A <code>Post</code> model and <code>Video</code> model could share a polymorphic relation to a <code>Tag</code> model. Using a
+              many-to-many polymorphic relation in this situation would allow your application to have a single table of unique tags that may be
+              associated with posts or videos.
+            </div>
+            <div>
+              In this case, the table shared among the main (father) models corresponds to the intermediate table in a normal many-to-many
+              relationship. It means that you just need one intermediate table for all the models related to the <code>Tag</code> model, because you
+              can identify the relation with the <code>taggable_type</code> field.
+            </div>
+          </td>
+          <td>
+            <b>One to One:</b>
+            <img class="w-80" src="../images/one-to-one-polymorphic.png" alt="diagrama UML one to one poly" />
+            <br />
+
+            <b>One to Many:</b>
+            <img class="w-80" src="../images/one-to-many-polymorphic.png" alt="diagrama UML one to many poly" />
+            <br />
+
+            <b>Many to Many:</b>
+            <img class="w-80" src="../images/many-to-many-polymorphic.png" alt="diagrama UML many to many poly" />
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            mysql -u root -p &nbsp; &nbsp; (/opt/lampp/bin ruta en xampp)<br />
+            ALTER USER 'root'@'localhost' IDENTIFIED BY 'NEW_PASSWORD';
+          </td>
+          <td>
+            Abre la consola con el user y password especificados<br />
+            Cambiar clave del usuario con el que entro en la consola (root en este caso)
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            SELECT COLUMN_NAME AS 'ColumnName'<br />
+            ,TABLE_NAME AS 'TableName'<br />
+            FROM INFORMATION_SCHEMA.COLUMNS<br />
+            WHERE COLUMN_NAME LIKE '%country%'<br />
+            ORDER BY TableName, ColumnName;
+          </td>
+          <td>Buscar columnas y vistas en toda la DB segun el LIKE especificado</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            SELECT *<br />
+            FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE<br />
+            WHERE POSITION_IN_UNIQUE_CONSTRAINT IS NOT NULL
+          </td>
+          <td>Muestra todas las FOREIGN KEY de la base de datos</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>USE ['nombre_base_de_datos'];</td>
+          <td>Asigna la Base de Datos con la que se quiere trabajar</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>DESCRIBE ['nombre_tabla'];</td>
+          <td>
+            Muestra el nombre de los campos que conforman la tabla, su tipo de dato, si admite nulos, cuales son PRIMARY KEY o FOREIGN KEY, su valor
+            por defualt e info extra (si es auto_increment u otros)
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            SHOW Databases;<br />o<br />
+            SHOW Tables;
+          </td>
+          <td>
+            Muestra una lista con todas las Base de Datos almacenadas en el equipo<br />o<br />
+            Muestra una lista con los nombres de todas las tablas de la Base de Datos
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>ALTER TABLE [nombre_tabla_actual] RENAME TO [nuevo_nombre];</td>
+          <td>Cambia el nombre de una tabla</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>ALTER TABLE [nombre_tabla] CHANGE [nombre_actual_columna] [nuevo_nombre_columna][tipo de dato][restriccion];</td>
+          <td>Cambia el nombre de una columna</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            ALTER TABLE [nombre_tabla] ADD CONSTRAINT [nombre_restriccion] [restriccion(columna_objetivo)];
+            <br />
+            <br />
+            <b>Ejemplo:</b><br />
+            ALTER TABLE products ADD service_type_id int NOT NULL;<br />
+            ALTER TABLE products ADD CONSTRAINT products_service_types_fk FOREIGN KEY (service_type_id) REFERENCES service_types(id);
+          </td>
+          <td>
+            Agrega una restriccion a una columna<br />
+            Al modificar una tabla se debe añadir la columna primero y luego agregar la restriccion
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>NULLIF(valor1, valor2);</td>
+          <td>Si ambos valores son iguales devuelve nulo, sino devuelve el valor1</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>mysqldump -u username -p database_name > data-dump.sql</td>
+          <td>Exportar base de datos</td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>mysql -u username -p new_database < data-dump.sql</td>
+          <td>
+            Importar base de datos<br />
+            Antes se debe crear la base de datos vacia
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            CREATE TABLE ['nombre_tabla'] (<br />
+            &nbsp; &nbsp; ['nombre_columna'] [tipo_dato] [constraint],<br />
+            &nbsp; &nbsp; CONSTRAINT ['nombre_pk'] PRIMARY KEY ([columna1], [columna2]),<br />
+            &nbsp; &nbsp; CONSTRAINT ['nombre_fk'] FOREIGN KEY ([columna1], [columna2])<br />
+            &nbsp; &nbsp; REFERENCES ['nombre_tabla_ref'](['nombre_columna_ref'])<br />
+            &nbsp; &nbsp; [MATCH FULL | MATCH PARTIAL]<br />
+            &nbsp; &nbsp; ON UPDATE [accion] ON DELETE [accion]<br />
+            )ENGINE=InnoDB;<br /><br /><br />
+
+            CREATE TABLE codventa_resets (<br />
+            &nbsp; &nbsp; id int AUTO_INCREMENT NOT NUll,<br />
+            &nbsp; &nbsp; idventa int NOT NUll,<br />
+            &nbsp; &nbsp; created_at timestamp DEFAULT CURRENT_TIMESTAMP,<br />
+            &nbsp; &nbsp; CONSTRAINT codventa_reset_pk PRIMARY KEY (id),<br />
+            &nbsp; &nbsp; CONSTRAINT ventas_fk FOREIGN KEY (idventa)<br />
+            &nbsp; &nbsp; REFERENCES ventas(idventa)<br />
+            &nbsp; &nbsp; ON UPDATE CASCADE ON DELETE CASCADE<br />
+            )ENGINE=InnoDB;
+          </td>
+          <td>
+            Si la FOREIGN KEY esta formada por varias columnas y admite nulos se puede establecer:<br /><br />
+            - MATCH FULL: todas las columnas de la FOREIGN KEY tienen valor o ninguna de ellas lo tiene.<br />
+            - MATCH PARTIAL: permite las FOREIGN KEY parcialmente nulas.<br /><br /><br />
+
+            Se pueden establecer 4 comportamientos [accion] para cada FOREIGN KEY cuando se borra o actualiza el valor referenciado, es decir, el
+            valor original en la PRIMARY KEY:<br /><br />
+            - NO ACTION o RESTRICT: produce un error, no permite borrar ni actualizar.<br />
+            - CASCADE: borra/actualiza las filas que hacen referencia al valor borrado/actualizado.<br />
+            - SET NULL: pone un nulo en las filas donde se hacia referencia al valor borrado/actualizado.<br />
+            - SET DEFAULT: pone el valor por defecto en la filas donde se hacia referencia al valor borrado/actualizado.
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>
+            CREATE TRIGGER [nombre_trigger] [TIME] [EVENT]<br />
+            ON [nombre_tabla] FOR EACH ROW [NEW_STATEMENT];
+          </td>
+          <td>
+            <b>TIME</b> determina cuando se ejecuta la accion del trigger, puede ser:<br />
+            <b>BEFORE</b> ejecuta el trigger ANTES de la accion<br />
+            <b>AFTER</b> ejecuta el trigger DEPUES de la accion<br /><br />
+
+            <b>EVENT</b> es la accion que realiza el trigger, puede ser <b>UPDATE</b> o <b>DELETE</b> o <b>INSERT</b><br /><br />
+
+            <b>NEW_STATEMENT</b> es la query que ejecutara el trigger. Ej: INSERT INTO, UPDATE, etc.<br /><br />
+
+            En el <b>NEW_STATEMENT</b> se debe especificar si usar el valor previo o posterior al ACTION. Para ello se usan los prefijos
+            <b>"OLD."</b> (valor previo) y <b>"NEW."</b> (valor posterior) en los nombres de los campos de la tabla de origen de los datos, ya que son
+            los que se asignan como valores.
+
+            <b>EACH ROW o EACH STATEMENT</b> (Averiguar que opciones hay)
+          </td>
+        </tr>
+        <tr>
+          <td>MySQL</td>
+          <td>DROP TRIGGER ['nombre_trigger'];</td>
+          <td>Borra el trigger seleccionado.</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
+            <pre>
+            UPDATE test
+              SET
+                info = tmp.info
+                field = tmp.field
+            FROM (
+              VALUES
+                (1, 'new1', 'field1'),
+                (2, 'new2', 'field2'),
+                (6, 'new6', 'field6')
+            ) AS tmp (id, info, field)
+            WHERE test.id = tmp.id;
+            </pre>
+          </td>
+          <td>
+            Bulk update<br />
+            Use other's table name after 'FROM' to perform multi-table JOIN batch update.<br />
+            In a scenario where a Cartesian or one-to-many or many-to-many JOIN operations occur, the database might not know the target row for which
+            the value needs to be updated.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
+            <pre>
+            DELETE FROM test
+            USING (VALUES (3),(4),(5)) AS tmp(id)
+            WHERE test.id = tmp.id;
+            </pre>
+          </td>
+          <td>
+            Bulk delete<br />
+            Use other's table name after 'FROM' to perform multi-table JOIN batch deletion.<br />
+            If you want to clear the table, we recommend usig TRUNCATE.<br />
+            In a scenario where a Cartesian or one-to-many or many-to-many JOIN operations occur, the database might not know the target row for which
+            the value needs to be updated.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
+            <pre>
+              SELECT
+                "rt"."id",
+                "rt"."name",
+                "rt"."prefix",
+                "rt"."description",
+                "rt"."uses_resources",
+                "rt"."status",
+                "rt"."has_appointments",
+                "rt"."is_default",
+                CONCAT('[',
+                  STRING_AGG(
+                    CONCAT(
+                      '{',
+                        '"id": "', rtf.id, '",',
+                        '"resource_type_id": "', rtf.resource_type_id, '",',
+                        '"name": "', rtf.name, '",',
+                        '"type": "', rtf.type, '",',
+                        '"is_required": "', rtf.is_required, '",',
+                        '"options": ', COALESCE(rtf.options, '{}'::jsonb), ',',
+                        '"status": "', rtf.status, '",',
+                        '"position": "', rtf.position, '",',
+                        '"created_at": "', rtf.created_at, '",',
+                        '"created_by": "', rtf.created_by, '",',
+                        '"creator_id": "', rtf.creator_id, '"',
+                      '}'
+                    )
+                  , ','),
+                ']') AS fields
+              FROM resources_types rt
+              INNER JOIN resources_types_fields rtf ON rt.id = rtf.resource_type_id
+              WHERE rt.id = $1
+              GROUP BY rt.id
+            </pre>
+          </td>
+          <td>Armar JSON agrupando los resultados de un JOIN</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
+            sudo su - postgres<br />
+            sudo -i -u postgres
+          </td>
+          <td>Login con el usuario postgres, que es superusuario por defecto</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>psql</td>
+          <td>Entra a la consola postgres</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>psql -U [nombre_usuario] [nombre_db]</td>
+          <td>Accede a la base de datos con el usuario especificado</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\q</td>
+          <td>Salir de la consola</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\h [comando]</td>
+          <td>
+            Muestra la ayuda DENTRO de la consola para los comandos SQL.<br />
+            El [comando] es opcional.<br />
+            Presiona "q" para salir de la ayuda.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\?</td>
+          <td>
+            Muestra la ayuda DENTRO de la conexion a la consola.<br />
+            El [comando] es opcional.<br />
+            Presiona "q" para salir de la ayuda.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>psql --help</td>
+          <td>Muestra la ayuda FUERA de la conexion a la consola</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\l</td>
+          <td>Muestra la lista de las bases de datos</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\c [nombre_base_datos]</td>
+          <td>
+            Conecta a la base de datos especificada.<br />
+            Con la ayuda FUERA de la conexion a la consola se puede ver como setear las opciones de la conexion.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\d [nombre_tabla]</td>
+          <td>
+            Describe la Base de Datos. Lista de Relaciones<br />
+            Con el [nombre_tabla] describe la tabla especificada.
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\du</td>
+          <td>Muestra los usuarios</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>psql [databasename] < /lib/setup/initDb.sql</td>
+          <td>
+            Importar una base de datos desde un sql<br />
+            La base de datos debe estar creada (vacia) es psql para que esto funcione
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>pg_dump -U [nombre_usuario] [nombre_db] > [ruta_output].sql</td>
+          <td>
+            Respalda la base de datos del usuario especificado en la ruta despues del mayor que.<br />
+            El archivo de output debe ser .sql
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>pg_dumpall > /var/lib/pgsql/backups/dumpall.sql</td>
+          <td>
+            Respalda todas las bases de datos.<br />
+            Debes estar logueado con el superusuario postgres. (sudo su - postgres)
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>
+            psql -U postgres [database_name] < [ruta_archivo].sql<br />
+            psql -f /var/lib/pgsql/backups/dumpall.sql [database_name]
+          </td>
+          <td>
+            Restaura la base de datos especificada<br />
+            Para el segundo comando debes estar logueado con el superusuario postgres. (sudo su - postgres)
+          </td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>pg_restore --verbose --clean --no-acl --no-owner --host=[localhost] --dbname=[db_name] --username=[username] [ruta_archivo].backup</td>
+          <td>Restaura la base de datos especificada, para el usuario y host especificados</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>sudo -u user_name psql db_name</td>
+          <td>Password less login</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>\i [ruta_archivo]</td>
+          <td>Inserta un archivo .sql</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>SELECT version();</td>
+          <td>Selecciona la version</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>CREATE USER [nombre_usuario] WITH password '[password]'</td>
+          <td>Crea un usuario para acceder a la conexion postgres</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>ALTER USER [nombre_superuser] WITH SUPERUSER CREATEDB CREATEROLE INHERIT LOGIN REPLICATION</td>
+          <td>Crea super usuario</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>ALTER DATABASE [database_name] OWNER TO [new_owner];</td>
+          <td>Cambiar el dueño de una base de datos</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>DROP USER [nombre_usuario]</td>
+          <td>Elimina un usuario para acceder a la conexion postgres</td>
+        </tr>
+        <tr>
+          <td>PostgreSQL</td>
+          <td>ALTER USER [usertochange] WITH password '[new_passwd]';</td>
+          <td>Resetea la contraseña de un usuario. Solo se puede hacer como administrador.</td>
+        </tr>
+        <tr>
+          <td>noSQL Modeling</td>
+          <td>
+            - Usar ULID en lugar de UUID porque el primero se puede ordenar cronologicamente.<br /><br />
+            - noSQL tiene un diseño desnormalizado (se puede duplicar data) y “query-first” (las queries son mas relevantes que las relaciones). Esto
+            significa que se define el esquema segun los patrones de acceso a los datos y queries. Como ayuda en el proceso de diseño se recomienda
+            listar todos los casos de acceso a los datos que requiera tu apicacion y tratar de soportarlos todos con tu diseño, en lugar de un
+            diagrama entidad-relacion como se haria con una DB relacional.<br /><br />
+            - "query-first" se refleja en la practica cuando logras realizar (casi) todas las queries solo filtrando por la primary, sea simple o
+            compuesta.<br /><br />
+            - El diseño desnormalizado es posible porque noSQL esta diseñado para escalar horizontalmente. Al dividir la informacion en modulos o
+            particiones permite que al hacer una query la DB lea un listado con los rangos de datos en cada particion y asi puede elegir en cual
+            particion buscar.<br /><br />
+            - Es util comenzar por definir entidades, atributos y relaciones. Siempre que sea util, se pueden seguir las normas de SQL para
+            identificar las entidades debiles.<br /><br />
+            - Es importante recordar, los datos que se leen juntos se deben almacenar juntos. Por ejemplo:<br />
+            &nbsp; &nbsp; * Una web de post tiene las entidades 'Users', 'Posts' y 'Comments'.<br />
+            &nbsp; &nbsp; * En SQL, 'Comments' se relacionaria con las otras dos entidades.<br />
+            &nbsp; &nbsp; * En noSQL se debe decidir con cual agruparla. Para este caso se privilegia el acceso a los 'Posts', por lo que 'Comments'
+            quedaria como su embedded object.<br /><br />
+            - Si un embedded object es demasiado grande (el tamaño optimo es entre 50-100KB). Puede solo agregarse su row key y almacenarlo en su
+            propia tabla.<br /><br />
+            - En MongoDB para cada documento se designa un id (row key). Se pueden crear “composite” row key con varios campos, esto puede ser util
+            para (indexar) agrupar filas. En el siguiente ejemplo, la key es compuesta por la categoria y el timestamp.
+            <br /><br />
+            - En DynamoDB las primary keys son llamadas partition key (deben ser unicas). Dynamo tambien soporta keys compuestas formadas por un
+            partition key y un sort key (obviamente usada para ordenar/agrupar registros)
+            <br /><br /><br />
+            <span>RELATIONAL TO DOCUMENT MODEL EXAMPLE</span>
+            <img class="imagen-descripcion" src="../images/noSQL-relation-example.png" alt="noSQL relation example" />
+          </td>
+          <td>
+            <span>TREE, ADJACENCY LIST, GRAPH DATA EXAMPLE</span>
+            <img class="imagen-descripcion" src="../images/noSQL-tree-example.png" alt="diagrama UML de una BD" />
+            <br /><br />
+            <span>MAPR Documentation - ROW KEY RELEVANCE</span>
+            <img class="imagen-descripcion" src="../images/noSQL-row-key.png" alt="noSQL composite row key" />
+          </td>
+        </tr>
+        <tr>
+          <td>DynamoDB- Joins</td>
+          <td>
+            Dynamo no tiene joins por lo que para tratar relaciones uno a muchos en las que hay un padre con informacionde varios hijos asociados se
+            pueden usar los siguientes patrones:<br />
+            - <b>Denormalization + complex attribute: </b> de esta forma se puede incluir toda la informacion de los hijos junto con el padre. Este
+            metodo es recomendado cuando:
+            <ul>
+              <li>
+                Nunca es necesario acceder al hijo por separado. Es decir, no se requiere en base a un numero de tarjeta (PaymentMethod) acceder al
+                usuario
+              </li>
+              <li>El objeto hijo (iems relacionados al padre) son pocos. Dynamo tiene un tamaño por cada registro (item size) de 400kb</li>
+            </ul>
+            <br />
+            - <b>Denormalization + duplication: </b> el principal inconveniente con este metodo es que en caso de tener que modificar la informacion
+            duplicada se debe hacer en muchos registros, por lo que se recomeinda usar cuando:
+            <ul>
+              <li>Los datos que se duplican son inmutable. Como en el ejemplo, es una fecha de nacimiento</li>
+              <li>Los datos se duplican en pocos sitios y cambian con poca frecuencia</li>
+            </ul>
+            <br />
+            - <b>Composite primary key + query: </b> se hace un "pre-join", es decir, se modelan los datos en base al patron con el que se va a
+            acceder a ellos y asi se hace innecesario el uso de joins <br />
+          </td>
+          <td>
+            <span>Denormalization + complex attribute</span>
+            <img class="imagen-descripcion" src="../images/dynamo-denormalization.png" alt="dynamo denormalization" />
+            <hr />
+            <span>Denormalization + duplication</span>
+            <img class="imagen-descripcion" src="../images/dynamo-denormalization+duplication.png" alt="dynamo denormalization + duplication" />
+            <hr />
+            <span>Composite primary key + query (pre-join)</span>
+            <img class="imagen-descripcion" src="../images/dynamo-prejoin.png" alt="dynamo-prejoin" />
+          </td>
+        </tr>
+        <tr>
+          <td>DynamoDB - Single Table Design</td>
+          <td>
+            En la imagen se ve un ejemplo del Single Table Design propuesto por el equiop de dynamo: <br /><br />
+            - Se define una nomenclatura para la PK y SK que permita cierta flexibilidad en base al tipo de datos que se quieren almacenar. En este
+            caso se almacenan organizaciones y sus usuarios. Es recomendable usar upper case para las keys (sobretodo la sort key) porque en utf las
+            mayusculas siempre van alfabeticamente antes que las minusculas.<br />
+            - Con este dinseño se cumple el ideal de poder realizar queries solo en base a la primary key (compuesta en este caso). El sort key es
+            unico entre todos los registros de una misma organizacion (misma PK).<br />
+            - Dynamo es schemaless, los registros no tienen una estructura predefinida. En el diseño de la DB solo se deben cuidar el acceso a los
+            datos, no la estructura de cada registro
+          </td>
+          <td>
+            <img class="imagen-descripcion" src="../images/dynamo-single-table-model.png" alt="single table design" />
+          </td>
+        </tr>
+        <tr>
+          <td>DynamoDB - Secondary index</td>
+          <td>
+            - En dynamo un secondary index es el equivalente a una vistaa en SQL. <br />
+            - Un secondary index puede ser asociado con solo una tabla (base table). <br />
+            - Al crear un secondary index debes seleccionar la "alternate key" (partition key and sort key) y definir los atributos que quieres copiar
+            al secondary index. <br />
+            Existen dos tipos de secondary index:
+            <ul>
+              <li>
+                <b>Global: </b> <br />
+                - Puede tener una partition key simple o compuesta y ademas su partition key no debe coincidir con la de la tabla base, por eso es
+                considerada "global" porque sus datos pueden pertenecer a varias particiones de la tabla base a la vez. Este tipo de secondary index
+                son almacenados en su propia particion y escala independiente de la tabla base. <br />
+                - Pueden ser creados al crear su tabla base, luego de creada la tabla tambien se pueden agregar o eliminar. <br />
+                - Consume capacity units del propio secondary index, no de su base table.<br />
+                - En las queries al secondary index solo se pueden incluir atributos copiados (o preojectados) al secondary index.<br />
+              </li>
+              <li>
+                <b>Local: </b> <br />
+                - Debe tener la misma partition key que su tabla base pero una sort key diferente, por eso se considera "local" porque sus datos estan
+                restringidos a una particion de su tabla base. <br />
+                - Solo pueden ser creados al momento de crear su tabla base y no pueden ser eliminados mientras exista su tabla base.<br />
+                - Consume capacity units de su base table.<br />
+                - En las queries al secondary index se pueden incluir atributos presentes en su base table que no se hayan incluido en el secondary
+                index.<br />
+              </li>
+            </ul>
+          </td>
+          <td>
+            <div>Global secondary index</div>
+            <div>Se quiere dar soporte a un patron de acceso por Role de usuario, por ejemplo: Todos los usuarios con Role = Admin</div>
+            <img class="imagen-descripcion" src="../images/dynamo-global-secondary-index.png" alt="Global secondary index" />
+            <hr />
+            <div>Local secondary index</div>
+            <div>Mismo patron de acceso del global secondary index pero en este caso con local secondary index</div>
+            <img class="imagen-descripcion" src="../images/dynamo-local-secondary-index.png" alt="Local secondary index" />
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>sudo service mongod [start status stop restart]</td>
+          <td>
+            <b>start: </b> Inicia el servidor.<br />
+            <b>status: </b> Muestra informacion sobre el estado actual del servidor.<br />
+            <b>stop: </b> Detiene el servidor.<br />
+            <b>restart: </b> Reinicia el servidor.
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>sudo mongo</td>
+          <td>Inicia la consola (shell) de Mongo</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>show dbs</td>
+          <td>Muestra todas las bases de datos almacenadas en el equipo</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>db</td>
+          <td>Muestra la base de datos en uso actualmente</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>use [nombre_base_datos]</td>
+          <td>
+            Cambia a la base de datos seleccionada. Si el [nombre_base_datos] no existe, entonces "crea" una nueva con ese nombre (solo se crea
+            realmente cuando se le inserten datos).
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>
+            db.createUser({ &nbsp; &nbsp; user: '', &nbsp; &nbsp; pwd: '', &nbsp; &nbsp; customData: {}, &nbsp; &nbsp; roles: [], &nbsp; &nbsp;
+            authenticationRestrictions: [] })
+          </td>
+          <td>
+            Crea un usuario de la base de datos:<br />
+            <b>user: </b> nombre del nuevo usuario.<br />
+            <b>pwd: </b> contraseña del nuevo usuario.<br />
+            <b>customData (opcional): </b> informacion arbitraria que se desee agregar.<br />
+            <b>roles: </b> los roles (permisos) que tendra el usuario. Pueden ser uno o varios de estos:<br />
+
+            <b>authenticationRestrictions (opcional): </b> una lista IPs desde los cuales el usuario tiene permitido concetarse a la base de datos.<br />
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>db.createCollection(['nombre_coleccion'])</td>
+          <td>Crea una coleccion con el nombre que se especifique</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>show collections</td>
+          <td>Muestra las colecciones de la base de datos</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>db.[nombre_coleccion].drop()</td>
+          <td>Elimina la coleccion con el nombre que se especifique</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>db.[nombre_coleccion].insert([{}])</td>
+          <td>
+            Inserta un registro (objeto) en la coleccion que se indique<br />
+            Tambien se pueden insertar varios a la vez con un array de objetos<br /><br />
+            Creo que si la coleccion especificada no existe la crea.
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>db.[nombre_coleccion].find({ modificador })</td>
+          <td>
+            Es como el SELECT de SQL.<br />
+            Para acceder a objetos dentro de objetos se coloca la key como si se accediera desde JavaScript con dot notation.<br />
+            Por ejemplo: "address.city": "London" Si no se colocan argumentos devuelve todos los registros de la coleccion<br />
+            Los argumentos (criterio de busqueda) se colocan como key:value.<br /><br />
+            <b>Modificadores (opcionales):</b><br />
+            <b>$or: [{}] </b> permite colocar un array de objetos para especificar varios values (criterios) para un mismo key.<br />
+            <b>key: {$gt: [numero]} </b> greater than, permite buscar con un mayor que.<br />
+            <b>key: {$lt: [numero]} </b> less than, permite buscar con un menor que.<br />
+            <b>key: {$regex: [regex]} </b> permite buscar con Regular Expressions.
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>db.[nombre_coleccion].update({}, { [modificador] }, {upsert: true})</td>
+          <td>
+            Actualiza los registros seleccionados de la coleccion especificada. Recibe tres argumentos<br />
+            <b>-Primero: </b> El criterio de seleccion de los datos, igual como se pondria en el metodo find().<br /><br />
+            <b>-Segundo: </b> El nuevo registro. Sobreescribe el objeto actual.<br />
+            <b>Modificadores dentro del segundo argumento:</b><br />
+            La key <b>$set</b> permite modificar solo las propiedades que contenga el objeto que se le pasa como value.<br />
+            La key <b>$unset</b> permite eliminar solo las propiedades que contenga el objeto que se le pasa como value. El value del objeto que
+            recibe $unset es boolean y se especifica con 1 o 0.<br />
+            La key <b>$rename</b> permite modificar el nombre de la key especificada. Recibe un objeto donde la key es la key actual (que se desea
+            modificar) y el value es el nuevo nombre que se quiere dar a la key.<br />
+            <b>$inc: { key: [numero] }</b> incrementa el value de la key especificada en base al [numero].<br />
+            <b>$dec: { key: [numero] }</b> decrementa el value de la key especificada en base al [numero].<br /><br />
+            <b>-Tercero (opcional): </b> permite crear un nuevo dato en caso de que el que se intenta actualizar no exista.
+          </td>
+        </tr>
+        <td>MongoDB</td>
+        <td>db.[nombre_coleccion].remove({})</td>
+        <td>
+          Elimina los registro seleccionados de la coleccion especificada. Recibe como argumento el criterio de seleccion de los datos, igual como se
+          pondria en el metodo find().
+          <tr>
+            <td>MongoDB</td>
+            <td>.sort({ key: [1 -1] })</td>
+            <td>Organiza la respuesta de manera ascendente (1) o descendente (-1).</td>
+          </tr>
+          <tr>
+            <td>MongoDB</td>
+            <td>.limit([numero])</td>
+            <td>Limita la cantidad de resultados que devuelve la busqueda.</td>
+          </tr>
+          <tr>
+            <td>MongoDB</td>
+            <td>.forEach(function(doc){ print(doc.propiedad) })</td>
+            <td>Funciona igual al metodo de JavaScript. La diferencia es el metodo print que imprime el dato seleccionado.</td>
+          </tr>
+          <tr>
+            <td>MongoDB</td>
+            <td>.count()</td>
+            <td>
+              Cuenta la cantidad de registros que tiene la busqueda realizada. Si no la precede un .find() devuelve la cantidad total de registros en
+              la coleccion seleccionada.
+            </td>
+          </tr>
+          <tr>
+            <td>MongoDB</td>
+            <td>.pretty()</td>
+            <td>
+              Organiza el codigo de la respuesta para hacerlo mas legible.<br />
+              Por lo general se concatena al final de la query.
+            </td>
+          </tr>
+          <tr>
+            <td>MongoDB</td>
+            <td>Date()</td>
+            <td>Da el date y time actual.</td>
+          </tr>
+        </td>
+      </tbody>
+    </table>
+
+    <script>
+      function myFilterCuenta() {
+        var tr, td, inputCuenta, filterCuenta, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputCuenta = document.getElementById('inputCuenta')
+        filterCuenta = inputCuenta.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[0]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+      function myFilterDetalle() {
+        var tr, td, inputDetalle, filterDetalle, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputDetalle = document.getElementById('inputDetalle')
+        filterDetalle = inputDetalle.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[1]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

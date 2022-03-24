@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Data Visualization Cheatsheet</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      code {
+        background: lightgray;
+        color: red;
+      }
+
+      .w-80 {
+        width: 80%;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table,
+      td,
+      tr,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+      }
+
+      th {
+        padding: 0.8em;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: white;
+      }
+
+      tbody > tr:nth-child(odd) {
+        background-color: white;
+      }
+
+      tbody > tr:nth-child(even) {
+        background-color: lightblue;
+      }
+
+      td {
+        padding: 1em;
+        opacity: 0.6;
+      }
+
+      tbody td:hover {
+        opacity: 1;
+      }
+
+      input {
+        width: 25%;
+        padding: 0.5em 0;
+        margin-bottom: 1em;
+      }
+
+      tr > td:first-child {
+        font-weight: bold;
+        text-align: center;
+        width: 10%;
+      }
+
+      tr > td:last-child {
+        width: 35%;
+      }
+
+      img {
+        width: 100%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia" />
+    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis" />
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tema</th>
+          <th>Descripcion</th>
+          <th>Imagenes</th>
+        </tr>
+      </thead>
+      <tbody id="cuentas">
+        <tr>
+          <td>INPUTS: <br />Data and Tasks</td>
+          <td>
+            <div><b>Data types:</b></div>
+            <div>
+              - Tables: ademas de las tablas comunes existe tablas multidimensionales que representan datos agregados
+              (GROUP BY).
+            </div>
+            <div>
+              - Networks: Los datos en arbol son un subtipo de network, aunque no necesariamente tienen relacion directa
+            </div>
+            <div>
+              - Spatial: Datos que pueden ser representados en un espacio (datos por ubicacion en un mapa, votos en un
+              congreso, etc)
+            </div>
+            <br />
+            <div><b>Atribute types:</b></div>
+            <div>
+              - Categorical: Son atributos diferentes entre si pero que no tienen un orden natural entre ellos (paises,
+              colores). No es posible asegurar que uno viene antes o despues del otro.
+            </div>
+            <div>
+              - Ordinal: valores diferentes pero con un orden natural entre ellos. Por ej: tamaño porque se puede
+              asegurar que despues de pequeño viene mediano y luego grande.
+            </div>
+            <div>
+              - Quantitative: normalmente involucra numeros, un valor cuantitativo a diferencia de los anteriores que
+              son valores cualitativos. Aca al tratarse de numeros hay un orden especifico para cada dato.
+            </div>
+            <div>
+              - Casos Especiales: son datos que son de naturaleza quantitative pero pueden ser representados como
+              ordinal o categorical (ver imagen). Al hablar de una ubicacion, si no se representa en un mapa, entonces
+              se puede representar como categorical porque no existiria un orden natural entre los datos. Al igual
+              cantidad o tiempo, si se toman como un rango, pueden ser representados como ordinal porque no serian
+              valores especificos pero seguirian teniendo un orden natural.
+            </div>
+            <br />
+            <div><b>Tasks:</b></div>
+            <div>
+              En pocas palabras es el objetivo que quieres lograr con la visualizacion. Al menos deberias tener una idea
+              de lo que quieres y responder las siguientes preguntas puede servir de guia:
+            </div>
+            <div>- What questions do you want to answer?</div>
+            <div>- What is the problem you are trying t solve?</div>
+            <div>- What decision are you trying to make?</div>
+            <div>- What outcomes are you hoping for?</div>
+            <div>- What story do you want to tell?</div>
+            <div>- What tasks should the viewer be able to perform?</div>
+          </td>
+          <td>
+            <img class="imagen-descripcion" src="../images/dataViz-dataTypes.png" alt="Data types" />
+          </td>
+        </tr>
+        <tr>
+          <td>MARKS AND CAHNNELS</td>
+          <td>
+            <div><b>Marks:</b></div>
+            <div>- Point: los datos son representados por puntos</div>
+            <div>- Line: los datos son representados por una linea continua</div>
+            <div>
+              - Area: los datos son representados igual que en Line pero con el area debajo de la linea llena con un
+              color (normalmente solido)
+            </div>
+            <br />
+            <div><b>Channels:</b></div>
+            <div>
+              - Position: normalmente representa en donde se encuentra el dato segun los ejes X y Y. Es muy común usar
+              el eje X para representar datos del tiempo o la duracion como datos quantitative pero siempre es
+              recomendable inicialmente experimentar con combinaciones de los attribute types (categorical, ordinal o
+              quantitative) para ver que posibilidades hay con los datos que se tienen.
+            </div>
+            <div>- Color: Se puede dividir en tres:</div>
+            <div>
+              &nbsp;&nbsp;&nbsp;&nbsp; Hue: el color como tal. Se recomienda usarlo para datos Categorical ya que un
+              color no representa un orden especifico (por ej: verde no viene naturalmente antes o despues de rojo).
+            </div>
+            <div>
+              &nbsp;&nbsp;&nbsp;&nbsp; Saturation: No explica como este valor afecta la representacion de los datos
+            </div>
+            <div>
+              &nbsp;&nbsp;&nbsp;&nbsp; Luminance: el brillo del color. Se recomienda usarlo para datos quantitative
+              porque permite mostrar una escala de mas claro a mas oscuro que solo tendria sentido con datos que tengan
+              un orden natural.
+            </div>
+            <div>
+              - Size: se refiere al tamaño de la representacion de cada dato, si se usan puntos, entonces el valor mas
+              grande debe tener un Size mayor para representarlo.
+            </div>
+            <div>- Shape: muy similar a Size. Util para datos ordinal o categorical</div>
+            <br />
+            <br />
+            <div>
+              En el grafico de ejemplo se puede ver el uso de Size para resaltar las diferencias de peso (weight) entre
+              los distintos vehiculos. Tambien se usa el Hue o color para representar el pais de origen (origin)
+              aprovechando ademas un efecto de transparencia para resaltar la densidad de datos en cada zona del
+              grafico.
+            </div>
+          </td>
+          <td>
+            <div>A la izquierda los que son mas utiles para representar atributos ordinal o quantitative.</div>
+            <div>A la derecha los que son mas utiles para representar atributo categorical</div>
+            <img class="imagen-descripcion" src="../images/dataViz-channels.png" alt="Channels" />
+
+            <img class="imagen-descripcion" src="../images/dataViz-size.png" alt="Size" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script>
+      function myFilterCuenta() {
+        var tr, td, inputCuenta, filterCuenta, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputCuenta = document.getElementById('inputCuenta')
+        filterCuenta = inputCuenta.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[0]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+      function myFilterDetalle() {
+        var tr, td, inputDetalle, filterDetalle, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputDetalle = document.getElementById('inputDetalle')
+        filterDetalle = inputDetalle.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[1]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>

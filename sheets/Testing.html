@@ -88,58 +88,76 @@
           <td>APUNTES GENERALES</td>
           <td>
             <div>
-              - Los queryBy* y queryAllBy* no dan error, siguen corriendo aunque no consigan nada. En cambio, los getBy*
-              y getAllBy* si dan error al no conseguir nada, es decir, nunca llegan a verificar el expect.
+              - Los queryBy* y queryAllBy* no dan error, siguen corriendo aunque no consigan nada. En cambio, los getBy* y getAllBy* si dan error al
+              no conseguir nada, es decir, nunca llegan a verificar el expect.
             </div>
             <br />
-            <div>
-              - Los warning que piden usar un "act" normalmente se resuelven poniendo el expect dentro de un wait o
-              waitFor.
-            </div>
+            <div>- Los warning que piden usar un "act" normalmente se resuelven poniendo el expect dentro de un wait o waitFor.</div>
             <br />
             <div>
-              - La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks()
-              que resetea todos los mocks del test.
+              - La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks() que resetea todos los mocks
+              del test.
             </div>
             <br />
             <div>- Los mock pueden retornar un valor con .mockReturnValue o .mockReturnValueOnce.</div>
             <br />
-            <div>
-              - Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.
-            </div>
+            <div>- Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.</div>
             <br />
+            <b>Evaluar excepcion de una funcion</b>
+            <pre>
+              expect(() => baseHandler(event)).toThrow()
+            </pre>
+            <br>
+            <b>Evaluar excepcion de una promesa</b>
+            <pre>
+              stockHandleMock.mockImplementation(() => {
+                throw new Error(errorMessage)
+              })
+
+              await expect(() => baseHandler(event)).rejects.toThrow(errorMessage)
+            </pre>
           </td>
           <td>
-            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
-            util en esos casos
+            Normalmente no se recomienda mockear el state de React pero en algunos casos es necesario. Este snippet puede ser util en esos casos
           </td>
         </tr>
         <tr>
           <td>APUNTES MOCKS</td>
           <td>
             <div>
-              - La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks()
-              que resetea todos los mocks del test.
+              - La funcion .mockClear() resetea el mock sin tocar su implementacion. Tambien existe jest.clearAllMocks() que resetea todos los mocks
+              del test.
             </div>
             <br />
             <div>- Los mock pueden retornar un valor con .mockReturnValue o .mockReturnValueOnce.</div>
             <br />
-            <div>
-              - Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.
-            </div>
+            <div>- Los mock pueden retornan una respuesta asincrona con .mockResolvedValueOnce o .mockRejectedValueOnce.</div>
+            <br />
+            <div>- Formas de importar modulos:</div>
+            <b>Clases:</b>
+            <pre>
+            import SoundPlayer from '../sound-player';
+            jest.mock('../sound-player'); // SoundPlayer is now a mock constructor
+
+            const SoundPlayerMock = SoundPlayer as jest.MockedClass<typeof SoundPlayer>
+            </pre>
+            <br />
+            <b>Funciones:</b>
+            <pre>
+            import add from './add';
+
+            const mockAdd = jest.fn() as jest.MockedFunction<typeof add>;
+            </pre>
             <br />
           </td>
-          <td>
-            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
-            util en esos casos
-          </td>
+          <td>Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser util en esos casos</td>
         </tr>
         <tr>
           <td>APUNTES MATCHERS</td>
           <td>
             <div>
-              getByText(/text/i, { selector: 'button' }) - Pueden recibir un segundo parametro indicando un selector css
-              para el elemento que se quiere
+              getByText(/text/i, { selector: 'button' }) - Pueden recibir un segundo parametro indicando un selector css para el elemento que se
+              quiere
             </div>
             <br />
             <div>getByLabelText(/label text/i) = el input correspondiente a ese label (via htmlFor attribute).</div>
@@ -147,10 +165,7 @@
             <div>getByRole('heading') = tags h1 hasta h6.</div>
             <br />
           </td>
-          <td>
-            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
-            util en esos casos
-          </td>
+          <td>Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser util en esos casos</td>
         </tr>
         <tr>
           <td>REACT - Mock con spyOn</td>
@@ -203,18 +218,14 @@
           </td>
           <td>
             Caso 1:
+            <p>- La funcion thumbWar (puede aplicar como componente) llama internamente la funcion utils.getWinner (puede aplicar como un hook).</p>
             <p>
-              - La funcion thumbWar (puede aplicar como componente) llama internamente la funcion utils.getWinner (puede
-              aplicar como un hook).
-            </p>
-            <p>
-              - Se hace mocking de una funcion que se llama dentro de la funcion que se esta probando para poder
-              controlar el resultado que se obtiene
+              - Se hace mocking de una funcion que se llama dentro de la funcion que se esta probando para poder controlar el resultado que se obtiene
             </p>
             Caso 2:
             <p>
-              - Aca es importante el import (sirve para named and default exports). En este caso en el componente se
-              usaba: import { useMutation } from 'hooks'
+              - Aca es importante el import (sirve para named and default exports). En este caso en el componente se usaba: import { useMutation }
+              from 'hooks'
             </p>
           </td>
         </tr>
@@ -251,12 +262,11 @@
             </pre>
           </td>
           <td>
-            - No se obtiene la fecha exacta pero al saber que esta entre la preDate y la postDate el test es
-            confiable.<br />
+            - No se obtiene la fecha exacta pero al saber que esta entre la preDate y la postDate el test es confiable.<br />
             - Esto funciona cuando se le pasa al componente el date como new Date().toISOString()<br />
             - En los date en el test se usa el getter getTime() para obteenr un numero que cmomparar<br />
-            - expect.any(String) recibe como argumento un constructor (Array, Number, String, etc) y hace match con
-            cualquier dato que sea creado con el constructor dado.
+            - expect.any(String) recibe como argumento un constructor (Array, Number, String, etc) y hace match con cualquier dato que sea creado con
+            el constructor dado.
           </td>
         </tr>
         <tr>
@@ -269,10 +279,17 @@
               }
             })
             </pre>
+            <br>
+            <pre>
+              jest.mock('njwt', () => ({
+                ...(jest.requireActual('njwt') as any),
+                verify: jest.fn(),
+              }))
+              </pre>
           </td>
           <td>
-            Puedes hacer que el mock devuelva lo que tu quieres. En este caso si la prop in es truthy muestra retorna la
-            props children (sin esperar la animacion) sino retorna null
+            Puedes hacer que el mock devuelva lo que tu quieres. En este caso si la prop in es truthy muestra retorna la props children (sin esperar
+            la animacion) sino retorna null
           </td>
         </tr>
         <tr>
@@ -318,10 +335,7 @@
             });
             </pre>
           </td>
-          <td>
-            Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser
-            util en esos casos
-          </td>
+          <td>Normalmente no se recomienda mockear el state pero en algunos casos es necesario. Este snippet puede ser util en esos casos</td>
         </tr>
         <tr>
           <td>REACT - fireEvent change</td>
@@ -341,10 +355,7 @@
             })
             </pre>
           </td>
-          <td>
-            Esto es util para modificar el valor del componente aunque tambien se puede modificar actualizando la prop
-            value
-          </td>
+          <td>Esto es util para modificar el valor del componente aunque tambien se puede modificar actualizando la prop value</td>
         </tr>
         <tr>
           <td>REACT - update props</td>
@@ -390,8 +401,7 @@
             </pre>
           </td>
           <td>
-            Lo que se mockea realmente es el valor que recibe el componente desde el context, de resto sigue consumiendo
-            el context como siempre
+            Lo que se mockea realmente es el valor que recibe el componente desde el context, de resto sigue consumiendo el context como siempre
           </td>
         </tr>
       </tbody>
