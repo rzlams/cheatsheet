@@ -107,7 +107,7 @@
             <pre>
               expect(() => baseHandler(event)).toThrow()
             </pre>
-            <br>
+            <br />
             <b>Evaluar excepcion de una promesa</b>
             <pre>
               stockHandleMock.mockImplementation(() => {
@@ -136,17 +136,40 @@
             <div>- Formas de importar modulos:</div>
             <b>Clases:</b>
             <pre>
-            import SoundPlayer from '../sound-player';
-            jest.mock('../sound-player'); // SoundPlayer is now a mock constructor
+            import SoundPlayer from '../sound-player'
+            jest.mock('../sound-player') // SoundPlayer is now a mock constructor
 
-            const SoundPlayerMock = SoundPlayer as jest.MockedClass<typeof SoundPlayer>
+            const SoundPlayerMock = SoundPlayer as jest.MockedClass&#60;typeof SoundPlayer&#62;
+            </pre>
+            <br />
+            <b>Clases con named export y haciendo mock de la implementacion:</b>
+            <pre>
+            // Para una clase que se instancie de esta forma
+            const player = new SoundPlayer()
+            player.someMethod()
+
+            // se hace el mock asi
+            import { SoundPlayer } from '../sound-player'
+            jest.mock('../sound-player', () => {
+              const classMethods = {
+                someMethod: jest.fn()
+              }
+
+              // al retornar un objeto haces mock del named export
+              return {
+                // al retornar una jest function aca haces mock de una clase, es decir, permites que se pueda instanciar
+                SoundPlayer: jest.fn(() => classMethods)
+              }
+            })
+
+            const SoundPlayerMock = SoundPlayer as jest.MockedClass&#60;typeof SoundPlayer&#62;
             </pre>
             <br />
             <b>Funciones:</b>
             <pre>
-            import add from './add';
+            import add from './add'
 
-            const mockAdd = jest.fn() as jest.MockedFunction<typeof add>;
+            const mockAdd = jest.fn() as jest.MockedFunction&#60;typeof add&#62;
             </pre>
             <br />
           </td>
@@ -279,13 +302,14 @@
               }
             })
             </pre>
-            <br>
+            <br />
             <pre>
               jest.mock('njwt', () => ({
                 ...(jest.requireActual('njwt') as any),
                 verify: jest.fn(),
               }))
-              </pre>
+              </pre
+            >
           </td>
           <td>
             Puedes hacer que el mock devuelva lo que tu quieres. En este caso si la prop in es truthy muestra retorna la props children (sin esperar
