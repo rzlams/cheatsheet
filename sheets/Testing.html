@@ -165,11 +165,33 @@
             const SoundPlayerMock = SoundPlayer as jest.MockedClass&#60;typeof SoundPlayer&#62;
             </pre>
             <br />
+            <b>Clases con default export:</b>
+            <pre>
+            const pandoraMock = jest.fn();
+            jest.mock("@stockoverflow/pandora", () => ({
+              __esModule: true,
+              default: jest.fn.mockImplementation(() => {
+                return pandoraMock(arn, queryAttributes);
+              }),
+            }));
+            </pre>
+            <br />
             <b>Funciones:</b>
             <pre>
             import add from './add'
 
             const mockAdd = jest.fn() as jest.MockedFunction&#60;typeof add&#62;
+            </pre>
+            <br />
+            <b>Funciones con exports default:</b>
+            <pre>
+            const pandoraMock = jest.fn();
+            jest.mock("@stockoverflow/pandora", () => ({
+              __esModule: true,
+              default: (arn: { arn: string }, queryAttributes: Service) => {
+                return pandoraMock(arn, queryAttributes);
+              },
+            }));
             </pre>
             <br />
           </td>
