@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>My cheatsheet</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      table {
+        width: 100%;
+      }
+
+      table,
+      td,
+      tr,
+      th {
+        border: 1px solid black;
+        border-collapse: collapse;
+        position: relative;
+      }
+
+      th {
+        padding: 0.8em;
+        text-transform: uppercase;
+        background-color: darkblue;
+        color: white;
+      }
+
+      tbody > tr:nth-child(odd) {
+        background-color: white;
+      }
+
+      tbody > tr:nth-child(even) {
+        background-color: lightblue;
+      }
+
+      td {
+        padding: 1em;
+        opacity: 0.6;
+      }
+
+      tbody td:hover {
+        opacity: 1;
+      }
+
+      input {
+        width: 25%;
+        padding: 0.5em 0;
+        margin-bottom: 1em;
+      }
+
+      tr > td:first-child {
+        font-weight: bold;
+        text-align: center;
+        width: 10%;
+      }
+
+      tr > td:last-child {
+        width: 35%;
+      }
+
+      img {
+        width: 100%;
+      }
+
+      h2 {
+        margin-top: 1em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <input type="search" id="inputCuenta" onkeyup="myFilterCuenta()" placeholder="Buscar por tecnologia" />
+    <input type="search" id="inputDetalle" onkeyup="myFilterDetalle()" placeholder="Buscar por sintaxis" />
+
+    <div>
+      <div>
+        <img src="../images/regex-cheatsheet.jpg" alt="RegEx Cheatsheet" />
+      </div>
+
+      <div>
+        <h2>
+          <a name="characters" href="#characters"> </a>
+          Characters
+        </h2>
+
+        <div class="table-wrapper-paragraph">
+          <table>
+            <thead>
+              <tr>
+                <th>Characters</th>
+                <th>Legend</th>
+                <th>Example</th>
+                <th>Sample Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>[abc], [a-c]</td>
+                <td>Match the given characters/range of characters</td>
+                <td>abc[abc]</td>
+                <td>abca, abcb, abcc</td>
+              </tr>
+              <tr>
+                <td>[^abc], [^a-c]</td>
+                <td>Negate and match the given characters/range of characters</td>
+                <td>abc[^abc]</td>
+                <td>abcd, abce, abc1, ...</td>
+              </tr>
+              <tr>
+                <td>.</td>
+                <td>Any character except <strong>line break</strong></td>
+                <td>bc.</td>
+                <td>bca, bcd, bc1, b., ...</td>
+              </tr>
+              <tr>
+                <td>\d</td>
+                <td>Any <strong>numeric character</strong> (equivalent to [0-9])</td>
+                <td>c\d</td>
+                <td>c1, c2, c3 ...</td>
+              </tr>
+              <tr>
+                <td>\D</td>
+                <td>Any <strong>non-numeric character</strong> (equivalent to [^0-9])</td>
+                <td>c\D</td>
+                <td>ca, c., c* ...</td>
+              </tr>
+              <tr>
+                <td>\w</td>
+                <td>Any <strong>alphanumeric character</strong> (equivalent to [A-Za-z0-9_])</td>
+                <td>a\w</td>
+                <td>aa, a1, a_ ...</td>
+              </tr>
+              <tr>
+                <td>\W</td>
+                <td>Any <strong>non-alphanumeric character</strong> (equivalent to [A-Za-z0-9_])</td>
+                <td>a\W</td>
+                <td>a), a$, a? ...</td>
+              </tr>
+              <tr>
+                <td>\s</td>
+                <td>Usually used for <strong>white space</strong>, but can be used for <strong>new line</strong>, <strong>tab</strong>, etc</td>
+                <td>a\s</td>
+                <td>a</td>
+              </tr>
+              <tr>
+                <td>\S</td>
+                <td>Not a <strong>white space</strong> or equivalent like <strong>new line</strong>, <strong>tab</strong>, etc</td>
+                <td>a\S</td>
+                <td>aa</td>
+              </tr>
+              <tr>
+                <td>\t</td>
+                <td>Matches a <strong>horizontal tab</strong></td>
+                <td>T\tab</td>
+                <td>T ab</td>
+              </tr>
+              <tr>
+                <td>\r</td>
+                <td>Matches a <strong>carriage return</strong></td>
+                <td>AB\r\nCD</td>
+                <td>AB<br />CD</td>
+              </tr>
+              <tr>
+                <td>\n</td>
+                <td>Matches a <strong>linefeed</strong></td>
+                <td>AB\r\nCD</td>
+                <td>AB<br />CD</td>
+              </tr>
+              <tr>
+                <td>\</td>
+                <td>Escapes special characters</td>
+                <td>\d</td>
+                <td>0, 1, ...</td>
+              </tr>
+              <tr>
+                <td>x|y</td>
+                <td>Matches either "x" or "y"</td>
+                <td>a|b</td>
+                <td>a, b</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>
+          <a name="assertions" href="#assertions"> </a>
+          Assertions
+        </h2>
+
+        <div class="table-wrapper-paragraph">
+          <table>
+            <thead>
+              <tr>
+                <th>Characters</th>
+                <th>Legend</th>
+                <th>Example</th>
+                <th>Sample Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>^</td>
+                <td>Start of string or start of line depending on <strong>multiline mode</strong></td>
+                <td>^abc.*</td>
+                <td>abc, abd, abcd, ...</td>
+              </tr>
+              <tr>
+                <td>$</td>
+                <td>End of string or start of line depending on <strong>multiline mode</strong></td>
+                <td>.*xyz$</td>
+                <td>xyz, wxyz, abcdxyz, ...</td>
+              </tr>
+              <tr>
+                <td>\b</td>
+                <td>Matches a word character is not followed by another <strong>word-character</strong></td>
+                <td>My.*\bpie</td>
+                <td>My apple pie, ...</td>
+              </tr>
+              <tr>
+                <td>\B</td>
+                <td>Matches a <strong>non-word boundary</strong></td>
+                <td>c.*\Bcat</td>
+                <td>copycat, ...</td>
+              </tr>
+              <tr>
+                <td>x(?=y)</td>
+                <td><strong>Lookahead assertion</strong>: Matches "x" only if "x" is followed by "y"</td>
+                <td>\d+(?=€)</td>
+                <td>$1 = 0.<strong>9</strong>8€, ...</td>
+              </tr>
+              <tr>
+                <td>x(?!y)</td>
+                <td><strong>Negative Lookahead assertion</strong>: Matches "x" only if "x" is followed not by "y"</td>
+                <td>\d+\b(?!€)</td>
+                <td>$<strong>1</strong> = <strong>0</strong>.98€ , ...</td>
+              </tr>
+              <tr>
+                <td>(?&lt;=y)x</td>
+                <td><strong>Lookbehind assertion</strong>: Matches "x" only if "x" is preceded by "y"</td>
+                <td>(?&lt;=\d)\d</td>
+                <td>$1 = 0.9*<em>8</em>*€, ...</td>
+              </tr>
+              <tr>
+                <td>(?&lt;!y)x</td>
+                <td><strong>Negative Lookbehind assertion</strong>: Matches "x" only if "x" is not preceded by "y"</td>
+                <td>(?&lt;!\d)\d</td>
+                <td>$<strong>1</strong> = <strong>0</strong>.<strong>9</strong>8€, ...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>
+          <a name="groups" href="#groups"> </a>
+          Groups
+        </h2>
+
+        <div class="table-wrapper-paragraph">
+          <table>
+            <thead>
+              <tr>
+                <th>Characters</th>
+                <th>Legend</th>
+                <th>Example</th>
+                <th>Sample Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>(x)</td>
+                <td><strong>Capturing group</strong>: Matches x and remembers the match</td>
+                <td>A(nt|pple)</td>
+                <td>Ant (remembers "nt")</td>
+              </tr>
+              <tr>
+                <td>(?&lt;name&gt;x)</td>
+                <td><strong>Capturing group</strong>: Matches x and stores it in the mentioned variable</td>
+                <td>A(?&lt;m&gt;nt|pple)</td>
+                <td>Ant (m = "nt")</td>
+              </tr>
+              <tr>
+                <td>(?:name&gt;x)</td>
+                <td><strong>Non-capturing group</strong>: Matches x and does not remember the match</td>
+                <td>A(?:nt|pple)</td>
+                <td>Ant</td>
+              </tr>
+              <tr>
+                <td>\<em>n</em></td>
+                <td>Back reference to the last substring matching the <em>n</em> parenthetical</td>
+                <td>(\d)+(\d)=\2+\1</td>
+                <td>5+6=6+5</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h2>
+          <a name="quantifiers" href="#quantifiers"> </a>
+          Quantifiers
+        </h2>
+
+        <div class="table-wrapper-paragraph">
+          <table>
+            <thead>
+              <tr>
+                <th>Characters</th>
+                <th>Legend</th>
+                <th>Example</th>
+                <th>Sample Match</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>x*</td>
+                <td>Matches the preceding item "x" 0 or more times</td>
+                <td>a*</td>
+                <td>a, aa, aaa, ...</td>
+              </tr>
+              <tr>
+                <td>x+</td>
+                <td>Matches the preceding item "x" 1 or more times, equivalent to {1,}</td>
+                <td>a+</td>
+                <td>aa, aaa, aaaa, ...</td>
+              </tr>
+              <tr>
+                <td>x?</td>
+                <td>Matches the preceding item "x" 0 or 1 time</td>
+                <td>ab?</td>
+                <td>a, ab</td>
+              </tr>
+              <tr>
+                <td>x{<em>n</em>}</td>
+                <td>Matches the preceding item "x" <em>n</em> times (<em>n</em> = <strong>positive integer</strong>)</td>
+                <td>ab{5}c</td>
+                <td>abbbbbc</td>
+              </tr>
+              <tr>
+                <td>x{<em>n</em>,}</td>
+                <td>Matches the preceding item "x" at least <em>n</em> times (<em>n</em> = <strong>positive integer</strong>)</td>
+                <td>ab{2,}c</td>
+                <td>abbc, abbbc, abbbbc, ...</td>
+              </tr>
+              <tr>
+                <td>x{<em>n</em>,<em>m</em>}</td>
+                <td>Matches the preceding item "x" at least <em>n</em> times &amp; at most <em>m</em> times (<em>n</em>&lt;<em>m</em>)</td>
+                <td>ab{2,3}c</td>
+                <td>abbc, abbbc</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>
+          <a name="note" href="#note"> </a>
+          NOTE
+        </h3>
+
+        <p>
+          By default <strong>quantifiers</strong> are <strong>greedy</strong> (they try to match as much of the string as possible). The
+          <code>?</code> character after the <strong>quantifier</strong> makes the <strong>quantifier</strong> <strong>non-greedy</strong> (it will
+          stop as soon as it finds a match).
+        </p>
+
+        <p>
+          For Example: <code>\d+?</code> for a test string <code>12345</code> will match only <code>1</code>, but <code>\d+</code> will match the
+          entire string <code>12345</code>
+        </p>
+
+        <h2>
+          <a name="flags" href="#flags"> </a>
+          Flags
+        </h2>
+
+        <p>
+          <strong>Flags</strong> are put at the end of the <strong>regular expression</strong>. They are used to modify how the
+          <strong>regular expression</strong> behaves.
+        </p>
+
+        <p>
+          For Example: <code>/a/</code> for a test string <code>a</code> will match <code>a</code> only, but adding the flag
+          <code>i</code> (<code>/a/i</code>) would match both <code>a</code> and <code>A</code>
+        </p>
+
+        <div class="table-wrapper-paragraph">
+          <table>
+            <thead>
+              <tr>
+                <th>Characters</th>
+                <th>Legend</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>d</td>
+                <td>Generate indices for substring matches</td>
+              </tr>
+              <tr>
+                <td>g</td>
+                <td><strong>Global search</strong></td>
+              </tr>
+              <tr>
+                <td>i</td>
+                <td><strong>Case-insensitive search</strong></td>
+              </tr>
+              <tr>
+                <td>m</td>
+                <td><strong>Multi-line search</strong></td>
+              </tr>
+              <tr>
+                <td>s</td>
+                <td>Allows <code>.</code> to match <strong>newline characters</strong></td>
+              </tr>
+              <tr>
+                <td>u</td>
+                <td>Treats a pattern as a sequence of <strong>Unicode code points</strong></td>
+              </tr>
+              <tr>
+                <td>y</td>
+                <td>Perform a <strong>sticky</strong> search that matches starting at the current position in the target string</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function myFilterCuenta() {
+        var tr, td, inputCuenta, filterCuenta, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputCuenta = document.getElementById('inputCuenta')
+        filterCuenta = inputCuenta.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[0]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterCuenta) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+      function myFilterDetalle() {
+        var tr, td, inputDetalle, filterDetalle, i, textValue
+
+        tr = document.getElementsByTagName('tr')
+        inputDetalle = document.getElementById('inputDetalle')
+        filterDetalle = inputDetalle.value.toUpperCase()
+
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName('td')[1]
+
+          if (td) {
+            textValue = td.textContent
+            if (textValue.toUpperCase().indexOf(filterDetalle) > -1) {
+              tr[i].style.display = ''
+            } else {
+              tr[i].style.display = 'none'
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
