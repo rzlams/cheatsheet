@@ -199,6 +199,69 @@
           </td>
         </tr>
         <tr>
+          <td>Transaction Isolation Levels</td>
+          <td>
+            - Default Transaction Isolation Level for Mysql is Repeatable Read <br />
+            - Default Transaction Isolation Level for Mysql is Read Committed <br />
+            <br />
+            - The Transaction Isolation Level is set globally for the entire database <br />
+            - Choosing the isolation level is about finding the right balance of consistency and scalability for our current application requirements
+            <br />
+            - There are Four Transaction Isolation Levels and Three Consistency Anomalies:
+            <ul>
+              <li>
+                <b>Isolation Levels</b> <br />
+                - READ UNCOMMITTED <br />
+                - READ COMMITTED <br />
+                - REPEATABLE READ <br />
+                - SERIALIZABLE
+              </li>
+              <li>
+                <b>Anomalies:</b> <br />
+                - Dirty read <br />
+                - Non-repeatable read <br />
+                - Phantom read
+              </li>
+            </ul>
+            <br />
+            <b>- READ UNCOMMITED:</b> In READ UNCOMMITTED isolation level, there isn’t much isolation present between the transactions at all, ie .,
+            No locks. This isolation level allows dirty reads, which means one transaction may see uncommitted changes made by some other transaction.
+            In our example, Transaction Two has seen the uncommitted data(changed username) by Transaction One. <br />
+            <b>- READ COMMITTED:</b> IN READ-COMMITTED isolation level, the phenomenon of dirty read is avoided, however, this isolation level allows
+            Non-repeatable read. Within the same transaction, the same retrieves should return the same data. However, Non-repeatable read returns
+            different results because the data is changed by another transaction committing in the meantime.<br />
+            <b>- REPEATABLE READ:</b> In REPEATABLE-READ isolation level, the phenomenon of non-repeatable read is avoided. It is the default
+            isolation in MySQL. This isolation level allows phantom read. A Phantom read occurs when one user is repeating a read operation on the
+            same records but has new records in the results set.<br />
+            <b>- SERIALIZABLE:</b> This isolation level is the strongest possible isolation level. It completely isolates the effect of one
+            transaction from others.
+          </td>
+          <td>
+            <span>Summary Table</span>
+            <img src="../images/transaction-isolation-levels-summary.webp" alt="Summary Table" />
+            <hr />
+            <span>READ UNCOMMITED - Diagram</span>
+            <img src="../images/transaction-isolation-levels-read-uncommited-diagram.webp" alt="READ UNCOMMITED - Diagram" />
+            <hr />
+            <span>READ UNCOMMITED - Tables</span>
+            <img src="../images/transaction-isolation-levels-read-uncommited-tables.webp" alt="READ UNCOMMITED - Tables" />
+            <hr />
+            <span>READ COMMITED - Diagram</span>
+            <img src="../images/transaction-isolation-levels-read-commited-diagram.webp" alt="READ COMMITED - Diagram" />
+            <hr />
+            <span>READ COMMITED - Tables</span>
+            <img src="../images/transaction-isolation-levels-read-commited-tables.webp" alt="READ COMMITED - Tables" />
+            <hr />
+            <hr />
+            <span>REPEATABLE READ - Diagram</span>
+            <img src="../images/transaction-isolation-levels-repeatable-read-diagram.webp" alt="REPEATABLE READ - Diagram" />
+            <hr />
+            <span>REPEATABLE READ - Tables</span>
+            <img src="../images/transaction-isolation-levels-repeatable-read-tables.webp" alt="REPEATABLE READ - Tables" />
+            <hr />
+          </td>
+        </tr>
+        <tr>
           <td>MySQL</td>
           <td>
             mysql -u root -p &nbsp; &nbsp; (/opt/lampp/bin ruta en xampp)<br />
@@ -827,48 +890,50 @@
             <b>-Tercero (opcional): </b> permite crear un nuevo dato en caso de que el que se intenta actualizar no exista.
           </td>
         </tr>
-        <td>MongoDB</td>
-        <td>db.[nombre_coleccion].remove({})</td>
-        <td>
-          Elimina los registro seleccionados de la coleccion especificada. Recibe como argumento el criterio de seleccion de los datos, igual como se
-          pondria en el metodo find().
-          <tr>
-            <td>MongoDB</td>
-            <td>.sort({ key: [1 -1] })</td>
-            <td>Organiza la respuesta de manera ascendente (1) o descendente (-1).</td>
-          </tr>
-          <tr>
-            <td>MongoDB</td>
-            <td>.limit([numero])</td>
-            <td>Limita la cantidad de resultados que devuelve la busqueda.</td>
-          </tr>
-          <tr>
-            <td>MongoDB</td>
-            <td>.forEach(function(doc){ print(doc.propiedad) })</td>
-            <td>Funciona igual al metodo de JavaScript. La diferencia es el metodo print que imprime el dato seleccionado.</td>
-          </tr>
-          <tr>
-            <td>MongoDB</td>
-            <td>.count()</td>
-            <td>
-              Cuenta la cantidad de registros que tiene la busqueda realizada. Si no la precede un .find() devuelve la cantidad total de registros en
-              la coleccion seleccionada.
-            </td>
-          </tr>
-          <tr>
-            <td>MongoDB</td>
-            <td>.pretty()</td>
-            <td>
-              Organiza el codigo de la respuesta para hacerlo mas legible.<br />
-              Por lo general se concatena al final de la query.
-            </td>
-          </tr>
-          <tr>
-            <td>MongoDB</td>
-            <td>Date()</td>
-            <td>Da el date y time actual.</td>
-          </tr>
-        </td>
+        <tr>
+          <td>MongoDB</td>
+          <td>db.[nombre_coleccion].remove({})</td>
+          <td>
+            Elimina los registro seleccionados de la coleccion especificada. Recibe como argumento el criterio de seleccion de los datos, igual como
+            se pondria en el metodo find().
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>.sort({ key: [1 -1] })</td>
+          <td>Organiza la respuesta de manera ascendente (1) o descendente (-1).</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>.limit([numero])</td>
+          <td>Limita la cantidad de resultados que devuelve la busqueda.</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>.forEach(function(doc){ print(doc.propiedad) })</td>
+          <td>Funciona igual al metodo de JavaScript. La diferencia es el metodo print que imprime el dato seleccionado.</td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>.count()</td>
+          <td>
+            Cuenta la cantidad de registros que tiene la busqueda realizada. Si no la precede un .find() devuelve la cantidad total de registros en la
+            coleccion seleccionada.
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>.pretty()</td>
+          <td>
+            Organiza el codigo de la respuesta para hacerlo mas legible.<br />
+            Por lo general se concatena al final de la query.
+          </td>
+        </tr>
+        <tr>
+          <td>MongoDB</td>
+          <td>Date()</td>
+          <td>Da el date y time actual.</td>
+        </tr>
       </tbody>
     </table>
 
